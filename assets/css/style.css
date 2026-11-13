@@ -307,8 +307,21 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .hero-top p { margin: 0; color: var(--ink-soft); }
 .hero .photo { aspect-ratio: 16 / 7; }
 
-/* Herofilm (YouTube) – täcker hela ytan oavsett format, utan YouTubes egna kontroller */
-.hero-media { container-type: size; }
+/* Hero med helskärmsfilm (YouTube) */
+.hero-video-section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: 560px;
+  height: calc(100svh - 78px);
+  max-height: 920px;
+  padding: 96px 0 108px;
+  background: var(--forest);
+  color: #fff;
+  isolation: isolate;
+}
+.hero-media { position: absolute; inset: 0; z-index: -2; container-type: size; }
 .hero-video {
   position: absolute; top: 50%; left: 50%;
   width: max(100cqw, 177.78cqh);
@@ -317,11 +330,24 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
   border: 0;
   pointer-events: none;
   opacity: 0;
-  transition: opacity .8s ease;
+  transition: opacity 1s ease;
 }
 .hero-media.video-ready .hero-video { opacity: 1; }
+.hero-shade {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(to top, rgba(12, 18, 14, .82) 0%, rgba(12, 18, 14, .45) 45%, rgba(12, 18, 14, .15) 75%, rgba(12, 18, 14, .35) 100%);
+}
+.hero-content { width: 100%; }
+.hero-content h1 { max-width: 19ch; margin-bottom: 18px; color: #fff; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
+.hero-content .lead { max-width: 560px; color: rgba(255, 255, 255, .9); margin: 0; }
+.hero-content .eyebrow { background: rgba(255, 255, 255, .16); color: #fff; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.hero-video-section :focus-visible { outline-color: #fff; }
+.hero-search { position: relative; z-index: 2; }
+.hero-search .search { margin-top: -44px; }
+
 .video-controls {
-  position: absolute; top: 16px; right: 16px; z-index: 1;
+  position: absolute; top: 24px; right: max(24px, calc((100% - var(--container)) / 2 + 24px)); z-index: 1;
   display: flex; gap: 8px;
 }
 .video-btn {
@@ -339,6 +365,8 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .video-btn .icon { font-size: 16px; }
 @media (max-width: 600px) {
   .video-controls { top: 12px; right: 12px; }
+  .hero-video-section { min-height: 520px; height: calc(88svh - 78px); }
+  .hero-video-section { padding: 80px 0 64px; }
   .video-btn { padding: 0; width: 44px; }
   .video-btn-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }

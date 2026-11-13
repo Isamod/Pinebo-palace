@@ -34,19 +34,14 @@ Se `assets/img/README.md` för vilka filnamn som behövs.
 
 ## Herofilm på startsidan
 
-Toppen av startsidan visar en YouTube-film (ca 1 minut) som loopar. Film-id:t står
-i `index.html` på elementet `data-youtube-id`. Byt id:t för att byta film.
+Startsidan börjar med en hero som täcker hela skärmen, med en YouTube-film (ca 1 minut)
+som loopar och rubriken ovanpå. Film-id:t står i `index.html` på `data-youtube-id`.
 
-Så påverkar filmen sidan så lite som möjligt:
-- Stillbilden visas direkt. YouTube-spelaren laddas först när resten av sidan har laddat.
+- Filmen startar direkt utan ljud. Egna knappar för paus/spela och ljud på/av.
 - Cookie-fri YouTube-domän (`youtube-nocookie.com`), utan YouTubes separata API-skript.
-- Ljudet är av från start. Egna knappar för paus/spela och ljud på/av. YouTubes egna
-  kontroller och videoförslag visas inte.
+- YouTubes egna kontroller döljs, och filmen beskärs så att den alltid fyller ytan.
 - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
-- Filmen pausas när den scrollas ur bild. Pausad film visar stillbilden.
-
-Tips: lägg en egen stillbild som `assets/img/hero.jpg` och byt `src` på bilden i
-heron – det laddar snabbare och ser bättre ut än YouTubes miniatyrbild.
+- Filmen pausas när den scrollas ur bild och fortsätter när den syns igen.
 
 ## Hur bokningen fungerar just nu
 

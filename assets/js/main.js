@@ -527,22 +527,22 @@
   }
 
   /* ---------- Herofilm (YouTube) ----------
-     - Stillbilden visas direkt. YouTube-spelaren skapas först när sidan har laddat klart,
-       så den inte konkurrerar med sidans egna filer.
+     - Spelaren skapas direkt när sidan öppnas. Tills filmen spelar syns heron mörkgrön.
      - Cookie-fri domän (youtube-nocookie.com). Spelaren styrs med postMessage,
        så YouTubes separata API-skript behöver inte laddas.
      - Loopar, startar alltid utan ljud. Egna knappar för paus/spela och ljud.
      - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
      - Pausas när den inte syns och fortsätter när den syns igen,
-       om inte besökaren själv har pausat. När filmen är pausad visas stillbilden. */
+       om inte besökaren själv har pausat. */
   function initHeroVideo() {
     var box = $("[data-hero-video]");
     if (!box || !("IntersectionObserver" in window)) return;
     var id = box.getAttribute("data-youtube-id");
     var ORIGIN = "https://www.youtube-nocookie.com";
-    var controls = $(".video-controls", box);
-    var toggle = $("[data-video-toggle]", box);
-    var sound = $("[data-video-sound]", box);
+    var root = box.parentNode;
+    var controls = $(".video-controls", root);
+    var toggle = $("[data-video-toggle]", root);
+    var sound = $("[data-video-sound]", root);
 
     var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var conn = navigator.connection || {};
@@ -563,7 +563,8 @@
     function updateUI() {
       setBtn(toggle, playing ? "pause" : "play", playing ? "Pausa filmen" : "Spela filmen");
       setBtn(sound, muted ? "volume-x" : "volume", muted ? "Slå på ljud" : "Stäng av ljud");
-      box.classList.toggle("video-ready", playing);
+      // Filmen tonas in första gången den spelar och ligger sedan kvar (även pausad)
+      if (playing) box.classList.add("video-ready");
     }
     function send(data) {
       if (frame && frame.contentWindow) {
@@ -591,7 +592,7 @@
       frame.tabIndex = -1;
       frame.setAttribute("aria-hidden", "true");
       frame.addEventListener("load", function () { send({ event: "listening" }); });
-      box.insertBefore(frame, controls);
+      box.appendChild(frame);
     }
 
     window.addEventListener("message", function (e) {
@@ -647,12 +648,8 @@
       updateUI();
       if (autoplay) create();
     }
-    function schedule() {
-      if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 2000 });
-      else setTimeout(start, 200);
-    }
-    if (document.readyState === "complete") schedule();
-    else window.addEventListener("load", schedule, { once: true });
+    // Starta direkt (skriptet ligger sist i body, så sidans innehåll är redan på plats)
+    start();
   }
 
   /* ---------- Start ---------- */
