@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slutför bokning – Pinebo Palace</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="kassa">
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Pinebo Palace – startsida">
+      <span class="brand-mark"><i data-icon="tree"></i></span>
+      <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Privat stuga</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Huvudmeny">
+      <a href="boendet.html">Boendet</a>
+      <a href="bastu-bad.html">Bastu &amp; Bad</a>
+      <a href="index.html#priser">Priser &amp; Tillval</a>
+      <a href="index.html#upplevelser">Upplevelser</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <div class="header-aside">
+      <span class="header-step">Steg 2 av 2: Slutför bokning</span>
+      <span class="pill">Säker checkout</span>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Meny" aria-expanded="false"><i data-icon="menu"></i></button>
+  </div>
+</header>
+
+<main class="section" style="padding-top:48px">
+  <div class="container layout-sidebar">
+    <div>
+      <a class="btn-link" href="boka.html" style="margin-bottom:12px"><i data-icon="chevron-left"></i> Gå tillbaka till tillval</a>
+      <h1 style="font-size:clamp(2.2rem,4vw,3rem)">Slutför din bokning</h1>
+      <p class="lead" style="margin-bottom:32px">Fyll i dina uppgifter och välj betalsätt nedan för att säkra din vistelse i Ulricehamns skogar.</p>
+
+      <div class="notice" data-need-dates hidden>
+        <i data-icon="calendar"></i>
+        <span>Du har inte valt några datum ännu. <a href="index.html#boka"><strong>Välj datum</strong></a> för att kunna slutföra bokningen.</span>
+      </div>
+
+      <form id="checkout" data-checkout novalidate>
+        <section class="card form-card">
+          <h2><i data-icon="user"></i> 1. Gästuppgifter</h2>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="f-first">Förnamn<span class="req">*</span></label>
+              <input id="f-first" name="firstName" autocomplete="given-name" placeholder="t.ex. Johan" required>
+            </div>
+            <div class="form-field">
+              <label for="f-last">Efternamn<span class="req">*</span></label>
+              <input id="f-last" name="lastName" autocomplete="family-name" placeholder="t.ex. Andersson" required>
+            </div>
+            <div class="form-field full">
+              <label for="f-email">E-postadress<span class="req">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="johan.andersson@example.se" required>
+            </div>
+            <div class="form-field">
+              <label for="f-phone">Telefonnummer<span class="req">*</span></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+46 70 123 45 67" required>
+            </div>
+            <div class="form-field">
+              <label for="f-guests">Antal gäster</label>
+              <select id="f-guests" name="guests" data-guests><option value="2">2 gäster</option></select>
+            </div>
+            <div class="form-field full">
+              <label for="f-msg">Meddelande till <span data-cfg="hosts">Maria &amp; Andreas</span> (valfritt)</label>
+              <textarea id="f-msg" name="message" placeholder="Berätta gärna om det är något speciellt ni firar eller om ni har några frågor inför ankomst…"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="card form-card">
+          <h2><i data-icon="card"></i> 2. Välj betalsätt</h2>
+          <div class="pay-options" role="radiogroup" aria-label="Betalsätt">
+            <div class="pay-option">
+              <input type="radio" id="pay-swish" name="payment" value="swish" checked>
+              <label for="pay-swish"><i data-icon="phone"></i> Betala med Swish</label>
+            </div>
+            <div class="pay-option">
+              <input type="radio" id="pay-card" name="payment" value="card">
+              <label for="pay-card"><i data-icon="card"></i> Kortbetalning</label>
+            </div>
+          </div>
+
+          <div class="pay-panel" data-pay-panel="swish">
+            <p>Du betalar tryggt och enkelt med Swish. När vi har bekräftat att datumen är lediga skickar vi en betalningsförfrågan till ditt Swish-nummer.</p>
+            <div class="form-field">
+              <label for="f-swish">Mobilnummer för Swish<span class="req">*</span></label>
+              <input id="f-swish" name="swish" type="tel" inputmode="tel" placeholder="0701234567">
+            </div>
+          </div>
+          <div class="pay-panel" data-pay-panel="card" hidden>
+            <p style="margin:0">När vi har bekräftat att datumen är lediga får du en säker betalningslänk via e-post där du betalar med kort.</p>
+          </div>
+
+          <p class="small" style="display:flex;gap:8px;align-items:center;margin:20px 0 0"><i data-icon="lock"></i> Inga pengar dras förrän bokningen är bekräftad av värdarna.</p>
+          <p class="form-msg" data-form-msg role="alert" hidden></p>
+        </section>
+      </form>
+    </div>
+
+    <aside class="sidebar">
+      <div class="card summary" data-summary="selected">
+        <h2>Bokningsöversikt</h2>
+        <div class="summary-dates">
+          <div><span class="label">Incheckning</span><strong data-sum="checkin">–</strong></div>
+          <i data-icon="arrow-right"></i>
+          <div class="end"><span class="label">Utcheckning</span><strong data-sum="checkout">–</strong></div>
+        </div>
+        <ul class="summary-lines" data-sum="lines"></ul>
+        <ul class="summary-lines" data-sum="discounts"></ul>
+        <div class="summary-total">
+          <div><strong>Totalbelopp</strong><span class="small" data-sum="totalnote"></span></div>
+          <span class="amount" data-sum="total">–</span>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" form="checkout" data-submit data-requires-dates>
+          <i data-icon="lock"></i> Slutför bokning · <span data-sum-total-inline>–</span>
+        </button>
+        <p class="small">Genom att klicka godkänner du våra bokningsvillkor och ordningsregler för stugan.</p>
+      </div>
+
+      <div class="card host-card">
+        <span class="ico-ok"><i data-icon="shield"></i></span>
+        <div><strong>Fri avbokning i <span data-cfg="cancel">14</span> dagar</strong><span>Du kan avboka helt kostnadsfritt fram till <span data-cfg="cancel">14</span> dagar före din planerade ankomst.</span></div>
+      </div>
+
+      <div class="card host-card">
+        <span class="avatar"><img src="assets/img/vardar.jpg" alt="" onerror="this.remove()">M&amp;A</span>
+        <div><strong><span data-cfg="hosts">Maria &amp; Andreas</span> hjälper dig</strong><span>Har du funderingar kring betalning eller stugan? <a data-mail href="mailto:kontakt@pinebo.se">Skicka ett meddelande</a>.</span></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a class="brand" href="index.html"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+        <p>Din privata fristad i Ulricehamns djupa skogar. Upplev tystnaden på dina egna villkor.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Länkar</h4>
+        <ul>
+          <li><a href="boendet.html">Om stugan</a></li>
+          <li><a href="bastu-bad.html">Bastu &amp; bad</a></li>
+          <li><a href="index.html#upplevelser">Aktiviteter</a></li>
+          <li><a href="index.html#faq">Vanliga frågor</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a data-mail data-cfg="email" href="mailto:kontakt@pinebo.se">kontakt@pinebo.se</a></li>
+          <li>Ulricehamn, Sverige</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Pinebo Palace. Alla rättigheter reserverade.</span>
+      <span>Tidigare listad på Airbnb · Nu bokningsbar direkt</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

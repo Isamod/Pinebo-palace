@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pinebo Palace – Privat skogsstuga i Ulricehamn</title>
+  <meta name="description" content="Pinebo Palace är en ombonad privat stuga i skogen utanför Ulricehamn med vedeldad bastu och spabad. Boka direkt utan avgifter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="start">
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Pinebo Palace – startsida">
+      <span class="brand-mark"><i data-icon="tree"></i></span>
+      <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Privat stuga</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Huvudmeny">
+      <a href="boendet.html">Boendet</a>
+      <a href="bastu-bad.html">Bastu &amp; Bad</a>
+      <a href="#priser">Priser &amp; Tillval</a>
+      <a href="#upplevelser">Upplevelser</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-aside">
+      <span class="header-price">Från <span data-cfg="night">1 300</span> kr/natt</span>
+      <a class="btn btn-primary" href="boka.html">Boka direkt</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Meny" aria-expanded="false"><i data-icon="menu"></i></button>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-top">
+        <div>
+          <span class="eyebrow">Din privata fristad i skogen</span>
+          <h1>Naturnära boende i Ulricehamn – lugn, skog och tid tillsammans.</h1>
+        </div>
+        <p>Välkommen till Pinebo Palace – en ombonad stuga i Ulricehamns sydvästra skogar, där du kan stanna upp och bara vara. Boka direkt hos oss, utan mellanhänder.</p>
+      </div>
+      <div class="photo" data-img="hero.jpg">
+        <img src="assets/img/hero.jpg" alt="Stugan i morgondimma bland höga tallar" onerror="this.remove()">
+      </div>
+
+      <form class="search" id="boka" data-search novalidate>
+        <div class="search-field">
+          <label class="label" for="s-from">Incheckning</label>
+          <input type="date" id="s-from" name="from" required>
+        </div>
+        <div class="search-field">
+          <label class="label" for="s-to">Utcheckning</label>
+          <input type="date" id="s-to" name="to" required>
+        </div>
+        <div class="search-field">
+          <label class="label" for="s-guests">Gäster</label>
+          <select id="s-guests" name="guests" data-guests>
+            <option value="2">2 gäster</option>
+          </select>
+        </div>
+        <p class="search-note">Fri avbokning upp till <span data-cfg="cancel">14</span> dagar före ankomst.</p>
+        <button class="btn btn-primary" type="submit">Se priser &amp; tillval</button>
+        <p class="search-error" data-search-error hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section section--dark" style="margin-top:96px">
+    <div class="container split">
+      <div>
+        <span class="eyebrow">Pinebo Palace – ett naturnära boende</span>
+        <h2>Koppla ner för att återigen kunna koppla på det som räknas.</h2>
+        <p class="lead">Pinebo Palace är en privat stuga för dig som söker tystnad, frisk luft och tid tillsammans. Här vaknar du till fågelsång, dricker morgonkaffet på altanen och låter dagarna ta den tid de behöver.</p>
+        <p>Vi har tidigare hyrt ut stugan via Airbnb – nu bokar du direkt hos oss. Det betyder inga plattformsavgifter och en personlig kontakt hela vägen.</p>
+      </div>
+      <div class="photo photo--warm" data-img="kaffe.jpg" style="aspect-ratio:4/3">
+        <img src="assets/img/kaffe.jpg" alt="Rykande kaffekopp på altanräcket i morgonljus" loading="lazy" onerror="this.remove()">
+      </div>
+    </div>
+  </section>
+
+  <!-- Boendet -->
+  <section class="section" id="boendet">
+    <div class="container">
+      <div class="section-head section-head--split">
+        <div>
+          <span class="eyebrow">Boendet</span>
+          <h2>En ombonad skogsstuga med allt du behöver.</h2>
+        </div>
+        <p class="muted">Genomtänkt inredning, stora fönster mot skogen och en eldstad som värmer. Här finns bekvämligheterna – men naturen står i centrum.</p>
+      </div>
+      <div class="split" style="grid-template-columns:1.4fr 1fr">
+        <div class="photo photo--wood" data-img="vardagsrum.jpg" style="aspect-ratio:4/3">
+          <img src="assets/img/vardagsrum.jpg" alt="Vardagsrum med kamin och panoramafönster mot skogen" loading="lazy" onerror="this.remove()">
+        </div>
+        <div>
+          <h3>Specifikationer &amp; bekvämligheter</h3>
+          <dl class="specs">
+            <div><dt class="label label--clay">Sovrum &amp; sängar</dt><dd>Sovloft med dubbelsäng · bäddsoffa</dd></div>
+            <div><dt class="label label--clay">Kapacitet</dt><dd>Optimalt för 2, max <span data-cfg="maxGuests">4</span> gäster</dd></div>
+            <div><dt class="label label--clay">Kök</dt><dd>Fullt utrustat kök</dd></div>
+            <div><dt class="label label--clay">Inkluderat</dt><dd>Snabbt Wi‑Fi, parkering, kaffe och dusch</dd></div>
+          </dl>
+          <p style="margin-top:24px"><a class="btn btn-outline" href="boendet.html">Utforska boendet <i data-icon="arrow-right"></i></a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bastu & bad -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Bastu &amp; spabad</span>
+        <h2>Bastu och spabad under stjärnorna.</h2>
+        <p class="muted">Gör vistelsen extra avkopplande. Den vedeldade bastun och det varma spabadet bokas enkelt som tillval.</p>
+      </div>
+      <div class="grid-2">
+        <article class="card media-card">
+          <div class="photo photo--warm" data-img="bastu-kvall.jpg">
+            <img src="assets/img/bastu-kvall.jpg" alt="Upplyst vedbastu i skogen en höstkväll" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="body">
+            <div class="meta"><h3>Vedeldad skogsbastu</h3><span class="price-tag"><span data-cfg="bastu">400</span> kr/dag</span></div>
+            <p>Doften av brinnande björkved och ett panoramafönster mot de mörka tallarna. Du tänder kaminen själv – ved ingår.</p>
+            <div class="check-line"><i data-icon="check"></i> Upp till 6 timmar per dag, ved ingår</div>
+          </div>
+        </article>
+        <article class="card media-card">
+          <div class="photo photo--night" data-img="spabad.jpg">
+            <img src="assets/img/spabad.jpg" alt="Ångande spabad bland tallarna i skymningen" loading="lazy" onerror="this.remove()">
+          </div>
+          <div class="body">
+            <div class="meta"><h3>Varmt stjärnspabad</h3><span class="price-tag">Från <span data-cfg="spa">400</span> kr</span></div>
+            <p>Kliv ner i 38-gradigt vatten efter en dag i skogen. Spabadet står uppvärmt och redo när du anländer.</p>
+            <div class="check-line"><i data-icon="check"></i> <span data-cfg="combo">10</span>&nbsp;% rabatt när du bokar bastu och bad</div>
+          </div>
+        </article>
+      </div>
+      <p style="text-align:center;margin-top:32px"><a class="btn btn-outline" href="bastu-bad.html">Läs mer om bastu &amp; bad <i data-icon="arrow-right"></i></a></p>
+    </div>
+  </section>
+
+  <!-- Priser & tillval -->
+  <section class="section" id="priser">
+    <div class="container">
+      <div class="section-head section-head--split">
+        <div>
+          <span class="eyebrow">Priser &amp; tillval</span>
+          <h2>Transparenta tillval. Du bestämmer nivån.</h2>
+        </div>
+        <p class="muted">Grundpriset är <strong><span data-cfg="night">1 300</span> kr/natt</strong> för hela stugan. Inga dolda avgifter – välj bara till det du vill ha.</p>
+      </div>
+      <div class="addon-list">
+        <div class="card addon-row">
+          <span class="ico"><i data-icon="flame"></i></span>
+          <div><strong>Vedbastu</strong><span>Privat vedeldad bastu, ved ingår. Bokas per dag.</span></div>
+          <span class="when">Väljs vid bokning</span>
+          <span class="cost"><span data-cfg="bastu">400</span> kr/dag</span>
+        </div>
+        <div class="card addon-row">
+          <span class="ico"><i data-icon="droplet"></i></span>
+          <div><strong>Spabad</strong><span>1–2 dagar <span data-cfg="spaTiers">400–600</span> kr, därefter <span data-cfg="spaExtra">100</span> kr per extra dag.</span></div>
+          <span class="when">Väljs vid bokning</span>
+          <span class="cost">Från <span data-cfg="spa">400</span> kr</span>
+        </div>
+        <div class="card addon-row">
+          <span class="ico"><i data-icon="sparkles"></i></span>
+          <div><strong>Slutstädning</strong><span>Vi sköter städning och tvätt efter din vistelse. Annars följer du vår checklista.</span></div>
+          <span class="when">Engångstillval</span>
+          <span class="cost"><span data-cfg="stad">800</span> kr</span>
+        </div>
+        <div class="card addon-row">
+          <span class="ico"><i data-icon="bed"></i></span>
+          <div><strong>Sängkläder &amp; handdukar</strong><span>Bäddade sängar, handdukar och badlakan. Annars tar du med eget.</span></div>
+          <span class="when">Engångstillval</span>
+          <span class="cost"><span data-cfg="linne">250</span> kr</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upplevelser -->
+  <section class="section section--alt" id="upplevelser">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Upplevelser</span>
+        <h2>Upplev naturen kring Ulricehamn.</h2>
+        <p class="muted">Från stugdörren når du mossiga stigar, klara sjöar och skogar fulla av svamp och bär.</p>
+      </div>
+      <div class="grid-3">
+        <article class="plain-card">
+          <div class="photo" data-img="svamp.jpg"><img src="assets/img/svamp.jpg" alt="Kantareller i mossan" loading="lazy" onerror="this.remove()"></div>
+          <h3>Svamp- och bärplockning</h3>
+          <p>På hösten fylls skogen runt stugan av kantareller och blåbär. Ta med en korg på promenaden.</p>
+        </article>
+        <article class="plain-card">
+          <div class="photo photo--night" data-img="sjo.jpg"><img src="assets/img/sjo.jpg" alt="Spegelblank skogssjö i soluppgång" loading="lazy" onerror="this.remove()"></div>
+          <h3>Skogssjöarna</h3>
+          <p>Ett kort stycke bort finns sjöar för morgondopp, fiske eller en stilla stund på bryggan.</p>
+        </article>
+        <article class="plain-card">
+          <div class="photo" data-img="vandring.jpg"><img src="assets/img/vandring.jpg" alt="Vandringsled genom solig tallskog" loading="lazy" onerror="this.remove()"></div>
+          <h3>Vandringsleder nära boendet</h3>
+          <p>Snöra på kängorna – leder i alla längder startar i närheten, och Ulricehamn med café och sjö ligger nära.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Så fungerar det -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Steg för steg</span>
+        <h2>Så fungerar din vistelse.</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card step-card">
+          <span class="step-num step-num--outline">01</span>
+          <h3>Enkel direktbokning</h3>
+          <p>Välj datum och tillval här på sidan. Du bokar direkt hos oss – utan plattformsavgifter.</p>
+        </div>
+        <div class="card step-card">
+          <span class="step-num step-num--outline">02</span>
+          <h3>Smidig nyckelbox</h3>
+          <p>Inför ankomst får du kod till nyckelboxen och vägbeskrivning. Incheckning från kl. <span data-cfg="checkin">15:00</span>.</p>
+        </div>
+        <div class="card step-card">
+          <span class="step-num step-num--outline">03</span>
+          <h3>Landa i lugnet</h3>
+          <p>Tänd kaminen, värm bastun och låt skogen göra resten. Utcheckning senast kl. <span data-cfg="checkout">11:00</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Omdömen
+       OBS: Platshållartexter – byt mot riktiga omdömen (t.ex. från Airbnb) innan sajten publiceras. -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Gästomdömen</span>
+        <h2>Vad tidigare gäster säger</h2>
+      </div>
+      <div class="grid-2">
+        <figure class="card quote">
+          <blockquote>”Att få vakna till tystnaden och se dimman lägga sig över trädtopparna var magiskt. Bastun på kvällen var pricken över i:et.”</blockquote>
+          <figcaption><cite>Gästens namn</cite><span class="small">Ort · Månad år</span></figcaption>
+        </figure>
+        <figure class="card quote">
+          <blockquote>”Stugan är otroligt genomtänkt och ren. Vi uppskattade att kunna välja att städa själva för att hålla nere priset.”</blockquote>
+          <figcaption><cite>Gästens namn</cite><span class="small">Ort · Månad år</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Vanliga frågor</span>
+        <h2>Vanliga frågor om boendet i Ulricehamn</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Hur fungerar in- och utcheckning?</summary>
+          <div><p>Incheckning sker från kl. <span data-cfg="checkin">15:00</span> och utcheckning senast kl. <span data-cfg="checkout">11:00</span>. Du får en kod till vår nyckelbox i god tid före ankomst.</p></div>
+        </details>
+        <details>
+          <summary>Är husdjur tillåtna?</summary>
+          <div><p>Husdjur är välkomna efter överenskommelse. Skriv gärna en rad i meddelandet när du bokar.</p></div>
+        </details>
+        <details>
+          <summary>Finns det mataffärer i närheten?</summary>
+          <div><p>Ja, i Ulricehamn finns flera matbutiker en kort bilresa från stugan.</p></div>
+        </details>
+        <details>
+          <summary>Vad händer om jag behöver avboka?</summary>
+          <div><p>Du kan avboka kostnadsfritt fram till <span data-cfg="cancel">14</span> dagar före ankomst.</p></div>
+        </details>
+        <details>
+          <summary>Måste jag städa själv?</summary>
+          <div><p>Antingen följer du vår enkla städchecklista, eller så lägger du till slutstädning för <span data-cfg="stad">800</span> kr så sköter vi det.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--dark">
+    <div class="container cta">
+      <div>
+        <h2>Boka ditt skogsboende i Ulricehamn</h2>
+        <p class="lead">Säkra dina datum, lägg till bastu och bad och njut av en helt privat oas mitt i de djupa skogarna. Fri avbokning upp till <span data-cfg="cancel">14</span> dagar före ankomst.</p>
+      </div>
+      <div class="cta-card">
+        <span class="label">Boka direkt</span>
+        <div class="price">Från <span data-cfg="night">1 300</span> kr / natt</div>
+        <a class="btn btn-sand btn-block" href="#boka">Se lediga datum</a>
+        <p class="small">Inga dolda bokningsavgifter tillkommer.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a class="brand" href="index.html"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+        <p>Din privata fristad i Ulricehamns djupa skogar. Upplev tystnaden på dina egna villkor.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Länkar</h4>
+        <ul>
+          <li><a href="boendet.html">Om stugan</a></li>
+          <li><a href="bastu-bad.html">Bastu &amp; bad</a></li>
+          <li><a href="index.html#upplevelser">Aktiviteter</a></li>
+          <li><a href="index.html#faq">Vanliga frågor</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a data-mail data-cfg="email" href="mailto:kontakt@pinebo.se">kontakt@pinebo.se</a></li>
+          <li>Ulricehamn, Sverige</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Pinebo Palace. Alla rättigheter reserverade.</span>
+      <span>Tidigare listad på Airbnb · Nu bokningsbar direkt</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
