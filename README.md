@@ -75,7 +75,7 @@ Värdarna bekräftar sedan datumen och skickar Swish-förfrågan eller betallän
 ## Att göra
 
 - [ ] Riktiga foton (se `assets/img/README.md`)
-- [ ] Riktiga gästomdömen (platshållare på startsidan)
+- [x] Riktiga gästomdömen (från Airbnb)
 - [ ] Korrekt e-post, priser och värdnamn i `config.js`
 - [ ] Tillgänglighetskalender (t.ex. synk mot Airbnb-kalendern via iCal)
 - [ ] Bokningsvillkor/ordningsregler som sida
