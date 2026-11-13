@@ -7,6 +7,8 @@
     user: '<circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/>',
     "arrow-right": '<path d="M5 12h14M12 5l7 7-7 7"/>',
     "chevron-left": '<path d="m15 18-6-6 6-6"/>',
+    "chevron-right": '<path d="m9 18 6-6-6-6"/>',
+    expand: '<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',
     "check-circle": '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
     circle: '<circle cx="12" cy="12" r="9"/>',
     check: '<path d="M20 6 9 17l-5-5"/>',

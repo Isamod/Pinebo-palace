@@ -656,10 +656,110 @@
     start();
   }
 
+  /* ---------- Bildvisare (lightbox) ----------
+     - Alla foton på sidan blir klickbara och öppnas i helskärm.
+     - Bläddra med knappar, piltangenter eller svep. Stäng med kryss, Esc eller klick utanför.
+     - Byggd på <dialog>: fokus stannar i visaren och återgår till bilden när den stängs.
+     - Galleriet på Boendet visar fem rutor; den sista visar hur många bilder som finns till. */
+  function initLightbox() {
+    if (!window.HTMLDialogElement) return;
+    var photos = $$(".photo").filter(function (p) {
+      var i = $("img", p);
+      return i && /\.webp$/.test(i.getAttribute("src") || "");
+    });
+    if (!photos.length) return;
+
+    var items = photos.map(function (p) {
+      var i = $("img", p);
+      return { src: i.getAttribute("src"), srcset: i.getAttribute("srcset"), alt: i.alt, w: i.getAttribute("width"), h: i.getAttribute("height") };
+    });
+
+    var dlg = document.createElement("dialog");
+    dlg.className = "lightbox";
+    dlg.setAttribute("aria-label", "Bildvisning");
+    dlg.innerHTML =
+      '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-caption"></figcaption></figure>' +
+      '<p class="lb-count" aria-live="polite"></p>' +
+      '<button type="button" class="lb-btn lb-close" aria-label="Stäng bildvisningen"><i data-icon="x"></i></button>' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="Föregående bild"><i data-icon="chevron-left"></i></button>' +
+      '<button type="button" class="lb-btn lb-next" aria-label="Nästa bild"><i data-icon="chevron-right"></i></button>';
+    document.body.appendChild(dlg);
+    window.PineboIcons.render(dlg);
+
+    var img = $(".lb-img", dlg), cap = $(".lb-caption", dlg), count = $(".lb-count", dlg);
+    var idx = 0, opener = null;
+    if (items.length < 2) { $(".lb-prev", dlg).hidden = true; $(".lb-next", dlg).hidden = true; }
+
+    function setImage(el, it) {
+      el.removeAttribute("srcset");
+      if (it.srcset) { el.sizes = "100vw"; el.srcset = it.srcset; }
+      el.src = it.src;
+    }
+    function show(n) {
+      idx = (n + items.length) % items.length;
+      var it = items[idx];
+      setImage(img, it);
+      img.alt = it.alt;
+      if (it.w) img.width = it.w;
+      if (it.h) img.height = it.h;
+      cap.textContent = it.alt;
+      count.textContent = "Bild " + (idx + 1) + " av " + items.length;
+      // Förladda nästa bild så att bläddringen känns direkt
+      if (items.length > 1) setImage(new Image(), items[(idx + 1) % items.length]);
+    }
+    function open(n, from) {
+      opener = from;
+      show(n);
+      dlg.showModal();
+      document.documentElement.classList.add("lb-open");
+    }
+    dlg.addEventListener("close", function () {
+      document.documentElement.classList.remove("lb-open");
+      if (opener) opener.focus();
+    });
+    $(".lb-close", dlg).addEventListener("click", function () { dlg.close(); });
+    $(".lb-prev", dlg).addEventListener("click", function () { show(idx - 1); });
+    $(".lb-next", dlg).addEventListener("click", function () { show(idx + 1); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); show(idx - 1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); show(idx + 1); }
+    });
+    var touchX = null;
+    dlg.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    dlg.addEventListener("touchend", function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+    });
+
+    photos.forEach(function (p, n) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "photo-zoom";
+      btn.setAttribute("aria-label", "Visa större bild: " + items[n].alt);
+      btn.innerHTML = '<span class="photo-zoom-ico"><i data-icon="expand"></i></span>';
+      btn.addEventListener("click", function () { open(n, btn); });
+      p.appendChild(btn);
+      window.PineboIcons.render(btn);
+    });
+
+    // "+N bilder" på sista synliga rutan i galleriet
+    $$(".gallery").forEach(function (g) {
+      var tiles = $$(".photo", g), visible = 5;
+      if (tiles.length <= visible) return;
+      var btn = $(".photo-zoom", tiles[visible - 1]);
+      btn.setAttribute("aria-label", "Visa alla " + tiles.length + " bilder");
+      btn.insertAdjacentHTML("beforeend", '<span class="photo-more" aria-hidden="true">+' + (tiles.length - visible) + " bilder</span>");
+    });
+  }
+
   /* ---------- Start ---------- */
   var booking = getBooking();
   initNav();
   initHeroVideo();
+  initLightbox();
   fillConfigValues();
   fillGuestSelects(booking.guests);
   initSearchForms(booking);
