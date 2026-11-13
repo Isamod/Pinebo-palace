@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Slutför bokning – Pinebo Palace</title>
+  <title>Steg 2 av 2: Slutför bokning – Pinebo Palace</title>
   <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1f2a22">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
@@ -12,6 +13,7 @@
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 </head>
 <body data-page="kassa">
+<a class="skip-link" href="#main">Hoppa till innehållet</a>
 
 <header class="site-header">
   <div class="container">
@@ -19,7 +21,7 @@
       <span class="brand-mark"><i data-icon="tree"></i></span>
       <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Privat stuga</span></span>
     </a>
-    <nav class="main-nav" aria-label="Huvudmeny">
+    <nav class="main-nav" id="main-nav" aria-label="Huvudmeny">
       <a href="boendet.html">Boendet</a>
       <a href="bastu-bad.html">Bastu &amp; Bad</a>
       <a href="index.html#priser">Priser &amp; Tillval</a>
@@ -30,40 +32,41 @@
       <span class="header-step">Steg 2 av 2: Slutför bokning</span>
       <span class="pill">Säker checkout</span>
     </div>
-    <button class="nav-toggle" type="button" aria-label="Meny" aria-expanded="false"><i data-icon="menu"></i></button>
+    <button class="nav-toggle" type="button" aria-label="Öppna meny" aria-controls="main-nav" aria-expanded="false"><i data-icon="menu"></i></button>
   </div>
 </header>
 
-<main class="section" style="padding-top:48px">
+<main id="main" class="section section--tight">
   <div class="container layout-sidebar">
     <div>
-      <a class="btn-link" href="boka.html" style="margin-bottom:12px"><i data-icon="chevron-left"></i> Gå tillbaka till tillval</a>
-      <h1 style="font-size:clamp(2.2rem,4vw,3rem)">Slutför din bokning</h1>
-      <p class="lead" style="margin-bottom:32px">Fyll i dina uppgifter och välj betalsätt nedan för att säkra din vistelse i Ulricehamns skogar.</p>
+      <a class="btn-link mb-12" href="boka.html"><i data-icon="chevron-left"></i> Gå tillbaka till tillval</a>
+      <h1 class="h-lg">Slutför din bokning</h1>
+      <p class="lead">Fyll i dina uppgifter och välj betalsätt nedan för att säkra din vistelse i Ulricehamns skogar.</p>
+      <p class="small mb-32">Fält markerade med <span aria-hidden="true">*</span> är obligatoriska.</p>
 
-      <div class="notice" data-need-dates hidden>
+      <div class="notice" data-need-dates role="alert" hidden>
         <i data-icon="calendar"></i>
         <span>Du har inte valt några datum ännu. <a href="index.html#boka"><strong>Välj datum</strong></a> för att kunna slutföra bokningen.</span>
       </div>
 
       <form id="checkout" data-checkout novalidate>
-        <section class="card form-card">
-          <h2><i data-icon="user"></i> 1. Gästuppgifter</h2>
+        <section class="card form-card" aria-labelledby="guest-title">
+          <h2 id="guest-title"><i data-icon="user"></i> 1. Gästuppgifter</h2>
           <div class="form-grid">
             <div class="form-field">
-              <label for="f-first">Förnamn<span class="req">*</span></label>
+              <label for="f-first">Förnamn<span class="req" aria-hidden="true">*</span></label>
               <input id="f-first" name="firstName" autocomplete="given-name" placeholder="t.ex. Johan" required>
             </div>
             <div class="form-field">
-              <label for="f-last">Efternamn<span class="req">*</span></label>
+              <label for="f-last">Efternamn<span class="req" aria-hidden="true">*</span></label>
               <input id="f-last" name="lastName" autocomplete="family-name" placeholder="t.ex. Andersson" required>
             </div>
             <div class="form-field full">
-              <label for="f-email">E-postadress<span class="req">*</span></label>
+              <label for="f-email">E-postadress<span class="req" aria-hidden="true">*</span></label>
               <input id="f-email" name="email" type="email" autocomplete="email" placeholder="johan.andersson@example.se" required>
             </div>
             <div class="form-field">
-              <label for="f-phone">Telefonnummer<span class="req">*</span></label>
+              <label for="f-phone">Telefonnummer<span class="req" aria-hidden="true">*</span></label>
               <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+46 70 123 45 67" required>
             </div>
             <div class="form-field">
@@ -77,9 +80,11 @@
           </div>
         </section>
 
-        <section class="card form-card">
-          <h2><i data-icon="card"></i> 2. Välj betalsätt</h2>
-          <div class="pay-options" role="radiogroup" aria-label="Betalsätt">
+        <section class="card form-card" aria-labelledby="pay-title">
+          <h2 id="pay-title"><i data-icon="card"></i> 2. Välj betalsätt</h2>
+          <fieldset class="pay-fieldset">
+          <legend class="visually-hidden">Betalsätt</legend>
+          <div class="pay-options">
             <div class="pay-option">
               <input type="radio" id="pay-swish" name="payment" value="swish" checked>
               <label for="pay-swish"><i data-icon="phone"></i> Betala med Swish</label>
@@ -89,19 +94,20 @@
               <label for="pay-card"><i data-icon="card"></i> Kortbetalning</label>
             </div>
           </div>
+          </fieldset>
 
           <div class="pay-panel" data-pay-panel="swish">
             <p>Du betalar tryggt och enkelt med Swish. När vi har bekräftat att datumen är lediga skickar vi en betalningsförfrågan till ditt Swish-nummer.</p>
             <div class="form-field">
-              <label for="f-swish">Mobilnummer för Swish<span class="req">*</span></label>
-              <input id="f-swish" name="swish" type="tel" inputmode="tel" placeholder="0701234567">
+              <label for="f-swish">Mobilnummer för Swish<span class="req" aria-hidden="true">*</span></label>
+              <input id="f-swish" name="swish" type="tel" autocomplete="tel" placeholder="0701234567">
             </div>
           </div>
           <div class="pay-panel" data-pay-panel="card" hidden>
-            <p style="margin:0">När vi har bekräftat att datumen är lediga får du en säker betalningslänk via e-post där du betalar med kort.</p>
+            <p class="m-0">När vi har bekräftat att datumen är lediga får du en säker betalningslänk via e-post där du betalar med kort.</p>
           </div>
 
-          <p class="small" style="display:flex;gap:8px;align-items:center;margin:20px 0 0"><i data-icon="lock"></i> Inga pengar dras förrän bokningen är bekräftad av värdarna.</p>
+          <p class="small icon-line mt-20"><i data-icon="lock"></i> Inga pengar dras förrän bokningen är bekräftad av värdarna.</p>
           <p class="form-msg" data-form-msg role="alert" hidden></p>
         </section>
       </form>
@@ -119,7 +125,7 @@
         <ul class="summary-lines" data-sum="discounts"></ul>
         <div class="summary-total">
           <div><strong>Totalbelopp</strong><span class="small" data-sum="totalnote"></span></div>
-          <span class="amount" data-sum="total">–</span>
+          <span class="amount" data-sum="total" aria-live="polite" aria-atomic="true">–</span>
         </div>
         <button class="btn btn-primary btn-block btn-lg" type="submit" form="checkout" data-submit data-requires-dates>
           <i data-icon="lock"></i> Slutför bokning · <span data-sum-total-inline>–</span>
@@ -128,12 +134,12 @@
       </div>
 
       <div class="card host-card">
-        <span class="ico-ok"><i data-icon="shield"></i></span>
+        <span class="ico-ok" aria-hidden="true"><i data-icon="shield"></i></span>
         <div><strong>Fri avbokning i <span data-cfg="cancel">14</span> dagar</strong><span>Du kan avboka helt kostnadsfritt fram till <span data-cfg="cancel">14</span> dagar före din planerade ankomst.</span></div>
       </div>
 
       <div class="card host-card">
-        <span class="avatar"><img src="assets/img/vardar.jpg" alt="" onerror="this.remove()">M&amp;A</span>
+        <span class="avatar" aria-hidden="true"><img src="assets/img/vardar.jpg" alt="" onerror="this.remove()">M&amp;A</span>
         <div><strong><span data-cfg="hosts">Maria &amp; Andreas</span> hjälper dig</strong><span>Har du funderingar kring betalning eller stugan? <a data-mail href="mailto:kontakt@pinebo.se">Skicka ett meddelande</a>.</span></div>
       </div>
     </aside>
@@ -143,24 +149,24 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <div>
-        <a class="brand" href="index.html"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+      <div class="footer-about">
+        <a class="brand" href="index.html" aria-label="Pinebo Palace – startsida"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
         <p>Din privata fristad i Ulricehamns djupa skogar. Upplev tystnaden på dina egna villkor.</p>
       </div>
-      <div class="footer-col">
-        <h4>Länkar</h4>
+      <nav class="footer-col" aria-labelledby="footer-links">
+        <h2 id="footer-links">Länkar</h2>
         <ul>
           <li><a href="boendet.html">Om stugan</a></li>
           <li><a href="bastu-bad.html">Bastu &amp; bad</a></li>
           <li><a href="index.html#upplevelser">Aktiviteter</a></li>
           <li><a href="index.html#faq">Vanliga frågor</a></li>
         </ul>
-      </div>
+      </nav>
       <div class="footer-col">
-        <h4>Kontakt</h4>
+        <h2>Kontakt</h2>
         <ul>
           <li><a data-mail data-cfg="email" href="mailto:kontakt@pinebo.se">kontakt@pinebo.se</a></li>
-          <li>Ulricehamn, Sverige</li>
+          <li><address>Ulricehamn, Sverige</address></li>
         </ul>
       </div>
     </div>

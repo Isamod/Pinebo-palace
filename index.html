@@ -3,15 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pinebo Palace – Privat skogsstuga i Ulricehamn</title>
-  <meta name="description" content="Pinebo Palace är en ombonad privat stuga i skogen utanför Ulricehamn med vedeldad bastu och spabad. Boka direkt utan avgifter.">
+  <title>Stuga att hyra i Ulricehamn med bastu &amp; spabad | Pinebo Palace</title>
+  <meta name="description" content="Hyr en privat skogsstuga i Ulricehamn med vedeldad bastu och spabad. Plats för upp till 4 gäster. Boka direkt hos värdarna – utan avgifter, från 1 300 kr/natt.">
+  <meta name="theme-color" content="#1f2a22">
+  <link rel="canonical" href="https://isamod.github.io/Pinebo-palace/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sv_SE">
+  <meta property="og:site_name" content="Pinebo Palace">
+  <meta property="og:title" content="Stuga att hyra i Ulricehamn med bastu &amp; spabad | Pinebo Palace">
+  <meta property="og:description" content="Hyr en privat skogsstuga i Ulricehamn med vedeldad bastu och spabad. Plats för upp till 4 gäster. Boka direkt hos värdarna – utan avgifter, från 1 300 kr/natt.">
+  <meta property="og:url" content="https://isamod.github.io/Pinebo-palace/">
+  <meta property="og:image" content="https://isamod.github.io/Pinebo-palace/assets/img/hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "@id": "https://isamod.github.io/Pinebo-palace/#stugan",
+    "name": "Pinebo Palace",
+    "description": "Privat skogsstuga i Ulricehamn med vedeldad bastu och spabad. Boka direkt hos värdarna.",
+    "url": "https://isamod.github.io/Pinebo-palace/",
+    "image": "https://isamod.github.io/Pinebo-palace/assets/img/hero.jpg",
+    "email": "kontakt@pinebo.se",
+    "priceRange": "Från 1 300 kr/natt",
+    "currenciesAccepted": "SEK",
+    "paymentAccepted": "Swish, kort",
+    "checkinTime": "15:00",
+    "checkoutTime": "11:00",
+    "petsAllowed": "Efter överenskommelse",
+    "numberOfRooms": 1,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Ulricehamn",
+      "addressRegion": "Västra Götalands län",
+      "addressCountry": "SE"
+    },
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Vedeldad bastu", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Spabad", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Wi-Fi", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Fullt utrustat kök", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Gratis parkering", "value": true }
+    ]
+  }
+  </script>
 </head>
 <body data-page="start">
+<a class="skip-link" href="#main">Hoppa till innehållet</a>
 
 <header class="site-header">
   <div class="container">
@@ -19,7 +62,7 @@
       <span class="brand-mark"><i data-icon="tree"></i></span>
       <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Privat stuga</span></span>
     </a>
-    <nav class="main-nav" aria-label="Huvudmeny">
+    <nav class="main-nav" id="main-nav" aria-label="Huvudmeny">
       <a href="boendet.html">Boendet</a>
       <a href="bastu-bad.html">Bastu &amp; Bad</a>
       <a href="#priser">Priser &amp; Tillval</a>
@@ -30,11 +73,11 @@
       <span class="header-price">Från <span data-cfg="night">1 300</span> kr/natt</span>
       <a class="btn btn-primary" href="boka.html">Boka direkt</a>
     </div>
-    <button class="nav-toggle" type="button" aria-label="Meny" aria-expanded="false"><i data-icon="menu"></i></button>
+    <button class="nav-toggle" type="button" aria-label="Öppna meny" aria-controls="main-nav" aria-expanded="false"><i data-icon="menu"></i></button>
   </div>
 </header>
 
-<main>
+<main id="main">
   <!-- Hero -->
   <section class="hero">
     <div class="container">
@@ -46,10 +89,10 @@
         <p>Välkommen till Pinebo Palace – en ombonad stuga i Ulricehamns sydvästra skogar, där du kan stanna upp och bara vara. Boka direkt hos oss, utan mellanhänder.</p>
       </div>
       <div class="photo" data-img="hero.jpg">
-        <img src="assets/img/hero.jpg" alt="Stugan i morgondimma bland höga tallar" onerror="this.remove()">
+        <img src="assets/img/hero.jpg" alt="Stugan i morgondimma bland höga tallar" fetchpriority="high" onerror="this.remove()">
       </div>
 
-      <form class="search" id="boka" data-search novalidate>
+      <form class="search" id="boka" data-search novalidate aria-label="Sök datum och boka">
         <div class="search-field">
           <label class="label" for="s-from">Incheckning</label>
           <input type="date" id="s-from" name="from" required>
@@ -66,13 +109,13 @@
         </div>
         <p class="search-note">Fri avbokning upp till <span data-cfg="cancel">14</span> dagar före ankomst.</p>
         <button class="btn btn-primary" type="submit">Se priser &amp; tillval</button>
-        <p class="search-error" data-search-error hidden></p>
+        <p class="search-error" data-search-error role="alert" hidden></p>
       </form>
     </div>
   </section>
 
   <!-- Intro -->
-  <section class="section section--dark" style="margin-top:96px">
+  <section class="section section--dark section--after-hero">
     <div class="container split">
       <div>
         <span class="eyebrow">Pinebo Palace – ett naturnära boende</span>
@@ -80,7 +123,7 @@
         <p class="lead">Pinebo Palace är en privat stuga för dig som söker tystnad, frisk luft och tid tillsammans. Här vaknar du till fågelsång, dricker morgonkaffet på altanen och låter dagarna ta den tid de behöver.</p>
         <p>Vi har tidigare hyrt ut stugan via Airbnb – nu bokar du direkt hos oss. Det betyder inga plattformsavgifter och en personlig kontakt hela vägen.</p>
       </div>
-      <div class="photo photo--warm" data-img="kaffe.jpg" style="aspect-ratio:4/3">
+      <div class="photo photo--warm ratio-4-3" data-img="kaffe.jpg">
         <img src="assets/img/kaffe.jpg" alt="Rykande kaffekopp på altanräcket i morgonljus" loading="lazy" onerror="this.remove()">
       </div>
     </div>
@@ -96,8 +139,8 @@
         </div>
         <p class="muted">Genomtänkt inredning, stora fönster mot skogen och en eldstad som värmer. Här finns bekvämligheterna – men naturen står i centrum.</p>
       </div>
-      <div class="split" style="grid-template-columns:1.4fr 1fr">
-        <div class="photo photo--wood" data-img="vardagsrum.jpg" style="aspect-ratio:4/3">
+      <div class="split split--wide">
+        <div class="photo photo--wood ratio-4-3" data-img="vardagsrum.jpg">
           <img src="assets/img/vardagsrum.jpg" alt="Vardagsrum med kamin och panoramafönster mot skogen" loading="lazy" onerror="this.remove()">
         </div>
         <div>
@@ -108,7 +151,7 @@
             <div><dt class="label label--clay">Kök</dt><dd>Fullt utrustat kök</dd></div>
             <div><dt class="label label--clay">Inkluderat</dt><dd>Snabbt Wi‑Fi, parkering, kaffe och dusch</dd></div>
           </dl>
-          <p style="margin-top:24px"><a class="btn btn-outline" href="boendet.html">Utforska boendet <i data-icon="arrow-right"></i></a></p>
+          <p class="mt-24"><a class="btn btn-outline" href="boendet.html">Utforska boendet <i data-icon="arrow-right"></i></a></p>
         </div>
       </div>
     </div>
@@ -144,7 +187,7 @@
           </div>
         </article>
       </div>
-      <p style="text-align:center;margin-top:32px"><a class="btn btn-outline" href="bastu-bad.html">Läs mer om bastu &amp; bad <i data-icon="arrow-right"></i></a></p>
+      <p class="center mt-32"><a class="btn btn-outline" href="bastu-bad.html">Läs mer om bastu &amp; bad <i data-icon="arrow-right"></i></a></p>
     </div>
   </section>
 
@@ -158,32 +201,32 @@
         </div>
         <p class="muted">Grundpriset är <strong><span data-cfg="night">1 300</span> kr/natt</strong> för hela stugan. Inga dolda avgifter – välj bara till det du vill ha.</p>
       </div>
-      <div class="addon-list">
-        <div class="card addon-row">
-          <span class="ico"><i data-icon="flame"></i></span>
+      <ul class="addon-list" role="list">
+        <li class="card addon-row">
+          <span class="ico" aria-hidden="true"><i data-icon="flame"></i></span>
           <div><strong>Vedbastu</strong><span>Privat vedeldad bastu, ved ingår. Bokas per dag.</span></div>
           <span class="when">Väljs vid bokning</span>
           <span class="cost"><span data-cfg="bastu">400</span> kr/dag</span>
-        </div>
-        <div class="card addon-row">
-          <span class="ico"><i data-icon="droplet"></i></span>
+        </li>
+        <li class="card addon-row">
+          <span class="ico" aria-hidden="true"><i data-icon="droplet"></i></span>
           <div><strong>Spabad</strong><span>1–2 dagar <span data-cfg="spaTiers">400–600</span> kr, därefter <span data-cfg="spaExtra">100</span> kr per extra dag.</span></div>
           <span class="when">Väljs vid bokning</span>
           <span class="cost">Från <span data-cfg="spa">400</span> kr</span>
-        </div>
-        <div class="card addon-row">
-          <span class="ico"><i data-icon="sparkles"></i></span>
+        </li>
+        <li class="card addon-row">
+          <span class="ico" aria-hidden="true"><i data-icon="sparkles"></i></span>
           <div><strong>Slutstädning</strong><span>Vi sköter städning och tvätt efter din vistelse. Annars följer du vår checklista.</span></div>
           <span class="when">Engångstillval</span>
           <span class="cost"><span data-cfg="stad">800</span> kr</span>
-        </div>
-        <div class="card addon-row">
-          <span class="ico"><i data-icon="bed"></i></span>
+        </li>
+        <li class="card addon-row">
+          <span class="ico" aria-hidden="true"><i data-icon="bed"></i></span>
           <div><strong>Sängkläder &amp; handdukar</strong><span>Bäddade sängar, handdukar och badlakan. Annars tar du med eget.</span></div>
           <span class="when">Engångstillval</span>
           <span class="cost"><span data-cfg="linne">250</span> kr</span>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -222,23 +265,23 @@
         <span class="eyebrow">Steg för steg</span>
         <h2>Så fungerar din vistelse.</h2>
       </div>
-      <div class="grid-3">
-        <div class="card step-card">
-          <span class="step-num step-num--outline">01</span>
+      <ol class="grid-3 steps" role="list">
+        <li class="card step-card">
+          <span class="step-num step-num--outline" aria-hidden="true">01</span>
           <h3>Enkel direktbokning</h3>
           <p>Välj datum och tillval här på sidan. Du bokar direkt hos oss – utan plattformsavgifter.</p>
-        </div>
-        <div class="card step-card">
-          <span class="step-num step-num--outline">02</span>
+        </li>
+        <li class="card step-card">
+          <span class="step-num step-num--outline" aria-hidden="true">02</span>
           <h3>Smidig nyckelbox</h3>
           <p>Inför ankomst får du kod till nyckelboxen och vägbeskrivning. Incheckning från kl. <span data-cfg="checkin">15:00</span>.</p>
-        </div>
-        <div class="card step-card">
-          <span class="step-num step-num--outline">03</span>
+        </li>
+        <li class="card step-card">
+          <span class="step-num step-num--outline" aria-hidden="true">03</span>
           <h3>Landa i lugnet</h3>
           <p>Tänd kaminen, värm bastun och låt skogen göra resten. Utcheckning senast kl. <span data-cfg="checkout">11:00</span>.</p>
-        </div>
-      </div>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -305,7 +348,7 @@
       <div class="cta-card">
         <span class="label">Boka direkt</span>
         <div class="price">Från <span data-cfg="night">1 300</span> kr / natt</div>
-        <a class="btn btn-sand btn-block" href="#boka">Se lediga datum</a>
+        <a class="btn btn-sand btn-block" href="#boka">Välj datum</a>
         <p class="small">Inga dolda bokningsavgifter tillkommer.</p>
       </div>
     </div>
@@ -315,24 +358,24 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <div>
-        <a class="brand" href="index.html"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+      <div class="footer-about">
+        <a class="brand" href="index.html" aria-label="Pinebo Palace – startsida"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
         <p>Din privata fristad i Ulricehamns djupa skogar. Upplev tystnaden på dina egna villkor.</p>
       </div>
-      <div class="footer-col">
-        <h4>Länkar</h4>
+      <nav class="footer-col" aria-labelledby="footer-links">
+        <h2 id="footer-links">Länkar</h2>
         <ul>
           <li><a href="boendet.html">Om stugan</a></li>
           <li><a href="bastu-bad.html">Bastu &amp; bad</a></li>
           <li><a href="index.html#upplevelser">Aktiviteter</a></li>
           <li><a href="index.html#faq">Vanliga frågor</a></li>
         </ul>
-      </div>
+      </nav>
       <div class="footer-col">
-        <h4>Kontakt</h4>
+        <h2>Kontakt</h2>
         <ul>
           <li><a data-mail data-cfg="email" href="mailto:kontakt@pinebo.se">kontakt@pinebo.se</a></li>
-          <li>Ulricehamn, Sverige</li>
+          <li><address>Ulricehamn, Sverige</address></li>
         </ul>
       </div>
     </div>

@@ -43,6 +43,18 @@ Sajten tar emot en **bokningsförfrågan** – ingen betalning sker på sajten.
 
 Värdarna bekräftar sedan datumen och skickar Swish-förfrågan eller betallänk.
 
+## SEO och tillgänglighet
+
+- Varje publik sida har unik titel, beskrivning, canonical-länk och Open Graph-taggar
+  (för snygga förhandsvisningar när länken delas). Startsidan har strukturerad data
+  (`LodgingBusiness`) för Google.
+- `sitemap.xml` och `robots.txt` finns i roten. Bokningssidorna har `noindex`.
+- Byter ni till egen domän: sök-och-ersätt `https://isamod.github.io/Pinebo-palace/`
+  i alla `.html`-filer, `sitemap.xml` och `robots.txt`.
+- Byggd mot WCAG 2.2 AA: semantiska landmärken och rubriker, "hoppa till innehållet",
+  synligt fokus, kontrast ≥ 4.5:1, felmeddelanden kopplade till fälten, respekt för
+  "reducerad rörelse". Testad med axe-core (0 fel) på desktop och mobil.
+
 ## Att göra
 
 - [ ] Riktiga foton (se `assets/img/README.md`)

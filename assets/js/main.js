@@ -189,16 +189,26 @@
   function initNav() {
     var btn = $(".nav-toggle"), nav = $(".main-nav");
     if (!btn || !nav) return;
-    btn.addEventListener("click", function () {
-      var open = nav.classList.toggle("is-open");
+    function setOpen(open) {
+      nav.classList.toggle("is-open", open);
       btn.setAttribute("aria-expanded", open);
+      btn.setAttribute("aria-label", open ? "Stäng meny" : "Öppna meny");
       btn.innerHTML = '<i data-icon="' + (open ? "x" : "menu") + '"></i>';
       window.PineboIcons.render(btn);
-    });
+    }
+    btn.addEventListener("click", function () { setOpen(!nav.classList.contains("is-open")); });
     $$("a", nav).forEach(function (a) {
-      a.addEventListener("click", function () { nav.classList.remove("is-open"); btn.setAttribute("aria-expanded", "false"); });
+      a.addEventListener("click", function () { setOpen(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("is-open")) { setOpen(false); btn.focus(); }
     });
   }
+
+  // Länkar/knappar markerade som inaktiva ska inte gå att aktivera (mus eller tangentbord)
+  document.addEventListener("click", function (e) {
+    if (e.target.closest('[aria-disabled="true"]')) e.preventDefault();
+  });
 
   function fillConfigValues() {
     var map = {
@@ -282,6 +292,7 @@
         else if (to.value <= from.value) msg = "Utcheckningen måste vara efter incheckningen.";
         if (msg) {
           if (err) { err.textContent = msg; err.hidden = false; } else alert(msg);
+          (!from.value || from.value < today ? from : to).focus();
           return;
         }
         var saved = getBooking();
@@ -343,7 +354,7 @@
         var on = b.addons[k], btn = $("[data-toggle]", box);
         btn.textContent = on ? "Ta bort" : "Lägg till";
         btn.className = "btn btn-sm " + (on ? "btn-outline" : "btn-primary");
-        btn.setAttribute("aria-pressed", on);
+        btn.setAttribute("aria-label", (on ? "Ta bort " : "Lägg till ") + C.addons[k].name.toLowerCase());
         btn.disabled = !b.valid;
         box.classList.toggle("is-active", on);
       });
@@ -393,6 +404,7 @@
       var m = form.elements.payment.value;
       $$("[data-pay-panel]").forEach(function (p) { p.hidden = p.getAttribute("data-pay-panel") !== m; });
       swishNr.required = m === "swish";
+      if (swishNr.hasAttribute("aria-invalid")) fieldError(swishNr);
     }
     $$('input[name="payment"]', form).forEach(function (r) { r.addEventListener("change", syncPay); });
     syncPay();
@@ -405,11 +417,49 @@
     var msg = $("[data-form-msg]");
     var submitBtns = $$("[data-submit]");
 
+    // Tydliga felmeddelanden på svenska direkt under respektive fält
+    var messages = {
+      firstName: "Fyll i ditt förnamn.",
+      lastName: "Fyll i ditt efternamn.",
+      email: { valueMissing: "Fyll i din e-postadress.", typeMismatch: "Skriv e-postadressen i formatet namn@exempel.se." },
+      phone: "Fyll i ditt telefonnummer.",
+      swish: "Fyll i mobilnumret som ska ta emot Swish-förfrågan.",
+    };
+    function fieldError(input) {
+      var id = input.id + "-error";
+      var el = document.getElementById(id);
+      var m = messages[input.name];
+      var text = "";
+      if (!input.validity.valid) {
+        text = typeof m === "string" ? m : (input.validity.typeMismatch ? m.typeMismatch : m.valueMissing);
+      }
+      if (!el && text) {
+        el = document.createElement("p");
+        el.id = id;
+        el.className = "field-error";
+        input.insertAdjacentElement("afterend", el);
+        input.setAttribute("aria-describedby", id);
+      }
+      if (el) { el.textContent = text; el.hidden = !text; }
+      if (text) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
+      return !text;
+    }
+    var validated = Object.keys(messages).map(function (n) { return form.elements[n]; });
+    validated.forEach(function (input) {
+      // Visa fel först när fältet lämnats, och ta bort felet direkt när det rättats
+      input.addEventListener("blur", function () { if (input.value) fieldError(input); });
+      input.addEventListener("input", function () { if (input.hasAttribute("aria-invalid")) fieldError(input); });
+    });
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       msg.hidden = true;
       if (!b.valid) return;
-      if (!form.reportValidity()) return;
+      var firstInvalid = null;
+      validated.forEach(function (input) {
+        if (!fieldError(input) && !firstInvalid) firstInvalid = input;
+      });
+      if (firstInvalid) { firstInvalid.focus(); return; }
 
       var r = calc(b);
       var f = form.elements;
@@ -472,6 +522,8 @@
     $("[data-thanks-email]").textContent = rec.guest.email;
     $$("[data-via]").forEach(function (n) { n.hidden = n.getAttribute("data-via") !== rec.via; });
     renderSummaries(b);
+    var h = $("[data-focus]");
+    if (h) h.focus();
   }
 
   /* ---------- Start ---------- */

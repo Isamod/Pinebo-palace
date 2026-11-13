@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Välj upplevelse – Pinebo Palace</title>
+  <title>Steg 1 av 2: Välj upplevelse – Pinebo Palace</title>
   <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1f2a22">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
@@ -12,6 +13,7 @@
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 </head>
 <body data-page="boka">
+<a class="skip-link" href="#main">Hoppa till innehållet</a>
 
 <header class="site-header">
   <div class="container">
@@ -19,7 +21,7 @@
       <span class="brand-mark"><i data-icon="tree"></i></span>
       <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Privat stuga</span></span>
     </a>
-    <nav class="main-nav" aria-label="Huvudmeny">
+    <nav class="main-nav" id="main-nav" aria-label="Huvudmeny">
       <a href="boendet.html">Boendet</a>
       <a href="bastu-bad.html">Bastu &amp; Bad</a>
       <a href="index.html#priser">Priser &amp; Tillval</a>
@@ -29,19 +31,20 @@
     <div class="header-aside">
       <span class="header-step">Steg 1 av 2: Välj upplevelse</span>
     </div>
-    <button class="nav-toggle" type="button" aria-label="Meny" aria-expanded="false"><i data-icon="menu"></i></button>
+    <button class="nav-toggle" type="button" aria-label="Öppna meny" aria-controls="main-nav" aria-expanded="false"><i data-icon="menu"></i></button>
   </div>
 </header>
 
-<div class="booking-bar">
+<main id="main">
+<section class="booking-bar" aria-label="Din sökning">
   <div class="container">
-    <span class="item"><i data-icon="calendar"></i> <span data-bar-dates>–</span></span>
+    <span class="item"><i data-icon="calendar"></i><span class="visually-hidden">Datum:</span> <span data-bar-dates>–</span></span>
     <span class="sep"></span>
-    <span class="item"><i data-icon="users"></i> <span data-bar-guests>2 gäster</span></span>
-    <button class="btn btn-outline btn-sm" type="button" data-toggle-search aria-expanded="false">Ändra sökning</button>
+    <span class="item"><i data-icon="users"></i><span class="visually-hidden">Gäster:</span> <span data-bar-guests>2 gäster</span></span>
+    <button class="btn btn-outline btn-sm" type="button" data-toggle-search aria-controls="booking-search" aria-expanded="false">Ändra sökning</button>
   </div>
-  <div class="container booking-search" data-booking-search hidden>
-    <form class="search search--inline" data-search novalidate>
+  <div class="container booking-search" id="booking-search" data-booking-search hidden>
+    <form class="search search--inline" data-search novalidate aria-label="Ändra datum och gäster">
       <div class="search-field">
         <label class="label" for="s-from">Incheckning</label>
         <input type="date" id="s-from" name="from" required>
@@ -56,17 +59,17 @@
       </div>
       <p class="search-note">Fri avbokning upp till <span data-cfg="cancel">14</span> dagar före ankomst.</p>
       <button class="btn btn-primary" type="submit">Uppdatera</button>
-      <p class="search-error" data-search-error hidden></p>
+      <p class="search-error" data-search-error role="alert" hidden></p>
     </form>
   </div>
-</div>
+</section>
 
-<main class="section" style="padding-top:48px">
+<div class="section section--tight">
   <div class="container layout-sidebar">
     <div>
       <span class="eyebrow" data-dates-badge>Dina valda datum</span>
-      <h1 style="font-size:clamp(2.2rem,4vw,3rem)">Välj din upplevelse på Pinebo Palace</h1>
-      <p class="lead" style="margin-bottom:32px">Priserna nedan visar totalbeloppet för hela din vistelse baserat på <span data-intro-nights>dina nätter</span> för <span data-intro-guests>2 personer</span>.</p>
+      <h1 class="h-lg">Välj din upplevelse på Pinebo Palace</h1>
+      <p class="lead mb-32">Priserna nedan visar totalbeloppet för hela din vistelse baserat på <span data-intro-nights>dina nätter</span> för <span data-intro-guests>2 personer</span>.</p>
 
       <!-- Grundpaket -->
       <article class="card package is-selected">
@@ -87,7 +90,7 @@
           <p class="package-desc">Vårt ombonade baspaket ger dig exklusiv tillgång till hela stugan, omgiven av skogens fridsamma atmosfär. Perfekt för dig som vill vandra, läsa framför kaminen och bara andas ut. Egen checklista för städning ingår.</p>
           <div class="package-foot">
             <div class="perks"><span><i data-icon="coffee"></i> Kaffe ingår</span><span><i data-icon="wifi"></i> Snabbt Wi‑Fi</span></div>
-            <span class="btn btn-primary btn-sm" aria-hidden="true"><i data-icon="check"></i> Vald</span>
+            <span class="badge-selected"><i data-icon="check"></i> Valt paket</span>
           </div>
         </div>
       </article>
@@ -109,14 +112,14 @@
               <span><span data-cfg="combo">10</span>&nbsp;% rabatt när båda bokas</span>
             </div>
           </div>
-          <p class="small" style="color:var(--ink-soft);margin:0">Välj hur många dagar du vill ha tillvalen. Priset räknas ut per vald antal dagar.</p>
+          <p class="small ink-soft m-0">Välj hur många dagar du vill ha tillvalen. Priset räknas ut per vald antal dagar.</p>
 
           <div class="option" data-addon="bastu">
-            <div class="option-head"><strong>Vedbastu</strong><span class="price"><span data-cfg="bastu">400</span> kr/dag</span></div>
+            <div class="option-head"><h3 id="bastu-title">Vedbastu</h3><span class="price"><span data-cfg="bastu">400</span> kr/dag</span></div>
             <p class="desc">6 timmar per dag · ved ingår</p>
             <div class="option-row">
-              <span>Antal dagar</span>
-              <span class="stepper">
+              <span id="bastu-days">Antal dagar</span>
+              <span class="stepper" role="group" aria-labelledby="bastu-title bastu-days">
                 <button type="button" data-dec aria-label="Färre dagar bastu">−</button>
                 <output data-value aria-live="polite">0</output>
                 <button type="button" data-inc aria-label="Fler dagar bastu">+</button>
@@ -126,11 +129,11 @@
           </div>
 
           <div class="option" data-addon="spa">
-            <div class="option-head"><strong>Spabad</strong><span class="price">Från <span data-cfg="spa">400</span> kr</span></div>
+            <div class="option-head"><h3 id="spa-title">Spabad</h3><span class="price">Från <span data-cfg="spa">400</span> kr</span></div>
             <p class="desc">1–2 dagar: <span data-cfg="spaTiers">400–600</span> kr · därefter <span data-cfg="spaExtra">100</span> kr per extra dag</p>
             <div class="option-row">
-              <span>Antal dagar</span>
-              <span class="stepper">
+              <span id="spa-days">Antal dagar</span>
+              <span class="stepper" role="group" aria-labelledby="spa-title spa-days">
                 <button type="button" data-dec aria-label="Färre dagar spabad">−</button>
                 <output data-value aria-live="polite">0</output>
                 <button type="button" data-inc aria-label="Fler dagar spabad">+</button>
@@ -139,31 +142,31 @@
             <div class="option-row"><span>Vald period</span><b data-period>Ej valt</b></div>
           </div>
 
-          <p class="notice" data-combo-note hidden style="margin:14px 0 0"><i data-icon="sparkles"></i> <span>Snyggt! Du får <span data-cfg="combo">10</span>&nbsp;% komborabatt på bastu och spabad.</span></p>
+          <p class="notice notice--inline" data-combo-note role="status" hidden><i data-icon="sparkles"></i> <span>Snyggt! Du får <span data-cfg="combo">10</span>&nbsp;% komborabatt på bastu och spabad.</span></p>
 
           <div class="option" data-addon="stad">
-            <div class="option-head"><strong>Städning vid avresa</strong><span class="price"><span data-cfg="stad">800</span> kr</span></div>
+            <div class="option-head"><h3>Städning vid avresa</h3><span class="price"><span data-cfg="stad">800</span> kr</span></div>
             <p class="desc">Vi sköter städning och tvätt efter din vistelse.</p>
-            <div class="option-row"><span>Engångstillval</span><button type="button" class="btn btn-primary btn-sm" data-toggle aria-pressed="false">Lägg till</button></div>
+            <div class="option-row"><span>Engångstillval</span><button type="button" class="btn btn-primary btn-sm" data-toggle>Lägg till</button></div>
           </div>
 
           <div class="option" data-addon="linne">
-            <div class="option-head"><strong>Sängkläder &amp; handdukar</strong><span class="price"><span data-cfg="linne">250</span> kr</span></div>
+            <div class="option-head"><h3>Sängkläder &amp; handdukar</h3><span class="price"><span data-cfg="linne">250</span> kr</span></div>
             <p class="desc">Sängkläder, handdukar och badlakan för <span data-linne-guests>2 personer</span>.</p>
-            <div class="option-row"><span>Engångstillval</span><button type="button" class="btn btn-primary btn-sm" data-toggle aria-pressed="false">Lägg till</button></div>
+            <div class="option-row"><span>Engångstillval</span><button type="button" class="btn btn-primary btn-sm" data-toggle>Lägg till</button></div>
           </div>
 
-          <div class="package-foot" style="margin-top:18px;border-top:1px solid var(--line)">
+          <div class="package-foot package-foot--ruled">
             <div class="perks"><span><i data-icon="coffee"></i> Kaffe ingår</span><span><i data-icon="wifi"></i> Snabbt Wi‑Fi</span></div>
             <a class="btn btn-outline btn-sm" href="kassa.html" data-requires-dates>Fortsätt till betalning</a>
           </div>
         </div>
       </article>
 
-      <div class="trust">
-        <span><i data-icon="shield"></i> Säker direktbokning – inga dolda förmedlingsavgifter.</span>
-        <span><i data-icon="leaf"></i> 100 % förnybar el och miljövänliga produkter i stugan.</span>
-      </div>
+      <ul class="trust" role="list">
+        <li><i data-icon="shield"></i> Säker direktbokning – inga dolda förmedlingsavgifter.</li>
+        <li><i data-icon="leaf"></i> 100 % förnybar el och miljövänliga produkter i stugan.</li>
+      </ul>
     </div>
 
     <aside class="sidebar">
@@ -177,41 +180,47 @@
         <ul class="summary-lines" data-sum="lines"></ul>
         <div class="summary-total">
           <div><strong>Totalbelopp</strong><span class="small" data-sum="totalnote"></span></div>
-          <span class="amount" data-sum="total">–</span>
+          <span class="amount" data-sum="total" aria-live="polite" aria-atomic="true">–</span>
         </div>
         <a class="btn btn-primary btn-block btn-lg" href="kassa.html" data-requires-dates>Gå vidare till betalning</a>
         <p class="small">Inga pengar dras direkt. Fri avbokning upp till <span data-cfg="cancel">14</span> dagar före ankomst.</p>
       </div>
 
       <div class="card host-card">
-        <span class="avatar"><img src="assets/img/vardar.jpg" alt="" onerror="this.remove()">M&amp;A</span>
+        <span class="avatar" aria-hidden="true"><img src="assets/img/vardar.jpg" alt="" onerror="this.remove()">M&amp;A</span>
         <div><strong>Frågor före du bokar?</strong><span>Vi som äger Pinebo heter <span data-cfg="hosts">Maria &amp; Andreas</span>. <a data-mail href="mailto:kontakt@pinebo.se">Skicka ett meddelande</a> direkt till oss.</span></div>
       </div>
     </aside>
   </div>
+</div>
+
+<div class="mobile-cta" data-mobile-cta>
+  <div><span class="small">Totalbelopp</span><strong data-sum-total-inline>–</strong></div>
+  <a class="btn btn-primary" href="kassa.html" data-requires-dates>Gå vidare</a>
+</div>
 </main>
 
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <div>
-        <a class="brand" href="index.html"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+      <div class="footer-about">
+        <a class="brand" href="index.html" aria-label="Pinebo Palace – startsida"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
         <p>Din privata fristad i Ulricehamns djupa skogar. Upplev tystnaden på dina egna villkor.</p>
       </div>
-      <div class="footer-col">
-        <h4>Länkar</h4>
+      <nav class="footer-col" aria-labelledby="footer-links">
+        <h2 id="footer-links">Länkar</h2>
         <ul>
           <li><a href="boendet.html">Om stugan</a></li>
           <li><a href="bastu-bad.html">Bastu &amp; bad</a></li>
           <li><a href="index.html#upplevelser">Aktiviteter</a></li>
           <li><a href="index.html#faq">Vanliga frågor</a></li>
         </ul>
-      </div>
+      </nav>
       <div class="footer-col">
-        <h4>Kontakt</h4>
+        <h2>Kontakt</h2>
         <ul>
           <li><a data-mail data-cfg="email" href="mailto:kontakt@pinebo.se">kontakt@pinebo.se</a></li>
-          <li>Ulricehamn, Sverige</li>
+          <li><address>Ulricehamn, Sverige</address></li>
         </ul>
       </div>
     </div>
