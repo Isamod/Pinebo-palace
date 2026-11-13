@@ -729,6 +729,39 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 
 [hidden] { display: none !important; }
 
+/* Tillgänglighetskalender */
+.notice--warn { background: #f6e3dc; color: #6e2a19; }
+.notice--warn a { color: inherit; }
+.hero-search-link { margin: 14px 0 0; text-align: center; font-size: .9rem; }
+.hero-search-link a { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.availability {
+  margin-top: 16px; padding: 20px 24px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.availability-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.availability-head h2 { font-size: 1.6rem; margin: 0; }
+.availability-nav { display: flex; gap: 8px; }
+.availability-nav .btn { width: 44px; height: 44px; padding: 0; font-size: 18px; }
+.availability-nav .btn:disabled { opacity: .35; cursor: not-allowed; }
+.cal-months { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.cal { width: 100%; border-collapse: separate; border-spacing: 3px; table-layout: fixed; font-size: .88rem; }
+.cal caption { font-weight: 700; text-align: left; padding: 0 0 8px 3px; }
+.cal th { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding: 4px 0; }
+.cal td { text-align: center; padding: 8px 0; border-radius: 8px; }
+.cal td.is-past { color: var(--muted); }
+.cal td.is-booked { background: #ebe5d8; color: var(--muted); text-decoration: line-through; }
+.cal td.is-selected { background: var(--forest); color: #fff; font-weight: 600; }
+.cal td.is-booked.is-selected { background: var(--danger); color: #fff; }
+.cal-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin: 14px 0 0; }
+.cal-key { display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 6px; vertical-align: -2px; }
+.cal-key--free { background: var(--surface); border: 1px solid var(--line-strong); }
+.cal-key--booked { background: #ebe5d8; border: 1px solid var(--line-strong); }
+.cal-key--selected { background: var(--forest); }
+@media (max-width: 600px) {
+  .availability { padding: 16px; }
+  .cal-months { grid-template-columns: 1fr; gap: 20px; }
+}
+
 /* Klickbara foton */
 .photo-zoom {
   position: absolute; inset: 0; z-index: 1;

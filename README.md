@@ -49,34 +49,53 @@ som loopar och rubriken ovanpå. Film-id:t står i `index.html` på `data-youtub
 - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
 - Filmen pausas när den scrollas ur bild och fortsätter när den syns igen.
 
-## Hur bokningen fungerar just nu
+## Hur bokningen fungerar
 
-Sajten tar emot en **bokningsförfrågan** – ingen betalning sker på sajten.
+Sajten tar emot **bokningsförfrågningar** – ingen betalning sker på sajten.
+Gästen väljer datum och tillval, fyller i sina uppgifter och önskat betalsätt
+(Swish eller banköverföring). Värdarna bekräftar och skickar betalningsinstruktioner.
 
 - Om `bookingEndpoint` i `config.js` är tom öppnas gästens e-postprogram med ett
   färdigifyllt mejl till värdarnas adress.
 - Sätter man `bookingEndpoint` till t.ex. en [Formspree](https://formspree.io)-adress
   skickas förfrågan direkt från sidan och hamnar i värdarnas inkorg.
 
-Värdarna bekräftar sedan datumen och skickar Swish-förfrågan eller betallänk.
+## Kalendersynk med Airbnb och Booking.com
 
-## SEO och tillgänglighet
+Bokade datum hämtas automatiskt varje timme från Airbnb och Booking.com och visas
+som en kalender på bokningssidan. Gäster kan inte skicka förfrågan på upptagna datum.
 
-- Varje publik sida har unik titel, beskrivning, canonical-länk och Open Graph-taggar
-  (för snygga förhandsvisningar när länken delas). Startsidan har strukturerad data
-  (`LodgingBusiness`) för Google.
-- `sitemap.xml` och `robots.txt` finns i roten. Bokningssidorna har `noindex`.
-- Byter ni till egen domän: sök-och-ersätt `https://isamod.github.io/Pinebo-palace/`
-  i alla `.html`-filer, `sitemap.xml` och `robots.txt`.
-- Byggd mot WCAG 2.2 AA: semantiska landmärken och rubriker, "hoppa till innehållet",
-  synligt fokus, kontrast ≥ 4.5:1, felmeddelanden kopplade till fälten, respekt för
-  "reducerad rörelse". Testad med axe-core (0 fel) på desktop och mobil.
+Så fungerar det: `.github/workflows/publicera.yml` kör `scripts/sync-calendars.mjs`,
+som skriver `data/bokade-datum.json`, och publicerar sedan sajten på GitHub Pages.
+
+### Engångsinställning
+
+1. **Koden måste ligga på `main`** – schemalagda körningar går bara där.
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
+3. **Hämta kalenderlänkarna** (de är hemliga – lägg dem aldrig i koden):
+   - *Airbnb:* Annonser → välj annonsen → Tillgänglighet → Anslut kalendrar /
+     Synkronisera kalendrar → Exportera kalender → kopiera länken.
+   - *Booking.com (extranätet):* Priser och tillgänglighet → Synkronisera kalendrar
+     → Exportera kalender → kopiera länken.
+4. **Settings → Secrets and variables → Actions → New repository secret:**
+   `AIRBNB_ICAL_URL` och `BOOKING_ICAL_URL` med respektive länk.
+5. **Actions → Publicera sajten → Run workflow** för att köra direkt första gången.
+
+Utan länkar publiceras sajten ändå, men kalendern döljs.
+
+### Viktigt
+- **Direktbokningar** från sajten måste blockeras manuellt i Airbnb och Booking.com
+  när ni bekräftar dem – annars kan någon boka samma datum där.
+- Se till att **Airbnb och Booking.com även synkar med varandra** (importera den ena
+  kalendern i den andra), om ni inte redan gör det.
 
 ## Att göra
 
 - [ ] Riktiga foton (se `assets/img/README.md`)
 - [x] Riktiga gästomdömen (från Airbnb)
 - [ ] Korrekt e-post, priser och värdnamn i `config.js`
-- [ ] Tillgänglighetskalender (t.ex. synk mot Airbnb-kalendern via iCal)
+- [x] Tillgänglighetskalender (synk mot Airbnb och Booking.com)
+- [ ] Lägg in kalenderlänkarna som hemligheter (se ovan)
 - [ ] Bokningsvillkor/ordningsregler som sida
+- [ ] Integritetspolicy (GDPR)
 - [ ] Publicering (t.ex. GitHub Pages) och domän

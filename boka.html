@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 </head>
 <body data-page="boka">
@@ -61,12 +61,33 @@
       <button class="btn btn-primary" type="submit">Uppdatera</button>
       <p class="search-error" data-search-error role="alert" hidden></p>
     </form>
+    <section class="availability" id="tillganglighet" data-availability aria-labelledby="avail-title" hidden>
+      <div class="availability-head">
+        <h2 id="avail-title">Lediga datum</h2>
+        <div class="availability-nav">
+          <button type="button" class="btn btn-outline btn-sm" data-cal-prev aria-label="Föregående månad"><i data-icon="chevron-left"></i></button>
+          <button type="button" class="btn btn-outline btn-sm" data-cal-next aria-label="Nästa månad"><i data-icon="chevron-right"></i></button>
+        </div>
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-cal-status></p>
+      <div class="cal-months" data-cal-months></div>
+      <p class="cal-legend small">
+        <span><span class="cal-key cal-key--free" aria-hidden="true"></span>Ledigt</span>
+        <span><span class="cal-key cal-key--booked" aria-hidden="true"></span>Upptaget</span>
+        <span><span class="cal-key cal-key--selected" aria-hidden="true"></span>Dina valda nätter</span>
+        <span data-cal-updated></span>
+      </p>
+    </section>
   </div>
 </section>
 
 <div class="section section--tight">
   <div class="container layout-sidebar">
     <div>
+      <div class="notice notice--warn" data-conflict role="alert" hidden>
+        <i data-icon="calendar"></i>
+        <span data-conflict-text></span>
+      </div>
       <span class="eyebrow" data-dates-badge>Dina valda datum</span>
       <h1 class="h-lg">Välj din upplevelse på Pinebo Palace</h1>
       <p class="lead mb-32">Priserna nedan visar totalbeloppet för hela din vistelse baserat på <span data-intro-nights>dina nätter</span> för <span data-intro-guests>2 personer</span>.</p>
@@ -158,7 +179,7 @@
 
           <div class="package-foot package-foot--ruled">
             <div class="perks"><span><i data-icon="coffee"></i> Kaffe ingår</span><span><i data-icon="wifi"></i> Snabbt Wi‑Fi</span></div>
-            <a class="btn btn-outline btn-sm" href="kassa.html" data-requires-dates>Fortsätt till betalning</a>
+            <a class="btn btn-outline btn-sm" href="kassa.html" data-requires-dates>Fortsätt till dina uppgifter</a>
           </div>
         </div>
       </article>
@@ -182,8 +203,8 @@
           <div><strong>Totalbelopp</strong><span class="small" data-sum="totalnote"></span></div>
           <span class="amount" data-sum="total" aria-live="polite" aria-atomic="true">–</span>
         </div>
-        <a class="btn btn-primary btn-block btn-lg" href="kassa.html" data-requires-dates>Gå vidare till betalning</a>
-        <p class="small">Inga pengar dras direkt. Fri avbokning upp till <span data-cfg="cancel">14</span> dagar före ankomst.</p>
+        <a class="btn btn-primary btn-block btn-lg" href="kassa.html" data-requires-dates>Fortsätt till dina uppgifter</a>
+        <p class="small">Ingen betalning sker nu. Fri avbokning upp till <span data-cfg="cancel">14</span> dagar före ankomst.</p>
       </div>
 
       <div class="card host-card">
@@ -231,8 +252,8 @@
   </div>
 </footer>
 
-<script src="assets/js/config.js?v=5"></script>
-<script src="assets/js/icons.js?v=5"></script>
-<script src="assets/js/main.js?v=5"></script>
+<script src="assets/js/config.js?v=6"></script>
+<script src="assets/js/icons.js?v=6"></script>
+<script src="assets/js/main.js?v=6"></script>
 </body>
 </html>

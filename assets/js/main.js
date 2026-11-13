@@ -171,7 +171,7 @@
     set("discounts", disc);
 
     set("total", kr(r.total));
-    var note = "inkl. moms";
+    var note = "Betalas först när vi har bekräftat";
     if (mode === "all" && r.addonsTotal) {
       note = "Tillval " + kr(r.addonsTotal) + (r.combo ? " · " + Math.round(C.comboDiscount * 100) + " % rabatt: " + kr(-r.combo) : "");
     }
@@ -248,6 +248,105 @@
     });
   }
 
+  /* ---------- Tillgänglighet (bokade datum från Airbnb/Booking.com) ----------
+     data/bokade-datum.json skapas av scripts/sync-calendars.mjs varje timme.
+     Saknas filen, eller har den aldrig synkats ("updated": null), döljs kalendern
+     och ingen kontroll görs. Perioderna är nätter: from = första natten, to = utcheckningsdag. */
+  var availability = { ready: false, blocked: [], updated: null };
+  var availabilityLoaded = (window.fetch
+    ? fetch("data/bokade-datum.json", { cache: "no-cache" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (d && d.updated && Array.isArray(d.blocked)) {
+            availability = { ready: true, blocked: d.blocked, updated: d.updated };
+          }
+        })
+        .catch(function () {})
+    : Promise.resolve()
+  ).then(function () { return availability; });
+
+  function findConflict(from, to) {
+    if (!availability.ready || !from || !to) return null;
+    for (var i = 0; i < availability.blocked.length; i++) {
+      var r = availability.blocked[i];
+      if (from < r.to && r.from < to) return r;
+    }
+    return null;
+  }
+  function isBookedNight(day) {
+    for (var i = 0; i < availability.blocked.length; i++) {
+      var r = availability.blocked[i];
+      if (day >= r.from && day < r.to) return true;
+    }
+    return false;
+  }
+  function shortDate(isoDay) { return fmt(parseDate(isoDay), { day: "numeric", month: "short" }); }
+  function conflictText(r) {
+    return "Gästhuset är tyvärr redan bokat " + shortDate(r.from) + " – " + shortDate(r.to) + ". Välj andra datum.";
+  }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+  function initCalendar(b) {
+    var sec = $("[data-availability]");
+    availabilityLoaded.then(function () {
+      if (!availability.ready) return;
+      $$("[data-availability-link]").forEach(function (l) { l.hidden = false; });
+      if (!sec) return;
+      sec.hidden = false;
+      var box = $("[data-cal-months]", sec);
+      var status = $("[data-cal-status]", sec);
+      var prev = $("[data-cal-prev]", sec), next = $("[data-cal-next]", sec);
+      var now = new Date();
+      var base = { y: now.getFullYear(), m: now.getMonth() };
+      var maxOffset = 16;
+      var offset = 0;
+      if (b.valid) {
+        var f = parseDate(b.from);
+        offset = clamp((f.getUTCFullYear() - base.y) * 12 + (f.getUTCMonth() - base.m), 0, maxOffset);
+      }
+      var today = todayIso();
+      var dayNames = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
+
+      function month(y, m) {
+        var first = new Date(Date.UTC(y, m, 1));
+        var days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+        var lead = (first.getUTCDay() + 6) % 7;
+        var html = '<table class="cal"><caption>' + cap(fmt(first, { month: "long", year: "numeric" })) + "</caption><thead><tr>" +
+          dayNames.map(function (d) { return '<th scope="col" abbr="' + d + '">' + cap(d.slice(0, 3)) + "</th>"; }).join("") +
+          "</tr></thead><tbody><tr>";
+        var cell = 0;
+        for (; cell < lead; cell++) html += "<td></td>";
+        for (var d = 1; d <= days; d++, cell++) {
+          if (cell && cell % 7 === 0) html += "</tr><tr>";
+          var day = y + "-" + pad(m + 1) + "-" + pad(d);
+          var cls = [], label = "";
+          if (day < today) cls.push("is-past");
+          else if (isBookedNight(day)) { cls.push("is-booked"); label = ", upptaget"; }
+          if (b.valid && day >= b.from && day < b.to) { cls.push("is-selected"); label += ", din valda natt"; }
+          html += '<td class="' + cls.join(" ") + '">' + d + (label ? '<span class="visually-hidden">' + label + "</span>" : "") + "</td>";
+        }
+        while (cell % 7) { html += "<td></td>"; cell++; }
+        return html + "</tr></tbody></table>";
+      }
+      function render(announce) {
+        var a = base.m + offset, c = a + 1;
+        var y1 = base.y + Math.floor(a / 12), m1 = a % 12, y2 = base.y + Math.floor(c / 12), m2 = c % 12;
+        box.innerHTML = month(y1, m1) + month(y2, m2);
+        prev.disabled = offset <= 0;
+        next.disabled = offset >= maxOffset;
+        if (announce) {
+          status.textContent = "Visar " + fmt(new Date(Date.UTC(y1, m1, 1)), { month: "long", year: "numeric" }) +
+            " och " + fmt(new Date(Date.UTC(y2, m2, 1)), { month: "long", year: "numeric" });
+        }
+      }
+      prev.addEventListener("click", function () { offset = Math.max(0, offset - 1); render(true); });
+      next.addEventListener("click", function () { offset = Math.min(maxOffset, offset + 1); render(true); });
+      var upd = $("[data-cal-updated]", sec);
+      if (upd) upd.textContent = "Uppdaterad " + new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(availability.updated)).replace(/\./g, "");
+      render(false);
+    });
+  }
+
   /* ---------- Sökformulär ---------- */
   function initSearchForms(b) {
     $$("form[data-search]").forEach(function (form) {
@@ -266,7 +365,11 @@
           to.min = addDays(from.value, C.minNights);
           if (to.value && to.value < to.min) to.value = "";
         }
-        if (err) err.hidden = true;
+        if (err) {
+          var clash = from.value && to.value && to.value > from.value ? findConflict(from.value, to.value) : null;
+          err.textContent = clash ? conflictText(clash) : "";
+          err.hidden = !clash;
+        }
         if (quote) {
           var q = normalize({ from: from.value, to: to.value, guests: +guests.value, addons: {} });
           var lines = $("[data-quote-lines]", quote), total = $("[data-quote-total]", quote);
@@ -283,6 +386,7 @@
       to.addEventListener("change", update);
       guests.addEventListener("change", update);
       update();
+      availabilityLoaded.then(function () { if (from.value && to.value) update(); });
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -290,6 +394,7 @@
         if (!from.value || !to.value) msg = "Välj både incheckning och utcheckning.";
         else if (from.value < today) msg = "Incheckningen kan inte vara bakåt i tiden.";
         else if (to.value <= from.value) msg = "Utcheckningen måste vara efter incheckningen.";
+        else if (findConflict(from.value, to.value)) msg = conflictText(findConflict(from.value, to.value));
         if (msg) {
           if (err) { err.textContent = msg; err.hidden = false; } else alert(msg);
           (!from.value || from.value < today ? from : to).focus();
@@ -314,6 +419,21 @@
         toggle.setAttribute("aria-expanded", !searchBox.hidden);
       });
     }
+
+    if (location.hash === "#tillganglighet" && searchBox) {
+      searchBox.hidden = false;
+      if (toggle) toggle.setAttribute("aria-expanded", "true");
+    }
+    initCalendar(b);
+    availabilityLoaded.then(function () {
+      var clash = b.valid ? findConflict(b.from, b.to) : null;
+      var box = $("[data-conflict]");
+      if (!clash || !box) return;
+      $("[data-conflict-text]", box).textContent = conflictText(clash);
+      box.hidden = false;
+      $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); });
+      if (searchBox) { searchBox.hidden = false; if (toggle) toggle.setAttribute("aria-expanded", "true"); }
+    });
 
     var dateBadge = $("[data-dates-badge]");
     if (!b.valid) {
@@ -392,6 +512,15 @@
       $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); n.disabled = true; });
     }
 
+    availabilityLoaded.then(function () {
+      var clash = b.valid ? findConflict(b.from, b.to) : null;
+      if (!clash) return;
+      var box = $("[data-conflict]");
+      $("[data-conflict-text]", box).textContent = conflictText(clash);
+      box.hidden = false;
+      $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); n.disabled = true; });
+    });
+
     var guestSel = form.elements.guests;
     guestSel.addEventListener("change", function () {
       b.guests = +guestSel.value;
@@ -399,20 +528,12 @@
     });
 
     // Betalsätt
-    var swishNr = form.elements.swish;
     function syncPay() {
       var m = form.elements.payment.value;
       $$("[data-pay-panel]").forEach(function (p) { p.hidden = p.getAttribute("data-pay-panel") !== m; });
-      swishNr.required = m === "swish";
-      if (swishNr.hasAttribute("aria-invalid")) fieldError(swishNr);
     }
     $$('input[name="payment"]', form).forEach(function (r) { r.addEventListener("change", syncPay); });
     syncPay();
-
-    // Förifyll Swish-nummer från telefon
-    form.elements.phone.addEventListener("change", function () {
-      if (!swishNr.value) swishNr.value = form.elements.phone.value;
-    });
 
     var msg = $("[data-form-msg]");
     var submitBtns = $$("[data-submit]");
@@ -423,7 +544,6 @@
       lastName: "Fyll i ditt efternamn.",
       email: { valueMissing: "Fyll i din e-postadress.", typeMismatch: "Skriv e-postadressen i formatet namn@exempel.se." },
       phone: "Fyll i ditt telefonnummer.",
-      swish: "Fyll i mobilnumret som ska ta emot Swish-förfrågan.",
     };
     function fieldError(input) {
       var id = input.id + "-error";
@@ -454,7 +574,7 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       msg.hidden = true;
-      if (!b.valid) return;
+      if (!b.valid || findConflict(b.from, b.to)) return;
       var firstInvalid = null;
       validated.forEach(function (input) {
         if (!fieldError(input) && !firstInvalid) firstInvalid = input;
@@ -470,7 +590,6 @@
         phone: f.phone.value.trim(),
         message: f.message.value.trim(),
         payment: f.payment.value,
-        swish: f.payment.value === "swish" ? f.swish.value.trim() : "",
       };
 
       var text =
@@ -478,7 +597,7 @@
         "Namn: " + guest.firstName + " " + guest.lastName + "\n" +
         "E-post: " + guest.email + "\n" +
         "Telefon: " + guest.phone + "\n" +
-        "Betalsätt: " + (guest.payment === "swish" ? "Swish (" + guest.swish + ")" : "Kort") + "\n\n" +
+        "Önskat betalsätt: " + (guest.payment === "swish" ? "Swish" : "Banköverföring") + "\n\n" +
         bookingText(b, r) +
         (guest.message ? "\n\nMeddelande:\n" + guest.message : "");
 
@@ -763,7 +882,7 @@
   fillConfigValues();
   fillGuestSelects(booking.guests);
   initSearchForms(booking);
-  if (page === "boka") initBooking(booking);
+  if (page === "boka") initBooking(booking); else initCalendar(booking);
   if (page === "kassa") { initCheckout(booking); renderSummaries(booking); }
   if (page === "tack") initThanks();
 })();
