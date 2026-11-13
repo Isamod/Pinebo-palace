@@ -13,13 +13,30 @@
   var REQ_KEY = "pinebo-request";
   var page = document.body.getAttribute("data-page");
 
+  /* ---------- Språk ----------
+     Sidans språk läses från <html lang>. Texter i koden skrivs på svenska och slås
+     upp i window.PINEBO_I18N (assets/js/i18n.js). sv = true ger alltid svenska,
+     t.ex. i bokningsmejlet till värdarna. */
+  var LANG = document.documentElement.getAttribute("lang") || "sv";
+  var ROOT = document.documentElement.getAttribute("data-root") || "";
+  var LOCALE = { sv: "sv-SE", en: "en-GB", de: "de-DE" }[LANG] || "sv-SE";
+  var DICT = (window.PINEBO_I18N || {})[LANG] || {};
+  function t(s, vars, sv) {
+    var out = (!sv && DICT[s]) || s;
+    if (vars) out = out.replace(/\{(\w+)\}/g, function (m, k) { return vars[k]; });
+    return out;
+  }
+
   /* ---------- Hjälpfunktioner ---------- */
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
-  function num(n) { return Math.round(n).toLocaleString("sv-SE"); }
-  function kr(n) { return (n < 0 ? "−" + num(-n) : num(n)) + " kr"; }
+  function num(n, sv) { return Math.round(n).toLocaleString(sv ? "sv-SE" : LOCALE); }
+  function kr(n, sv) {
+    var unit = sv || LANG === "sv" ? "kr" : "SEK";
+    return (n < 0 ? "−" + num(-n, sv) : num(n, sv)) + "\u00a0" + unit;
+  }
   function clamp(n, lo, hi) { n = Number(n) || 0; return Math.max(lo, Math.min(hi, n)); }
-  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+  function plural(n, one, many, sv) { return n + " " + t(n === 1 ? one : many, null, sv); }
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -48,12 +65,13 @@
     d.setUTCDate(d.getUTCDate() + days);
     return isoDate(d);
   }
-  function fmt(d, opts) {
+  function fmt(d, opts, sv) {
     var o = Object.assign({ timeZone: "UTC" }, opts);
-    return new Intl.DateTimeFormat("sv-SE", o).format(d).replace(/\./g, "");
+    var s = new Intl.DateTimeFormat(sv ? "sv-SE" : LOCALE, o).format(d);
+    return sv || LANG === "sv" ? s.replace(/\./g, "") : s;
   }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-  function dayLabel(iso) { return cap(fmt(parseDate(iso), { weekday: "short", day: "numeric", month: "short" })); }
+  function dayLabel(iso, sv) { return cap(fmt(parseDate(iso), { weekday: "short", day: "numeric", month: "short" }, sv)); }
   function rangeLabel(b) {
     var f = parseDate(b.from), t = parseDate(b.to);
     var sameYear = f.getUTCFullYear() === t.getUTCFullYear();
@@ -113,28 +131,29 @@
     return r;
   }
 
-  function lineItems(b, r) {
+  function lineItems(b, r, sv) {
     var a = b.addons;
+    var name = function (k) { return t(C.addons[k].name, null, sv); };
     return [
-      { key: "stay", base: true, on: true, label: "Pinebo Classic (" + plural(b.nights, "natt", "nätter") + ")", amount: r.stay },
-      { key: "bastu", on: a.bastu > 0, label: C.addons.bastu.name + (a.bastu ? " (" + plural(a.bastu, "dag", "dagar") + " × " + num(C.addons.bastu.perDay) + " kr)" : ""), amount: r.bastu },
-      { key: "spa", on: a.spa > 0, label: C.addons.spa.name + (a.spa ? " (" + plural(a.spa, "dag", "dagar") + ")" : ""), amount: r.spa },
-      { key: "stad", on: a.stad, label: C.addons.stad.name, amount: r.stad },
-      { key: "linne", on: a.linne, label: C.addons.linne.name, amount: r.linne },
+      { key: "stay", base: true, on: true, label: "Pinebo Classic (" + plural(b.nights, "natt", "nätter", sv) + ")", amount: r.stay },
+      { key: "bastu", on: a.bastu > 0, label: name("bastu") + (a.bastu ? " (" + plural(a.bastu, "dag", "dagar", sv) + " × " + kr(C.addons.bastu.perDay, sv) + ")" : ""), amount: r.bastu },
+      { key: "spa", on: a.spa > 0, label: name("spa") + (a.spa ? " (" + plural(a.spa, "dag", "dagar", sv) + ")" : ""), amount: r.spa },
+      { key: "stad", on: a.stad, label: name("stad"), amount: r.stad },
+      { key: "linne", on: a.linne, label: name("linne"), amount: r.linne },
     ];
   }
 
   function bookingText(b, r) {
-    var lines = lineItems(b, r).filter(function (l) { return l.on; }).map(function (l) {
-      return "- " + l.label + ": " + kr(l.amount);
+    var lines = lineItems(b, r, true).filter(function (l) { return l.on; }).map(function (l) {
+      return "- " + l.label + ": " + kr(l.amount, true);
     });
-    if (r.combo) lines.push("- Komborabatt (" + Math.round(C.comboDiscount * 100) + " % på bastu & bad): " + kr(-r.combo));
+    if (r.combo) lines.push("- Komborabatt (" + Math.round(C.comboDiscount * 100) + " % på bastu & bad): " + kr(-r.combo, true));
     return [
-      "Incheckning: " + dayLabel(b.from) + " " + b.from.slice(0, 4) + ", " + C.checkInTime,
-      "Utcheckning: " + dayLabel(b.to) + " " + b.to.slice(0, 4) + ", " + C.checkOutTime,
+      "Incheckning: " + dayLabel(b.from, true) + " " + b.from.slice(0, 4) + ", " + C.checkInTime,
+      "Utcheckning: " + dayLabel(b.to, true) + " " + b.to.slice(0, 4) + ", " + C.checkOutTime,
       "Gäster: " + b.guests,
       "",
-    ].concat(lines, ["", "Totalbelopp: " + kr(r.total)]).join("\n");
+    ].concat(lines, ["", "Totalbelopp: " + kr(r.total, true)]).join("\n");
   }
 
   /* ---------- Bokningsöversikt (sidopanel) ---------- */
@@ -143,9 +162,9 @@
     var set = function (k, v) { var n = $('[data-sum="' + k + '"]', el); if (n) n.innerHTML = v; };
 
     if (!b.valid) {
-      set("checkin", "Välj datum");
-      set("checkout", "Välj datum");
-      set("lines", '<li class="off"><span>Välj datum för att se priset.</span><span></span></li>');
+      set("checkin", t("Välj datum"));
+      set("checkout", t("Välj datum"));
+      set("lines", '<li class="off"><span>' + t("Välj datum för att se priset.") + "</span><span></span></li>");
       set("discounts", "");
       set("total", "–");
       set("totalnote", "");
@@ -165,15 +184,16 @@
 
     var disc = "";
     if (r.combo) {
-      disc += '<li class="discount"><span>Komborabatt (' + Math.round(C.comboDiscount * 100) + " % på bastu & bad)</span><span>" + kr(-r.combo) + "</span></li>";
+      disc += '<li class="discount"><span>' + esc(t("Komborabatt ({p} % på bastu & bad)", { p: Math.round(C.comboDiscount * 100) })) + "</span><span>" + kr(-r.combo) + "</span></li>";
     }
-    disc += '<li class="discount"><span>Direktbokning</span><span>Ingen serviceavgift</span></li>';
+    disc += '<li class="discount"><span>' + t("Direktbokning") + "</span><span>" + t("Ingen serviceavgift") + "</span></li>";
     set("discounts", disc);
 
     set("total", kr(r.total));
-    var note = "Betalas först när vi har bekräftat";
+    var note = t("Betalas först när vi har bekräftat");
     if (mode === "all" && r.addonsTotal) {
-      note = "Tillval " + kr(r.addonsTotal) + (r.combo ? " · " + Math.round(C.comboDiscount * 100) + " % rabatt: " + kr(-r.combo) : "");
+      note = t("Tillval {amount}", { amount: kr(r.addonsTotal) }) +
+        (r.combo ? t(" · {p} % rabatt: {amount}", { p: Math.round(C.comboDiscount * 100), amount: kr(-r.combo) }) : "");
     }
     set("totalnote", note);
     $$("[data-sum-total-inline]").forEach(function (n) { n.textContent = kr(r.total); });
@@ -192,7 +212,7 @@
     function setOpen(open) {
       nav.classList.toggle("is-open", open);
       btn.setAttribute("aria-expanded", open);
-      btn.setAttribute("aria-label", open ? "Stäng meny" : "Öppna meny");
+      btn.setAttribute("aria-label", open ? t("Stäng meny") : t("Öppna meny"));
       btn.innerHTML = '<i data-icon="' + (open ? "x" : "menu") + '"></i>';
       window.PineboIcons.render(btn);
     }
@@ -254,7 +274,7 @@
      och ingen kontroll görs. Perioderna är nätter: from = första natten, to = utcheckningsdag. */
   var availability = { ready: false, blocked: [], updated: null };
   var availabilityLoaded = (window.fetch
-    ? fetch("data/bokade-datum.json", { cache: "no-cache" })
+    ? fetch(ROOT + "data/bokade-datum.json", { cache: "no-cache" })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
           if (d && d.updated && Array.isArray(d.blocked)) {
@@ -282,7 +302,7 @@
   }
   function shortDate(isoDay) { return fmt(parseDate(isoDay), { day: "numeric", month: "short" }); }
   function conflictText(r) {
-    return "Gästhuset är tyvärr redan bokat " + shortDate(r.from) + " – " + shortDate(r.to) + ". Välj andra datum.";
+    return t("Gästhuset är tyvärr redan bokat {from} – {to}. Välj andra datum.", { from: shortDate(r.from), to: shortDate(r.to) });
   }
   function pad(n) { return (n < 10 ? "0" : "") + n; }
 
@@ -305,14 +325,18 @@
         offset = clamp((f.getUTCFullYear() - base.y) * 12 + (f.getUTCMonth() - base.m), 0, maxOffset);
       }
       var today = todayIso();
-      var dayNames = ["måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag", "söndag"];
+      // Veckodagar på sidans språk (1 jan 2024 var en måndag)
+      var dayNames = [0, 1, 2, 3, 4, 5, 6].map(function (i) {
+        var d = new Date(Date.UTC(2024, 0, 1 + i));
+        return { long: fmt(d, { weekday: "long" }), short: cap(fmt(d, { weekday: "short" })).replace(/\.$/, "") };
+      });
 
       function month(y, m) {
         var first = new Date(Date.UTC(y, m, 1));
         var days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
         var lead = (first.getUTCDay() + 6) % 7;
         var html = '<table class="cal"><caption>' + cap(fmt(first, { month: "long", year: "numeric" })) + "</caption><thead><tr>" +
-          dayNames.map(function (d) { return '<th scope="col" abbr="' + d + '">' + cap(d.slice(0, 3)) + "</th>"; }).join("") +
+          dayNames.map(function (d) { return '<th scope="col" abbr="' + d.long + '">' + d.short + "</th>"; }).join("") +
           "</tr></thead><tbody><tr>";
         var cell = 0;
         for (; cell < lead; cell++) html += "<td></td>";
@@ -321,8 +345,8 @@
           var day = y + "-" + pad(m + 1) + "-" + pad(d);
           var cls = [], label = "";
           if (day < today) cls.push("is-past");
-          else if (isBookedNight(day)) { cls.push("is-booked"); label = ", upptaget"; }
-          if (b.valid && day >= b.from && day < b.to) { cls.push("is-selected"); label += ", din valda natt"; }
+          else if (isBookedNight(day)) { cls.push("is-booked"); label = t(", upptaget"); }
+          if (b.valid && day >= b.from && day < b.to) { cls.push("is-selected"); label += t(", din valda natt"); }
           html += '<td class="' + cls.join(" ") + '">' + d + (label ? '<span class="visually-hidden">' + label + "</span>" : "") + "</td>";
         }
         while (cell % 7) { html += "<td></td>"; cell++; }
@@ -335,14 +359,16 @@
         prev.disabled = offset <= 0;
         next.disabled = offset >= maxOffset;
         if (announce) {
-          status.textContent = "Visar " + fmt(new Date(Date.UTC(y1, m1, 1)), { month: "long", year: "numeric" }) +
-            " och " + fmt(new Date(Date.UTC(y2, m2, 1)), { month: "long", year: "numeric" });
+          status.textContent = t("Visar {a} och {b}", {
+            a: fmt(new Date(Date.UTC(y1, m1, 1)), { month: "long", year: "numeric" }),
+            b: fmt(new Date(Date.UTC(y2, m2, 1)), { month: "long", year: "numeric" }),
+          });
         }
       }
       prev.addEventListener("click", function () { offset = Math.max(0, offset - 1); render(true); });
       next.addEventListener("click", function () { offset = Math.min(maxOffset, offset + 1); render(true); });
       var upd = $("[data-cal-updated]", sec);
-      if (upd) upd.textContent = "Uppdaterad " + new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(availability.updated)).replace(/\./g, "");
+      if (upd) upd.textContent = t("Uppdaterad {date}", { date: new Intl.DateTimeFormat(LOCALE, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(availability.updated)) });
       render(false);
     });
   }
@@ -377,7 +403,7 @@
             lines.textContent = plural(q.nights, "natt", "nätter") + " × " + kr(C.nightlyPrice);
             total.textContent = kr(q.nights * C.nightlyPrice);
           } else {
-            lines.textContent = "Välj datum för att se priset";
+            lines.textContent = t("Välj datum för att se priset");
             total.textContent = "–";
           }
         }
@@ -391,9 +417,9 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         var msg = "";
-        if (!from.value || !to.value) msg = "Välj både incheckning och utcheckning.";
-        else if (from.value < today) msg = "Incheckningen kan inte vara bakåt i tiden.";
-        else if (to.value <= from.value) msg = "Utcheckningen måste vara efter incheckningen.";
+        if (!from.value || !to.value) msg = t("Välj både incheckning och utcheckning.");
+        else if (from.value < today) msg = t("Incheckningen kan inte vara bakåt i tiden.");
+        else if (to.value <= from.value) msg = t("Utcheckningen måste vara efter incheckningen.");
         else if (findConflict(from.value, to.value)) msg = conflictText(findConflict(from.value, to.value));
         if (msg) {
           if (err) { err.textContent = msg; err.hidden = false; } else alert(msg);
@@ -439,24 +465,24 @@
     if (!b.valid) {
       if (searchBox) searchBox.hidden = false;
       $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); });
-      $("[data-bar-dates]").textContent = "Inga datum valda";
-      if (dateBadge) dateBadge.textContent = "Välj datum för att fortsätta";
+      $("[data-bar-dates]").textContent = t("Inga datum valda");
+      if (dateBadge) dateBadge.textContent = t("Välj datum för att fortsätta");
     } else {
       $("[data-bar-dates]").innerHTML = esc(rangeLabel(b)) + ' <span class="muted">(' + plural(b.nights, "natt", "nätter") + ")</span>";
     }
     $("[data-bar-guests]").textContent = plural(b.guests, "gäst", "gäster");
-    $$("[data-intro-nights]").forEach(function (n) { n.textContent = b.valid ? plural(b.nights, "natt", "nätter") : "dina nätter"; });
+    $$("[data-intro-nights]").forEach(function (n) { n.textContent = b.valid ? plural(b.nights, "natt", "nätter") : t("dina nätter"); });
     $$("[data-intro-guests]").forEach(function (n) { n.textContent = plural(b.guests, "person", "personer"); });
     $$("[data-linne-guests]").forEach(function (n) { n.textContent = plural(b.guests, "person", "personer"); });
 
     function refresh() {
       var r = calc(b);
       var pkg = $("[data-pkg-total]");
-      if (pkg) pkg.textContent = b.valid ? kr(r.stay) : num(C.nightlyPrice) + " kr/natt";
+      if (pkg) pkg.textContent = b.valid ? kr(r.stay) : kr(C.nightlyPrice) + "/" + t("natt");
       var det = $("[data-pkg-detail]");
       if (det) det.textContent = b.valid
-        ? plural(b.nights, "natt", "nätter") + " · " + num(C.nightlyPrice) + " kr/natt · " + kr(r.stay) + " totalt"
-        : "Välj datum för att se totalpris";
+        ? plural(b.nights, "natt", "nätter") + " · " + kr(C.nightlyPrice) + "/" + t("natt") + " · " + kr(r.stay) + " " + t("totalt")
+        : t("Välj datum för att se totalpris");
 
       ["bastu", "spa"].forEach(function (k) {
         var box = $('.option[data-addon="' + k + '"]');
@@ -465,16 +491,18 @@
         $("[data-value]", box).textContent = v;
         $("[data-dec]", box).disabled = v <= 0;
         $("[data-inc]", box).disabled = !b.valid || v >= b.nights;
-        $("[data-period]", box).textContent = v ? plural(v, "dag", "dagar") + " · " + kr(r[k]) : "Ej valt";
+        $("[data-period]", box).textContent = v ? plural(v, "dag", "dagar") + " · " + kr(r[k]) : t("Ej valt");
         box.classList.toggle("is-active", v > 0);
       });
       ["stad", "linne"].forEach(function (k) {
         var box = $('.option[data-addon="' + k + '"]');
         if (!box) return;
         var on = b.addons[k], btn = $("[data-toggle]", box);
-        btn.textContent = on ? "Ta bort" : "Lägg till";
+        btn.textContent = on ? t("Ta bort") : t("Lägg till");
         btn.className = "btn btn-sm " + (on ? "btn-outline" : "btn-primary");
-        btn.setAttribute("aria-label", (on ? "Ta bort " : "Lägg till ") + C.addons[k].name.toLowerCase());
+        var addonName = t(C.addons[k].name);
+        if (LANG !== "de") addonName = addonName.toLowerCase();
+        btn.setAttribute("aria-label", t(on ? "Ta bort {name}" : "Lägg till {name}", { name: addonName }));
         btn.disabled = !b.valid;
         box.classList.toggle("is-active", on);
       });
@@ -540,10 +568,10 @@
 
     // Tydliga felmeddelanden på svenska direkt under respektive fält
     var messages = {
-      firstName: "Fyll i ditt förnamn.",
-      lastName: "Fyll i ditt efternamn.",
-      email: { valueMissing: "Fyll i din e-postadress.", typeMismatch: "Skriv e-postadressen i formatet namn@exempel.se." },
-      phone: "Fyll i ditt telefonnummer.",
+      firstName: t("Fyll i ditt förnamn."),
+      lastName: t("Fyll i ditt efternamn."),
+      email: { valueMissing: t("Fyll i din e-postadress."), typeMismatch: t("Skriv e-postadressen i formatet namn@exempel.se.") },
+      phone: t("Fyll i ditt telefonnummer."),
     };
     function fieldError(input) {
       var id = input.id + "-error";
@@ -597,6 +625,7 @@
         "Namn: " + guest.firstName + " " + guest.lastName + "\n" +
         "E-post: " + guest.email + "\n" +
         "Telefon: " + guest.phone + "\n" +
+        (LANG !== "sv" ? "Gästens språk: " + ({ en: "engelska", de: "tyska" }[LANG] || LANG) + " – svara gärna på det språket\n" : "") +
         "Önskat betalsätt: " + (guest.payment === "swish" ? "Swish" : "Banköverföring") + "\n\n" +
         bookingText(b, r) +
         (guest.message ? "\n\nMeddelande:\n" + guest.message : "");
@@ -621,7 +650,7 @@
           done("endpoint");
         }).catch(function () {
           submitBtns.forEach(function (btn) { btn.disabled = false; });
-          msg.textContent = "Något gick fel när förfrågan skulle skickas. Försök igen eller mejla oss på " + C.email + ".";
+          msg.textContent = t("Något gick fel när förfrågan skulle skickas. Försök igen eller mejla oss på {email}.", { email: C.email });
           msg.hidden = false;
         });
       } else {
@@ -680,8 +709,8 @@
       window.PineboIcons.render(btn);
     }
     function updateUI() {
-      setBtn(toggle, playing ? "pause" : "play", playing ? "Pausa filmen" : "Spela filmen");
-      setBtn(sound, muted ? "volume-x" : "volume", muted ? "Slå på ljud" : "Stäng av ljud");
+      setBtn(toggle, playing ? "pause" : "play", playing ? t("Pausa filmen") : t("Spela filmen"));
+      setBtn(sound, muted ? "volume-x" : "volume", muted ? t("Slå på ljud") : t("Stäng av ljud"));
       // Filmen tonas in första gången den spelar och ligger sedan kvar (även pausad)
       if (playing) box.classList.add("video-ready");
     }
@@ -704,7 +733,7 @@
       frame = document.createElement("iframe");
       frame.className = "hero-video";
       frame.src = ORIGIN + "/embed/" + encodeURIComponent(id) + "?" + params.toString();
-      frame.title = "Film från Pinebo Palace";
+      frame.title = t("Film från Pinebo Palace");
       frame.allow = "autoplay; encrypted-media; picture-in-picture";
       frame.referrerPolicy = "strict-origin-when-cross-origin";
       // Styrs via knapparna ovan – spelaren själv ska inte gå att tabba in i
@@ -795,13 +824,13 @@
 
     var dlg = document.createElement("dialog");
     dlg.className = "lightbox";
-    dlg.setAttribute("aria-label", "Bildvisning");
+    dlg.setAttribute("aria-label", t("Bildvisning"));
     dlg.innerHTML =
       '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-caption"></figcaption></figure>' +
       '<p class="lb-count" aria-live="polite"></p>' +
-      '<button type="button" class="lb-btn lb-close" aria-label="Stäng bildvisningen"><i data-icon="x"></i></button>' +
-      '<button type="button" class="lb-btn lb-prev" aria-label="Föregående bild"><i data-icon="chevron-left"></i></button>' +
-      '<button type="button" class="lb-btn lb-next" aria-label="Nästa bild"><i data-icon="chevron-right"></i></button>';
+      '<button type="button" class="lb-btn lb-close" aria-label="' + t("Stäng bildvisningen") + '"><i data-icon="x"></i></button>' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="' + t("Föregående bild") + '"><i data-icon="chevron-left"></i></button>' +
+      '<button type="button" class="lb-btn lb-next" aria-label="' + t("Nästa bild") + '"><i data-icon="chevron-right"></i></button>';
     document.body.appendChild(dlg);
     window.PineboIcons.render(dlg);
 
@@ -822,7 +851,7 @@
       if (it.w) img.width = it.w;
       if (it.h) img.height = it.h;
       cap.textContent = it.alt;
-      count.textContent = "Bild " + (idx + 1) + " av " + items.length;
+      count.textContent = t("Bild {n} av {total}", { n: idx + 1, total: items.length });
       // Förladda nästa bild så att bläddringen känns direkt
       if (items.length > 1) setImage(new Image(), items[(idx + 1) % items.length]);
     }
@@ -857,7 +886,7 @@
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "photo-zoom";
-      btn.setAttribute("aria-label", "Visa större bild: " + items[n].alt);
+      btn.setAttribute("aria-label", t("Visa större bild: {alt}", { alt: items[n].alt }));
       btn.innerHTML = '<span class="photo-zoom-ico"><i data-icon="expand"></i></span>';
       btn.addEventListener("click", function () { open(n, btn); });
       p.appendChild(btn);
@@ -869,8 +898,8 @@
       var tiles = $$(".photo", g), visible = 5;
       if (tiles.length <= visible) return;
       var btn = $(".photo-zoom", tiles[visible - 1]);
-      btn.setAttribute("aria-label", "Visa alla " + tiles.length + " bilder");
-      btn.insertAdjacentHTML("beforeend", '<span class="photo-more" aria-hidden="true">+' + (tiles.length - visible) + " bilder</span>");
+      btn.setAttribute("aria-label", t("Visa alla {n} bilder", { n: tiles.length }));
+      btn.insertAdjacentHTML("beforeend", '<span class="photo-more" aria-hidden="true">' + t("+{n} bilder", { n: tiles.length - visible }) + "</span>");
     });
   }
 

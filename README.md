@@ -23,6 +23,26 @@ python3 -m http.server 8000
 | `kassa.html`     | Bokning steg 2: gästuppgifter och betalsätt             |
 | `tack.html`      | Bekräftelse efter skickad förfrågan                     |
 
+## Språk: svenska, engelska och tyska
+
+De svenska sidorna i roten är källan. Engelska (`/en/`) och tyska (`/de/`) sidor
+**byggs** från dem med översättningarna i `i18n/en.json` och `i18n/de.json`:
+
+```bash
+npm install
+npm run build
+```
+
+- **Ändrar du en svensk text** måste översättningen uppdateras. Kör `npm run extract`
+  – då läggs nya texter till som tomma i `i18n/*.json`. Fyll i dem och kör `npm run build`.
+  Bygget stoppar om någon text saknar översättning, så inget svenskt slinker igenom.
+- Texter som skapas av JavaScript (felmeddelanden, kalender, prisöversikt) översätts
+  i `assets/js/i18n.js`.
+- Varje sida har `hreflang`-länkar till sina språkversioner och en språkväljare i menyn.
+- Omdömena på engelska/tyska är översatta från Airbnbs svenska version och märkta
+  "Translated"/"Übersetzt".
+- Bokningsmejlet till värdarna är alltid på svenska, med en rad om gästens språk.
+
 ## Ändra priser och kontaktuppgifter
 
 Allt finns i **`assets/js/config.js`** – nattpris, tillval, komborabatt,

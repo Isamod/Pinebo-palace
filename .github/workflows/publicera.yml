@@ -36,6 +36,12 @@ jobs:
         with:
           node-version: 20
 
+      - name: Bygg engelska och tyska sidor
+        run: |
+          npm ci
+          npm run build
+          rm -rf node_modules
+
       - name: Hämta bokade datum från Airbnb och Booking.com
         env:
           AIRBNB_ICAL_URL: ${{ secrets.AIRBNB_ICAL_URL }}

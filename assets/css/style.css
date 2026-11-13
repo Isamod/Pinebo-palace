@@ -729,6 +729,19 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 
 [hidden] { display: none !important; }
 
+/* Språkväljare */
+.lang-switch { display: flex; gap: 2px; font-size: .78rem; font-weight: 600; letter-spacing: .03em; }
+.lang-switch a { text-decoration: none; padding: 6px 8px; border-radius: 6px; color: var(--ink-soft); }
+.lang-switch a:hover { background: var(--chip); color: var(--ink); }
+.lang-switch a[aria-current] { background: var(--chip); color: var(--ink); }
+.lang-switch--menu { display: none; }
+@media (max-width: 900px) {
+  .lang-switch--bar { display: none; }
+  .main-nav .lang-switch--menu { display: flex; gap: 8px; padding: 14px 0 4px; }
+  .main-nav .lang-switch--menu a { padding: 8px 14px; border: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); border-radius: 8px; }
+  .main-nav .lang-switch--menu a[aria-current] { border-color: var(--ink); }
+}
+
 /* Tillgänglighetskalender */
 .notice--warn { background: #f6e3dc; color: #6e2a19; }
 .notice--warn a { color: inherit; }

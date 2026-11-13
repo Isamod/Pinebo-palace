@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://isamod.github.io/Pinebo-palace/</loc><priority>1.0</priority></url>
-  <url><loc>https://isamod.github.io/Pinebo-palace/boendet.html</loc><priority>0.8</priority></url>
-  <url><loc>https://isamod.github.io/Pinebo-palace/bastu-bad.html</loc><priority>0.8</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/</loc>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/en/</loc>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/de/</loc>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/boendet.html</loc>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/boendet.html"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/en/boendet.html</loc>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/boendet.html"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/de/boendet.html</loc>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/boendet.html"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/bastu-bad.html</loc>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/bastu-bad.html"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/en/bastu-bad.html</loc>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/bastu-bad.html"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/de/bastu-bad.html</loc>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/bastu-bad.html"/>
+  </url>
 </urlset>
