@@ -28,6 +28,12 @@ python3 -m http.server 8000
 Allt finns i **`assets/js/config.js`** – nattpris, tillval, komborabatt,
 in-/utcheckningstider, värdarnas namn och e-post. Sidorna uppdateras automatiskt.
 
+## Uppdatera CSS/JS – öka versionsnumret
+
+GitHub Pages låter webbläsare spara CSS och JS i upp till 10 minuter. Varje gång
+`style.css` eller någon `.js`-fil ändras: öka `?v=`-numret i alla `.html`-filer
+(t.ex. `?v=2` → `?v=3`), annars kan besökare få en blandning av ny och gammal kod.
+
 ## Bilder
 
 Se `assets/img/README.md` för vilka filnamn som behövs.

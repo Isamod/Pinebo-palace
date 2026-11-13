@@ -591,7 +591,11 @@
       // Styrs via knapparna ovan – spelaren själv ska inte gå att tabba in i
       frame.tabIndex = -1;
       frame.setAttribute("aria-hidden", "true");
-      frame.addEventListener("load", function () { send({ event: "listening" }); });
+      frame.addEventListener("load", function () {
+        send({ event: "listening" });
+        // Skydd: visa spelaren även om YouTube inte skulle rapportera sitt läge
+        setTimeout(function () { box.classList.add("video-ready"); }, 2500);
+      });
       box.appendChild(frame);
     }
 
