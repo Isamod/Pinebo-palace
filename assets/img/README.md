@@ -1,23 +1,25 @@
 # Bilder
 
-Lägg foton här med exakt dessa filnamn. Saknas en bild visas en grön/varm
-platshållare med filnamnet, så det syns direkt vilken bild som fattas.
+Foton sparas som WebP i två bredder (800 och 1600 px) så att mobiler laddar den
+mindre filen. Skapa nya med samma namnmönster: `namn-800.webp` och `namn-1600.webp`.
 
-Tips: exportera som JPG, ca 2000 px bred för stora bilder (hero, galleri) och
-ca 1200 px för övriga. Komprimera gärna med t.ex. squoosh.app.
+## På plats
 
-| Filnamn            | Används på                     | Motiv                                   |
-|--------------------|--------------------------------|-----------------------------------------|
-| `hero.jpg`         | Startsidan (stor toppbild)     | Stugan i skogen, gärna morgondimma      |
-| `kaffe.jpg`        | Startsidan                     | Kaffekopp på altanen / stämningsbild    |
-| `vardagsrum.jpg`   | Start, Boendet, Boka           | Vardagsrum med kamin och stora fönster  |
-| `sovloft.jpg`      | Boendet                        | Sovloftet                               |
-| `altan-spa.jpg`    | Boendet                        | Altanen med spabadet, kvällsljus        |
-| `bastu-kvall.jpg`  | Startsidan                     | Bastun utifrån en kväll                 |
-| `bastu-hero.jpg`   | Bastu & Bad (stor toppbild)    | Bastun i landskapet                     |
-| `bastu-insida.jpg` | Bastu & Bad                    | Bastun inifrån                          |
-| `spabad.jpg`       | Start, Bastu & Bad, Boka       | Spabadet                                |
-| `svamp.jpg`        | Startsidan – Upplevelser       | Svamp/bär i skogen                      |
-| `sjo.jpg`          | Startsidan – Upplevelser       | Närliggande sjö                         |
-| `vandring.jpg`     | Startsidan – Upplevelser       | Stig/vandringsled                       |
-| `vardar.jpg`       | Boka, Kassa (liten rund bild)  | Porträtt på värdarna                    |
+| Fil                      | Används på                                   |
+|--------------------------|----------------------------------------------|
+| `vardagsrum-*.webp`      | Start (Boendet), Boendet (galleri), Boka     |
+| `sovloft-*.webp`         | Boendet (galleri)                            |
+| `kok-*.webp`             | Start (intro), Boendet (galleri)             |
+| `bastu-kamin-*.webp`     | Start (bastukort), Bastu & Bad (toppbild)    |
+| `bastu-sittplats-*.webp` | Bastu & Bad                                  |
+| `og-image.jpg`           | Förhandsbild när länken delas (1200×800)     |
+
+## Saknas fortfarande (visar grön platshållare med filnamn)
+
+| Platshållare   | Används på                         | Motiv                         |
+|----------------|------------------------------------|-------------------------------|
+| `spabad.jpg`   | Start, Bastu & Bad, Boka           | Spabadet på altanen           |
+| `svamp.jpg`    | Start – Upplevelser                | Svamp/bär i skogen            |
+| `backen.jpg`   | Start – Upplevelser                | Bäcken vid gästhuset          |
+| `vandring.jpg` | Start – Upplevelser                | Vandringsled i närheten       |
+| `vardar.jpg`   | Boka, Kassa (liten rund bild)      | Porträtt på Maria & Andreas   |
