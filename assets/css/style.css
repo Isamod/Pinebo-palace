@@ -181,6 +181,7 @@ p { margin: 0 0 1em; }
 .mb-12 { margin-bottom: 12px; } .mb-32 { margin-bottom: 32px; }
 .ink-soft { color: var(--ink-soft); }
 .ratio-4-3 { aspect-ratio: 4 / 3; }
+.ratio-1-1, .split .photo.ratio-1-1 { aspect-ratio: 1 / 1; }
 .h-lg { font-size: clamp(2.2rem, 4vw, 3rem); }
 .h-md { font-size: 2rem; margin-bottom: 24px; }
 .icon-line { display: flex; gap: 8px; align-items: center; }
