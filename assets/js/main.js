@@ -1,0 +1,917 @@
+/* ==========================================================================
+   Pinebo Palace – sidlogik
+   - Mobilmeny
+   - Sökformulär (datum + gäster)
+   - Prisberäkning och bokningsöversikt
+   - Steg 1 (tillval) och steg 2 (kassa)
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  var C = window.PINEBO;
+  var KEY = "pinebo-booking";
+  var REQ_KEY = "pinebo-request";
+  var page = document.body.getAttribute("data-page");
+
+  /* ---------- Språk ----------
+     Sidans språk läses från <html lang>. Texter i koden skrivs på svenska och slås
+     upp i window.PINEBO_I18N (assets/js/i18n.js). sv = true ger alltid svenska,
+     t.ex. i bokningsmejlet till värdarna. */
+  var LANG = document.documentElement.getAttribute("lang") || "sv";
+  var ROOT = document.documentElement.getAttribute("data-root") || "";
+  var LOCALE = { sv: "sv-SE", en: "en-GB", de: "de-DE" }[LANG] || "sv-SE";
+  var DICT = (window.PINEBO_I18N || {})[LANG] || {};
+  function t(s, vars, sv) {
+    var out = (!sv && DICT[s]) || s;
+    if (vars) out = out.replace(/\{(\w+)\}/g, function (m, k) { return vars[k]; });
+    return out;
+  }
+
+  /* ---------- Hjälpfunktioner ---------- */
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function num(n, sv) { return Math.round(n).toLocaleString(sv ? "sv-SE" : LOCALE); }
+  function kr(n, sv) {
+    var unit = sv || LANG === "sv" ? "kr" : "SEK";
+    return (n < 0 ? "−" + num(-n, sv) : num(n, sv)) + "\u00a0" + unit;
+  }
+  function clamp(n, lo, hi) { n = Number(n) || 0; return Math.max(lo, Math.min(hi, n)); }
+  function plural(n, one, many, sv) { return n + " " + t(n === 1 ? one : many, null, sv); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  var storage = {
+    get: function (k) { try { return JSON.parse(sessionStorage.getItem(k)) || null; } catch (e) { return null; } },
+    set: function (k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+    del: function (k) { try { sessionStorage.removeItem(k); } catch (e) {} },
+  };
+
+  function parseDate(s) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s || "")) return null;
+    var p = s.split("-").map(Number);
+    var d = new Date(Date.UTC(p[0], p[1] - 1, p[2]));
+    return isNaN(d) ? null : d;
+  }
+  function isoDate(d) { return d.toISOString().slice(0, 10); }
+  function todayIso() {
+    var n = new Date();
+    return isoDate(new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate())));
+  }
+  function addDays(iso, days) {
+    var d = parseDate(iso);
+    d.setUTCDate(d.getUTCDate() + days);
+    return isoDate(d);
+  }
+  function fmt(d, opts, sv) {
+    var o = Object.assign({ timeZone: "UTC" }, opts);
+    var s = new Intl.DateTimeFormat(sv ? "sv-SE" : LOCALE, o).format(d);
+    return sv || LANG === "sv" ? s.replace(/\./g, "") : s;
+  }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function dayLabel(iso, sv) { return cap(fmt(parseDate(iso), { weekday: "short", day: "numeric", month: "short" }, sv)); }
+  function rangeLabel(b) {
+    var f = parseDate(b.from), t = parseDate(b.to);
+    var sameYear = f.getUTCFullYear() === t.getUTCFullYear();
+    return fmt(f, sameYear ? { day: "numeric", month: "short" } : { day: "numeric", month: "short", year: "numeric" }) +
+      " – " + fmt(t, { day: "numeric", month: "short", year: "numeric" });
+  }
+
+  /* ---------- Bokningsstatus ---------- */
+  function getBooking() {
+    var q = new URLSearchParams(location.search);
+    var saved = storage.get(KEY) || {};
+    var b = {
+      from: q.get("from") || saved.from || "",
+      to: q.get("to") || saved.to || "",
+      guests: clamp(q.get("guests") || saved.guests || 2, 1, C.maxGuests),
+      addons: Object.assign({ bastu: 0, spa: 0, stad: false, linne: false }, saved.addons),
+    };
+    return normalize(b);
+  }
+
+  function normalize(b) {
+    var f = parseDate(b.from), t = parseDate(b.to);
+    b.nights = f && t ? Math.round((t - f) / 864e5) : 0;
+    b.valid = b.nights >= C.minNights;
+    if (!b.valid) b.nights = 0;
+    b.addons.bastu = clamp(b.addons.bastu, 0, b.nights);
+    b.addons.spa = clamp(b.addons.spa, 0, b.nights);
+    b.addons.stad = !!b.addons.stad;
+    b.addons.linne = !!b.addons.linne;
+    return b;
+  }
+
+  function saveBooking(b) {
+    storage.set(KEY, { from: b.from, to: b.to, guests: b.guests, addons: b.addons });
+  }
+
+  function spaPrice(days) {
+    if (days <= 0) return 0;
+    var tiers = C.addons.spa.tiers;
+    if (tiers[days]) return tiers[days];
+    var maxTier = Math.max.apply(null, Object.keys(tiers).map(Number));
+    return tiers[maxTier] + (days - maxTier) * C.addons.spa.extraDay;
+  }
+
+  function calc(b) {
+    var a = b.addons;
+    var r = {
+      stay: b.nights * C.nightlyPrice,
+      bastu: a.bastu * C.addons.bastu.perDay,
+      spa: spaPrice(a.spa),
+      stad: a.stad ? C.addons.stad.price : 0,
+      linne: a.linne ? C.addons.linne.price : 0,
+    };
+    r.combo = a.bastu > 0 && a.spa > 0 ? Math.round((r.bastu + r.spa) * C.comboDiscount) : 0;
+    r.addonsTotal = r.bastu + r.spa + r.stad + r.linne;
+    r.total = r.stay + r.addonsTotal - r.combo;
+    return r;
+  }
+
+  function lineItems(b, r, sv) {
+    var a = b.addons;
+    var name = function (k) { return t(C.addons[k].name, null, sv); };
+    return [
+      { key: "stay", base: true, on: true, label: "Pinebo Classic (" + plural(b.nights, "natt", "nätter", sv) + ")", amount: r.stay },
+      { key: "bastu", on: a.bastu > 0, label: name("bastu") + (a.bastu ? " (" + plural(a.bastu, "dag", "dagar", sv) + " × " + kr(C.addons.bastu.perDay, sv) + ")" : ""), amount: r.bastu },
+      { key: "spa", on: a.spa > 0, label: name("spa") + (a.spa ? " (" + plural(a.spa, "dag", "dagar", sv) + ")" : ""), amount: r.spa },
+      { key: "stad", on: a.stad, label: name("stad"), amount: r.stad },
+      { key: "linne", on: a.linne, label: name("linne"), amount: r.linne },
+    ];
+  }
+
+  function bookingText(b, r) {
+    var lines = lineItems(b, r, true).filter(function (l) { return l.on; }).map(function (l) {
+      return "- " + l.label + ": " + kr(l.amount, true);
+    });
+    if (r.combo) lines.push("- Komborabatt (" + Math.round(C.comboDiscount * 100) + " % på bastu & bad): " + kr(-r.combo, true));
+    return [
+      "Incheckning: " + dayLabel(b.from, true) + " " + b.from.slice(0, 4) + ", " + C.checkInTime,
+      "Utcheckning: " + dayLabel(b.to, true) + " " + b.to.slice(0, 4) + ", " + C.checkOutTime,
+      "Gäster: " + b.guests,
+      "",
+    ].concat(lines, ["", "Totalbelopp: " + kr(r.total, true)]).join("\n");
+  }
+
+  /* ---------- Bokningsöversikt (sidopanel) ---------- */
+  function renderSummary(el, b) {
+    var mode = el.getAttribute("data-summary"); // "all" | "selected"
+    var set = function (k, v) { var n = $('[data-sum="' + k + '"]', el); if (n) n.innerHTML = v; };
+
+    if (!b.valid) {
+      set("checkin", t("Välj datum"));
+      set("checkout", t("Välj datum"));
+      set("lines", '<li class="off"><span>' + t("Välj datum för att se priset.") + "</span><span></span></li>");
+      set("discounts", "");
+      set("total", "–");
+      set("totalnote", "");
+      return;
+    }
+
+    var r = calc(b);
+    set("checkin", dayLabel(b.from) + ", " + C.checkInTime);
+    set("checkout", dayLabel(b.to) + ", " + C.checkOutTime);
+
+    var items = lineItems(b, r).filter(function (l) { return mode === "all" || l.on; });
+    set("lines", items.map(function (l) {
+      var icon = l.base ? "" : '<i data-icon="' + (l.on ? "check-circle" : "circle") + '"></i>';
+      var cls = l.base ? "base" : l.on ? "" : "off";
+      return '<li class="' + cls + '"><span>' + icon + esc(l.label) + "</span><span>" + kr(l.amount) + "</span></li>";
+    }).join(""));
+
+    var disc = "";
+    if (r.combo) {
+      disc += '<li class="discount"><span>' + esc(t("Komborabatt ({p} % på bastu & bad)", { p: Math.round(C.comboDiscount * 100) })) + "</span><span>" + kr(-r.combo) + "</span></li>";
+    }
+    disc += '<li class="discount"><span>' + t("Direktbokning") + "</span><span>" + t("Ingen serviceavgift") + "</span></li>";
+    set("discounts", disc);
+
+    set("total", kr(r.total));
+    var note = t("Betalas först när vi har bekräftat");
+    if (mode === "all" && r.addonsTotal) {
+      note = t("Tillval {amount}", { amount: kr(r.addonsTotal) }) +
+        (r.combo ? t(" · {p} % rabatt: {amount}", { p: Math.round(C.comboDiscount * 100), amount: kr(-r.combo) }) : "");
+    }
+    set("totalnote", note);
+    $$("[data-sum-total-inline]").forEach(function (n) { n.textContent = kr(r.total); });
+
+    if (window.PineboIcons) window.PineboIcons.render(el);
+  }
+
+  function renderSummaries(b) {
+    $$("[data-summary]").forEach(function (el) { renderSummary(el, b); });
+  }
+
+  /* ---------- Gemensamt ---------- */
+  function initNav() {
+    var btn = $(".nav-toggle"), nav = $(".main-nav");
+    if (!btn || !nav) return;
+    function setOpen(open) {
+      nav.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", open);
+      btn.setAttribute("aria-label", open ? t("Stäng meny") : t("Öppna meny"));
+      btn.innerHTML = '<i data-icon="' + (open ? "x" : "menu") + '"></i>';
+      window.PineboIcons.render(btn);
+    }
+    btn.addEventListener("click", function () { setOpen(!nav.classList.contains("is-open")); });
+    $$("a", nav).forEach(function (a) {
+      a.addEventListener("click", function () { setOpen(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("is-open")) { setOpen(false); btn.focus(); }
+    });
+  }
+
+  // Länkar/knappar markerade som inaktiva ska inte gå att aktivera (mus eller tangentbord)
+  document.addEventListener("click", function (e) {
+    if (e.target.closest('[aria-disabled="true"]')) e.preventDefault();
+  });
+
+  function fillConfigValues() {
+    var map = {
+      night: num(C.nightlyPrice),
+      bastu: num(C.addons.bastu.perDay),
+      spa: num(C.addons.spa.tiers[1]),
+      spaTiers: num(C.addons.spa.tiers[1]) + "–" + num(C.addons.spa.tiers[2]),
+      spaExtra: num(C.addons.spa.extraDay),
+      stad: num(C.addons.stad.price),
+      linne: num(C.addons.linne.price),
+      combo: Math.round(C.comboDiscount * 100),
+      cancel: C.freeCancellationDays,
+      checkin: C.checkInTime,
+      checkout: C.checkOutTime,
+      hosts: C.hosts,
+      email: C.email,
+      maxGuests: C.maxGuests,
+    };
+    $$("[data-cfg]").forEach(function (el) {
+      var v = map[el.getAttribute("data-cfg")];
+      if (v !== undefined) el.textContent = v;
+    });
+    $$("a[data-mail]").forEach(function (a) { a.href = "mailto:" + C.email; });
+    $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  }
+
+  function fillGuestSelects(selected) {
+    $$("select[data-guests]").forEach(function (sel) {
+      sel.innerHTML = "";
+      for (var i = 1; i <= C.maxGuests; i++) {
+        var o = document.createElement("option");
+        o.value = i;
+        o.textContent = plural(i, "gäst", "gäster");
+        if (i === selected) o.selected = true;
+        sel.appendChild(o);
+      }
+    });
+  }
+
+  /* ---------- Tillgänglighet (bokade datum från Airbnb/Booking.com) ----------
+     data/bokade-datum.json skapas av scripts/sync-calendars.mjs varje timme.
+     Saknas filen, eller har den aldrig synkats ("updated": null), döljs kalendern
+     och ingen kontroll görs. Perioderna är nätter: from = första natten, to = utcheckningsdag. */
+  var availability = { ready: false, blocked: [], updated: null };
+  var availabilityLoaded = (window.fetch
+    ? fetch(ROOT + "data/bokade-datum.json", { cache: "no-cache" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (d && d.updated && Array.isArray(d.blocked)) {
+            availability = { ready: true, blocked: d.blocked, updated: d.updated };
+          }
+        })
+        .catch(function () {})
+    : Promise.resolve()
+  ).then(function () { return availability; });
+
+  function findConflict(from, to) {
+    if (!availability.ready || !from || !to) return null;
+    for (var i = 0; i < availability.blocked.length; i++) {
+      var r = availability.blocked[i];
+      if (from < r.to && r.from < to) return r;
+    }
+    return null;
+  }
+  function isBookedNight(day) {
+    for (var i = 0; i < availability.blocked.length; i++) {
+      var r = availability.blocked[i];
+      if (day >= r.from && day < r.to) return true;
+    }
+    return false;
+  }
+  function shortDate(isoDay) { return fmt(parseDate(isoDay), { day: "numeric", month: "short" }); }
+  function conflictText(r) {
+    return t("Gästhuset är tyvärr redan bokat {from} – {to}. Välj andra datum.", { from: shortDate(r.from), to: shortDate(r.to) });
+  }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+  function initCalendar(b) {
+    var sec = $("[data-availability]");
+    availabilityLoaded.then(function () {
+      if (!availability.ready) return;
+      $$("[data-availability-link]").forEach(function (l) { l.hidden = false; });
+      if (!sec) return;
+      sec.hidden = false;
+      var box = $("[data-cal-months]", sec);
+      var status = $("[data-cal-status]", sec);
+      var prev = $("[data-cal-prev]", sec), next = $("[data-cal-next]", sec);
+      var now = new Date();
+      var base = { y: now.getFullYear(), m: now.getMonth() };
+      var maxOffset = 16;
+      var offset = 0;
+      if (b.valid) {
+        var f = parseDate(b.from);
+        offset = clamp((f.getUTCFullYear() - base.y) * 12 + (f.getUTCMonth() - base.m), 0, maxOffset);
+      }
+      var today = todayIso();
+      // Veckodagar på sidans språk (1 jan 2024 var en måndag)
+      var dayNames = [0, 1, 2, 3, 4, 5, 6].map(function (i) {
+        var d = new Date(Date.UTC(2024, 0, 1 + i));
+        return { long: fmt(d, { weekday: "long" }), short: cap(fmt(d, { weekday: "short" })).replace(/\.$/, "") };
+      });
+
+      function month(y, m) {
+        var first = new Date(Date.UTC(y, m, 1));
+        var days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+        var lead = (first.getUTCDay() + 6) % 7;
+        var html = '<table class="cal"><caption>' + cap(fmt(first, { month: "long", year: "numeric" })) + "</caption><thead><tr>" +
+          dayNames.map(function (d) { return '<th scope="col" abbr="' + d.long + '">' + d.short + "</th>"; }).join("") +
+          "</tr></thead><tbody><tr>";
+        var cell = 0;
+        for (; cell < lead; cell++) html += "<td></td>";
+        for (var d = 1; d <= days; d++, cell++) {
+          if (cell && cell % 7 === 0) html += "</tr><tr>";
+          var day = y + "-" + pad(m + 1) + "-" + pad(d);
+          var cls = [], label = "";
+          if (day < today) cls.push("is-past");
+          else if (isBookedNight(day)) { cls.push("is-booked"); label = t(", upptaget"); }
+          if (b.valid && day >= b.from && day < b.to) { cls.push("is-selected"); label += t(", din valda natt"); }
+          html += '<td class="' + cls.join(" ") + '">' + d + (label ? '<span class="visually-hidden">' + label + "</span>" : "") + "</td>";
+        }
+        while (cell % 7) { html += "<td></td>"; cell++; }
+        return html + "</tr></tbody></table>";
+      }
+      function render(announce) {
+        var a = base.m + offset, c = a + 1;
+        var y1 = base.y + Math.floor(a / 12), m1 = a % 12, y2 = base.y + Math.floor(c / 12), m2 = c % 12;
+        box.innerHTML = month(y1, m1) + month(y2, m2);
+        prev.disabled = offset <= 0;
+        next.disabled = offset >= maxOffset;
+        if (announce) {
+          status.textContent = t("Visar {a} och {b}", {
+            a: fmt(new Date(Date.UTC(y1, m1, 1)), { month: "long", year: "numeric" }),
+            b: fmt(new Date(Date.UTC(y2, m2, 1)), { month: "long", year: "numeric" }),
+          });
+        }
+      }
+      prev.addEventListener("click", function () { offset = Math.max(0, offset - 1); render(true); });
+      next.addEventListener("click", function () { offset = Math.min(maxOffset, offset + 1); render(true); });
+      var upd = $("[data-cal-updated]", sec);
+      if (upd) upd.textContent = t("Uppdaterad {date}", { date: new Intl.DateTimeFormat(LOCALE, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(availability.updated)) });
+      render(false);
+    });
+  }
+
+  /* ---------- Sökformulär ---------- */
+  function initSearchForms(b) {
+    $$("form[data-search]").forEach(function (form) {
+      var from = form.elements.from, to = form.elements.to, guests = form.elements.guests;
+      var err = $("[data-search-error]", form);
+      var quote = $("[data-quote]", form);
+      var today = todayIso();
+
+      from.min = today;
+      if (b.from && b.from >= today) from.value = b.from;
+      if (b.to && b.valid && b.from >= today) to.value = b.to;
+      to.min = from.value ? addDays(from.value, C.minNights) : addDays(today, C.minNights);
+
+      function update() {
+        if (from.value) {
+          to.min = addDays(from.value, C.minNights);
+          if (to.value && to.value < to.min) to.value = "";
+        }
+        if (err) {
+          var clash = from.value && to.value && to.value > from.value ? findConflict(from.value, to.value) : null;
+          err.textContent = clash ? conflictText(clash) : "";
+          err.hidden = !clash;
+        }
+        if (quote) {
+          var q = normalize({ from: from.value, to: to.value, guests: +guests.value, addons: {} });
+          var lines = $("[data-quote-lines]", quote), total = $("[data-quote-total]", quote);
+          if (q.valid) {
+            lines.textContent = plural(q.nights, "natt", "nätter") + " × " + kr(C.nightlyPrice);
+            total.textContent = kr(q.nights * C.nightlyPrice);
+          } else {
+            lines.textContent = t("Välj datum för att se priset");
+            total.textContent = "–";
+          }
+        }
+      }
+      from.addEventListener("change", update);
+      to.addEventListener("change", update);
+      guests.addEventListener("change", update);
+      update();
+      availabilityLoaded.then(function () { if (from.value && to.value) update(); });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var msg = "";
+        if (!from.value || !to.value) msg = t("Välj både incheckning och utcheckning.");
+        else if (from.value < today) msg = t("Incheckningen kan inte vara bakåt i tiden.");
+        else if (to.value <= from.value) msg = t("Utcheckningen måste vara efter incheckningen.");
+        else if (findConflict(from.value, to.value)) msg = conflictText(findConflict(from.value, to.value));
+        if (msg) {
+          if (err) { err.textContent = msg; err.hidden = false; } else alert(msg);
+          (!from.value || from.value < today ? from : to).focus();
+          return;
+        }
+        var saved = getBooking();
+        var nb = normalize({ from: from.value, to: to.value, guests: +guests.value, addons: saved.addons });
+        saveBooking(nb);
+        var params = new URLSearchParams({ from: nb.from, to: nb.to, guests: nb.guests });
+        location.href = "boka.html?" + params.toString();
+      });
+    });
+  }
+
+  /* ---------- Steg 1: Välj upplevelse ---------- */
+  function initBooking(b) {
+    var searchBox = $("[data-booking-search]");
+    var toggle = $("[data-toggle-search]");
+    if (toggle && searchBox) {
+      toggle.addEventListener("click", function () {
+        searchBox.hidden = !searchBox.hidden;
+        toggle.setAttribute("aria-expanded", !searchBox.hidden);
+      });
+    }
+
+    if (location.hash === "#tillganglighet" && searchBox) {
+      searchBox.hidden = false;
+      if (toggle) toggle.setAttribute("aria-expanded", "true");
+    }
+    initCalendar(b);
+    availabilityLoaded.then(function () {
+      var clash = b.valid ? findConflict(b.from, b.to) : null;
+      var box = $("[data-conflict]");
+      if (!clash || !box) return;
+      $("[data-conflict-text]", box).textContent = conflictText(clash);
+      box.hidden = false;
+      $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); });
+      if (searchBox) { searchBox.hidden = false; if (toggle) toggle.setAttribute("aria-expanded", "true"); }
+    });
+
+    var dateBadge = $("[data-dates-badge]");
+    if (!b.valid) {
+      if (searchBox) searchBox.hidden = false;
+      $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); });
+      $("[data-bar-dates]").textContent = t("Inga datum valda");
+      if (dateBadge) dateBadge.textContent = t("Välj datum för att fortsätta");
+    } else {
+      $("[data-bar-dates]").innerHTML = esc(rangeLabel(b)) + ' <span class="muted">(' + plural(b.nights, "natt", "nätter") + ")</span>";
+    }
+    $("[data-bar-guests]").textContent = plural(b.guests, "gäst", "gäster");
+    $$("[data-intro-nights]").forEach(function (n) { n.textContent = b.valid ? plural(b.nights, "natt", "nätter") : t("dina nätter"); });
+    $$("[data-intro-guests]").forEach(function (n) { n.textContent = plural(b.guests, "person", "personer"); });
+    $$("[data-linne-guests]").forEach(function (n) { n.textContent = plural(b.guests, "person", "personer"); });
+
+    function refresh() {
+      var r = calc(b);
+      var pkg = $("[data-pkg-total]");
+      if (pkg) pkg.textContent = b.valid ? kr(r.stay) : kr(C.nightlyPrice) + "/" + t("natt");
+      var det = $("[data-pkg-detail]");
+      if (det) det.textContent = b.valid
+        ? plural(b.nights, "natt", "nätter") + " · " + kr(C.nightlyPrice) + "/" + t("natt") + " · " + kr(r.stay) + " " + t("totalt")
+        : t("Välj datum för att se totalpris");
+
+      ["bastu", "spa"].forEach(function (k) {
+        var box = $('.option[data-addon="' + k + '"]');
+        if (!box) return;
+        var v = b.addons[k];
+        $("[data-value]", box).textContent = v;
+        $("[data-dec]", box).disabled = v <= 0;
+        $("[data-inc]", box).disabled = !b.valid || v >= b.nights;
+        $("[data-period]", box).textContent = v ? plural(v, "dag", "dagar") + " · " + kr(r[k]) : t("Ej valt");
+        box.classList.toggle("is-active", v > 0);
+      });
+      ["stad", "linne"].forEach(function (k) {
+        var box = $('.option[data-addon="' + k + '"]');
+        if (!box) return;
+        var on = b.addons[k], btn = $("[data-toggle]", box);
+        btn.textContent = on ? t("Ta bort") : t("Lägg till");
+        btn.className = "btn btn-sm " + (on ? "btn-outline" : "btn-primary");
+        var addonName = t(C.addons[k].name);
+        if (LANG !== "de") addonName = addonName.toLowerCase();
+        btn.setAttribute("aria-label", t(on ? "Ta bort {name}" : "Lägg till {name}", { name: addonName }));
+        btn.disabled = !b.valid;
+        box.classList.toggle("is-active", on);
+      });
+
+      var comboNote = $("[data-combo-note]");
+      if (comboNote) comboNote.hidden = !r.combo;
+
+      saveBooking(b);
+      renderSummaries(b);
+    }
+
+    $$(".option[data-addon]").forEach(function (box) {
+      var k = box.getAttribute("data-addon");
+      box.addEventListener("click", function (e) {
+        var t = e.target.closest("button");
+        if (!t) return;
+        if (t.hasAttribute("data-inc")) b.addons[k] = clamp(b.addons[k] + 1, 0, b.nights);
+        else if (t.hasAttribute("data-dec")) b.addons[k] = clamp(b.addons[k] - 1, 0, b.nights);
+        else if (t.hasAttribute("data-toggle")) b.addons[k] = !b.addons[k];
+        else return;
+        refresh();
+      });
+    });
+
+    refresh();
+  }
+
+  /* ---------- Steg 2: Kassa ---------- */
+  function initCheckout(b) {
+    var form = $("form[data-checkout]");
+    if (!form) return;
+
+    if (!b.valid) {
+      $("[data-need-dates]").hidden = false;
+      $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); n.disabled = true; });
+    }
+
+    availabilityLoaded.then(function () {
+      var clash = b.valid ? findConflict(b.from, b.to) : null;
+      if (!clash) return;
+      var box = $("[data-conflict]");
+      $("[data-conflict-text]", box).textContent = conflictText(clash);
+      box.hidden = false;
+      $$("[data-requires-dates]").forEach(function (n) { n.setAttribute("aria-disabled", "true"); n.disabled = true; });
+    });
+
+    var guestSel = form.elements.guests;
+    guestSel.addEventListener("change", function () {
+      b.guests = +guestSel.value;
+      saveBooking(b);
+    });
+
+    // Betalsätt
+    function syncPay() {
+      var m = form.elements.payment.value;
+      $$("[data-pay-panel]").forEach(function (p) { p.hidden = p.getAttribute("data-pay-panel") !== m; });
+    }
+    $$('input[name="payment"]', form).forEach(function (r) { r.addEventListener("change", syncPay); });
+    syncPay();
+
+    var msg = $("[data-form-msg]");
+    var submitBtns = $$("[data-submit]");
+
+    // Tydliga felmeddelanden på svenska direkt under respektive fält
+    var messages = {
+      firstName: t("Fyll i ditt förnamn."),
+      lastName: t("Fyll i ditt efternamn."),
+      email: { valueMissing: t("Fyll i din e-postadress."), typeMismatch: t("Skriv e-postadressen i formatet namn@exempel.se.") },
+      phone: t("Fyll i ditt telefonnummer."),
+    };
+    function fieldError(input) {
+      var id = input.id + "-error";
+      var el = document.getElementById(id);
+      var m = messages[input.name];
+      var text = "";
+      if (!input.validity.valid) {
+        text = typeof m === "string" ? m : (input.validity.typeMismatch ? m.typeMismatch : m.valueMissing);
+      }
+      if (!el && text) {
+        el = document.createElement("p");
+        el.id = id;
+        el.className = "field-error";
+        input.insertAdjacentElement("afterend", el);
+        input.setAttribute("aria-describedby", id);
+      }
+      if (el) { el.textContent = text; el.hidden = !text; }
+      if (text) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
+      return !text;
+    }
+    var validated = Object.keys(messages).map(function (n) { return form.elements[n]; });
+    validated.forEach(function (input) {
+      // Visa fel först när fältet lämnats, och ta bort felet direkt när det rättats
+      input.addEventListener("blur", function () { if (input.value) fieldError(input); });
+      input.addEventListener("input", function () { if (input.hasAttribute("aria-invalid")) fieldError(input); });
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      msg.hidden = true;
+      if (!b.valid || findConflict(b.from, b.to)) return;
+      var firstInvalid = null;
+      validated.forEach(function (input) {
+        if (!fieldError(input) && !firstInvalid) firstInvalid = input;
+      });
+      if (firstInvalid) { firstInvalid.focus(); return; }
+
+      var r = calc(b);
+      var f = form.elements;
+      var guest = {
+        firstName: f.firstName.value.trim(),
+        lastName: f.lastName.value.trim(),
+        email: f.email.value.trim(),
+        phone: f.phone.value.trim(),
+        message: f.message.value.trim(),
+        payment: f.payment.value,
+      };
+
+      var text =
+        "Ny bokningsförfrågan – Pinebo Palace\n\n" +
+        "Namn: " + guest.firstName + " " + guest.lastName + "\n" +
+        "E-post: " + guest.email + "\n" +
+        "Telefon: " + guest.phone + "\n" +
+        (LANG !== "sv" ? "Gästens språk: " + ({ en: "engelska", de: "tyska" }[LANG] || LANG) + " – svara gärna på det språket\n" : "") +
+        "Önskat betalsätt: " + (guest.payment === "swish" ? "Swish" : "Banköverföring") + "\n\n" +
+        bookingText(b, r) +
+        (guest.message ? "\n\nMeddelande:\n" + guest.message : "");
+
+      var record = { booking: { from: b.from, to: b.to, guests: b.guests, addons: b.addons }, guest: guest, total: r.total, sentAt: new Date().toISOString() };
+
+      function done(via) {
+        record.via = via;
+        storage.set(REQ_KEY, record);
+        storage.del(KEY);
+        location.href = "tack.html";
+      }
+
+      if (C.bookingEndpoint) {
+        submitBtns.forEach(function (btn) { btn.disabled = true; });
+        fetch(C.bookingEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(Object.assign({ _subject: "Bokningsförfrågan " + b.from + " – " + b.to, sammanfattning: text }, record)),
+        }).then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          done("endpoint");
+        }).catch(function () {
+          submitBtns.forEach(function (btn) { btn.disabled = false; });
+          msg.textContent = t("Något gick fel när förfrågan skulle skickas. Försök igen eller mejla oss på {email}.", { email: C.email });
+          msg.hidden = false;
+        });
+      } else {
+        var subject = "Bokningsförfrågan " + b.from + " – " + b.to;
+        location.href = "mailto:" + C.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text);
+        setTimeout(function () { done("mail"); }, 400);
+      }
+    });
+  }
+
+  /* ---------- Tack-sidan ---------- */
+  function initThanks() {
+    var rec = storage.get(REQ_KEY);
+    if (!rec) { $("[data-no-request]").hidden = false; $("[data-request]").hidden = true; return; }
+    var b = normalize(rec.booking);
+    $("[data-thanks-name]").textContent = rec.guest.firstName;
+    $("[data-thanks-email]").textContent = rec.guest.email;
+    $$("[data-via]").forEach(function (n) { n.hidden = n.getAttribute("data-via") !== rec.via; });
+    renderSummaries(b);
+    var h = $("[data-focus]");
+    if (h) h.focus();
+  }
+
+  /* ---------- Herofilm (YouTube) ----------
+     - Spelaren skapas direkt när sidan öppnas. Tills filmen spelar syns heron mörkgrön.
+     - Cookie-fri domän (youtube-nocookie.com). Spelaren styrs med postMessage,
+       så YouTubes separata API-skript behöver inte laddas.
+     - Loopar, startar alltid utan ljud. Egna knappar för paus/spela och ljud.
+     - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
+     - Pausas när den inte syns och fortsätter när den syns igen,
+       om inte besökaren själv har pausat. */
+  function initHeroVideo() {
+    var box = $("[data-hero-video]");
+    if (!box || !("IntersectionObserver" in window)) return;
+    var id = box.getAttribute("data-youtube-id");
+    var ORIGIN = "https://www.youtube-nocookie.com";
+    var root = box.parentNode;
+    var controls = $(".video-controls", root);
+    var toggle = $("[data-video-toggle]", root);
+    var sound = $("[data-video-sound]", root);
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var conn = navigator.connection || {};
+    var saveData = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
+    var autoplay = !reduceMotion && !saveData;
+
+    var frame = null;
+    var ready = false;
+    var playing = false;
+    var muted = true;
+    var userPaused = !autoplay;
+    var inView = true;
+
+    function setBtn(btn, icon, label) {
+      btn.innerHTML = '<i data-icon="' + icon + '"></i><span class="video-btn-text">' + label + "</span>";
+      window.PineboIcons.render(btn);
+    }
+    function updateUI() {
+      setBtn(toggle, playing ? "pause" : "play", playing ? t("Pausa filmen") : t("Spela filmen"));
+      setBtn(sound, muted ? "volume-x" : "volume", muted ? t("Slå på ljud") : t("Stäng av ljud"));
+      // Filmen tonas in första gången den spelar och ligger sedan kvar (även pausad)
+      if (playing) box.classList.add("video-ready");
+    }
+    function send(data) {
+      if (frame && frame.contentWindow) {
+        data.id = 1;
+        data.channel = "widget";
+        frame.contentWindow.postMessage(JSON.stringify(data), ORIGIN);
+      }
+    }
+    function cmd(func, args) { if (ready) send({ event: "command", func: func, args: args || [] }); }
+
+    function create() {
+      if (frame) return;
+      var params = new URLSearchParams({
+        autoplay: 1, mute: 1, loop: 1, playlist: id, controls: 0, playsinline: 1,
+        rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, modestbranding: 1,
+        enablejsapi: 1, origin: location.origin,
+      });
+      frame = document.createElement("iframe");
+      frame.className = "hero-video";
+      frame.src = ORIGIN + "/embed/" + encodeURIComponent(id) + "?" + params.toString();
+      frame.title = t("Film från Pinebo Palace");
+      frame.allow = "autoplay; encrypted-media; picture-in-picture";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      // Styrs via knapparna ovan – spelaren själv ska inte gå att tabba in i
+      frame.tabIndex = -1;
+      frame.setAttribute("aria-hidden", "true");
+      frame.addEventListener("load", function () {
+        send({ event: "listening" });
+        // Skydd: visa spelaren även om YouTube inte skulle rapportera sitt läge
+        setTimeout(function () { box.classList.add("video-ready"); }, 2500);
+      });
+      box.appendChild(frame);
+    }
+
+    window.addEventListener("message", function (e) {
+      if (e.origin !== ORIGIN || !frame || e.source !== frame.contentWindow) return;
+      var d;
+      try { d = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+      if (!d || !d.event) return;
+      var info = d.info || {};
+      if (d.event === "onReady" || d.event === "initialDelivery") {
+        if (!ready) {
+          ready = true;
+          if (!muted) cmd("unMute");
+          if (userPaused || !inView) cmd("pauseVideo");
+        }
+      }
+      var state = d.event === "onStateChange" ? d.info : (typeof info.playerState === "number" ? info.playerState : null);
+      if (state === 1) playing = true;        // spelar
+      else if (state === 2) playing = false;  // pausad (övriga lägen, t.ex. loop-omstart, ignoreras)
+      if (typeof info.muted === "boolean") muted = info.muted;
+      updateUI();
+    });
+
+    toggle.addEventListener("click", function () {
+      if (playing) {
+        userPaused = true;
+        playing = false;
+        cmd("pauseVideo");
+        updateUI();
+      } else {
+        userPaused = false;
+        if (frame) cmd("playVideo"); else create();
+      }
+    });
+    sound.addEventListener("click", function () {
+      muted = !muted;
+      if (frame) cmd(muted ? "mute" : "unMute");
+      if (!muted && !playing) {
+        userPaused = false;
+        if (frame) cmd("playVideo"); else create();
+      }
+      updateUI();
+    });
+
+    new IntersectionObserver(function (entries) {
+      inView = entries[0].isIntersecting;
+      if (!frame) return;
+      if (!inView && playing) { cmd("pauseVideo"); }
+      else if (inView && !userPaused && !playing) { cmd("playVideo"); }
+    }, { threshold: 0.25 }).observe(box);
+
+    function start() {
+      controls.hidden = false;
+      updateUI();
+      if (autoplay) create();
+    }
+    // Starta direkt (skriptet ligger sist i body, så sidans innehåll är redan på plats)
+    start();
+  }
+
+  /* ---------- Bildvisare (lightbox) ----------
+     - Alla foton på sidan blir klickbara och öppnas i helskärm.
+     - Bläddra med knappar, piltangenter eller svep. Stäng med kryss, Esc eller klick utanför.
+     - Byggd på <dialog>: fokus stannar i visaren och återgår till bilden när den stängs.
+     - Galleriet på Boendet visar fem rutor; den sista visar hur många bilder som finns till. */
+  function initLightbox() {
+    if (!window.HTMLDialogElement) return;
+    var photos = $$(".photo").filter(function (p) {
+      var i = $("img", p);
+      return i && /\.webp$/.test(i.getAttribute("src") || "");
+    });
+    if (!photos.length) return;
+
+    var items = photos.map(function (p) {
+      var i = $("img", p);
+      return { src: i.getAttribute("src"), srcset: i.getAttribute("srcset"), alt: i.alt, w: i.getAttribute("width"), h: i.getAttribute("height") };
+    });
+
+    var dlg = document.createElement("dialog");
+    dlg.className = "lightbox";
+    dlg.setAttribute("aria-label", t("Bildvisning"));
+    dlg.innerHTML =
+      '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-caption"></figcaption></figure>' +
+      '<p class="lb-count" aria-live="polite"></p>' +
+      '<button type="button" class="lb-btn lb-close" aria-label="' + t("Stäng bildvisningen") + '"><i data-icon="x"></i></button>' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="' + t("Föregående bild") + '"><i data-icon="chevron-left"></i></button>' +
+      '<button type="button" class="lb-btn lb-next" aria-label="' + t("Nästa bild") + '"><i data-icon="chevron-right"></i></button>';
+    document.body.appendChild(dlg);
+    window.PineboIcons.render(dlg);
+
+    var img = $(".lb-img", dlg), cap = $(".lb-caption", dlg), count = $(".lb-count", dlg);
+    var idx = 0, opener = null;
+    if (items.length < 2) { $(".lb-prev", dlg).hidden = true; $(".lb-next", dlg).hidden = true; }
+
+    function setImage(el, it) {
+      el.removeAttribute("srcset");
+      if (it.srcset) { el.sizes = "100vw"; el.srcset = it.srcset; }
+      el.src = it.src;
+    }
+    function show(n) {
+      idx = (n + items.length) % items.length;
+      var it = items[idx];
+      setImage(img, it);
+      img.alt = it.alt;
+      if (it.w) img.width = it.w;
+      if (it.h) img.height = it.h;
+      cap.textContent = it.alt;
+      count.textContent = t("Bild {n} av {total}", { n: idx + 1, total: items.length });
+      // Förladda nästa bild så att bläddringen känns direkt
+      if (items.length > 1) setImage(new Image(), items[(idx + 1) % items.length]);
+    }
+    function open(n, from) {
+      opener = from;
+      show(n);
+      dlg.showModal();
+      document.documentElement.classList.add("lb-open");
+    }
+    dlg.addEventListener("close", function () {
+      document.documentElement.classList.remove("lb-open");
+      if (opener) opener.focus();
+    });
+    $(".lb-close", dlg).addEventListener("click", function () { dlg.close(); });
+    $(".lb-prev", dlg).addEventListener("click", function () { show(idx - 1); });
+    $(".lb-next", dlg).addEventListener("click", function () { show(idx + 1); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); show(idx - 1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); show(idx + 1); }
+    });
+    var touchX = null;
+    dlg.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    dlg.addEventListener("touchend", function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+    });
+
+    photos.forEach(function (p, n) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "photo-zoom";
+      btn.setAttribute("aria-label", t("Visa större bild: {alt}", { alt: items[n].alt }));
+      btn.innerHTML = '<span class="photo-zoom-ico"><i data-icon="expand"></i></span>';
+      btn.addEventListener("click", function () { open(n, btn); });
+      p.appendChild(btn);
+      window.PineboIcons.render(btn);
+    });
+
+    // "+N bilder" på sista synliga rutan i galleriet
+    $$(".gallery").forEach(function (g) {
+      var tiles = $$(".photo", g), visible = 5;
+      if (tiles.length <= visible) return;
+      var btn = $(".photo-zoom", tiles[visible - 1]);
+      btn.setAttribute("aria-label", t("Visa alla {n} bilder", { n: tiles.length }));
+      btn.insertAdjacentHTML("beforeend", '<span class="photo-more" aria-hidden="true">' + t("+{n} bilder", { n: tiles.length - visible }) + "</span>");
+    });
+  }
+
+  /* ---------- Start ---------- */
+  var booking = getBooking();
+  initNav();
+  initHeroVideo();
+  initLightbox();
+  fillConfigValues();
+  fillGuestSelects(booking.guests);
+  initSearchForms(booking);
+  if (page === "boka") initBooking(booking); else initCalendar(booking);
+  if (page === "kassa") { initCheckout(booking); renderSummaries(booking); }
+  if (page === "tack") initThanks();
+})();

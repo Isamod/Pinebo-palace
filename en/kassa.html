@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Step 2 of 2: Send booking request – Pinebo Palace</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1f2a22">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css?v=7">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="kassa">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Pinebo Palace – home">
+      <span class="brand-mark"><i data-icon="tree"></i></span>
+      <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Private cabin</span></span>
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Main menu">
+      <a href="boendet.html">The guesthouse</a>
+      <a href="bastu-bad.html">Sauna &amp; Hot tub</a>
+      <a href="index.html#priser">Prices &amp; Extras</a>
+      <a href="index.html#upplevelser">Experiences</a>
+      <a href="index.html#faq">FAQ</a>
+    <nav class="lang-switch lang-switch--menu" data-lang-switch translate="no" aria-label="Choose language"><a href="../kassa.html" hreflang="sv" lang="sv">SV<span class="visually-hidden"> – Svenska</span></a><a href="../en/kassa.html" hreflang="en" lang="en" aria-current="true">EN<span class="visually-hidden"> – English</span></a><a href="../de/kassa.html" hreflang="de" lang="de">DE<span class="visually-hidden"> – Deutsch</span></a></nav></nav>
+    <div class="header-aside"><nav class="lang-switch lang-switch--bar" data-lang-switch translate="no" aria-label="Choose language"><a href="../kassa.html" hreflang="sv" lang="sv">SV<span class="visually-hidden"> – Svenska</span></a><a href="../en/kassa.html" hreflang="en" lang="en" aria-current="true">EN<span class="visually-hidden"> – English</span></a><a href="../de/kassa.html" hreflang="de" lang="de">DE<span class="visually-hidden"> – Deutsch</span></a></nav>
+      <span class="header-step">Step 2 of 2: Your details</span>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false"><i data-icon="menu"></i></button>
+  </div>
+</header>
+
+<main id="main" class="section section--tight">
+  <div class="container layout-sidebar">
+    <div>
+      <a class="btn-link mb-12" href="boka.html"><i data-icon="chevron-left"></i> Back to extras</a>
+      <h1 class="h-lg">Send your booking request</h1>
+      <p class="lead">Fill in your details and we'll get back to you as soon as we can with a confirmation and payment instructions. No payment is taken now.</p>
+      <p class="small mb-32">Fields marked with <span aria-hidden="true">*</span> are required.</p>
+
+      <div class="notice notice--warn" data-conflict role="alert" hidden>
+        <i data-icon="calendar"></i>
+        <span><span data-conflict-text></span> <a href="boka.html#tillganglighet"><strong>See available dates</strong></a></span>
+      </div>
+
+      <div class="notice" data-need-dates role="alert" hidden>
+        <i data-icon="calendar"></i>
+        <span>You haven't chosen any dates yet. <a href="index.html#boka"><strong>Choose dates</strong></a> to complete your request.</span>
+      </div>
+
+      <form id="checkout" data-checkout novalidate>
+        <section class="card form-card" aria-labelledby="guest-title">
+          <h2 id="guest-title"><i data-icon="user"></i> 1. Guest details</h2>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="f-first">First name<span class="req" aria-hidden="true">*</span></label>
+              <input id="f-first" name="firstName" autocomplete="given-name" placeholder="e.g. John" required>
+            </div>
+            <div class="form-field">
+              <label for="f-last">Last name<span class="req" aria-hidden="true">*</span></label>
+              <input id="f-last" name="lastName" autocomplete="family-name" placeholder="e.g. Smith" required>
+            </div>
+            <div class="form-field full">
+              <label for="f-email">Email address<span class="req" aria-hidden="true">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="johan.andersson@example.se" required>
+            </div>
+            <div class="form-field">
+              <label for="f-phone">Phone number<span class="req" aria-hidden="true">*</span></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+46 70 123 45 67" required>
+            </div>
+            <div class="form-field">
+              <label for="f-guests">Number of guests</label>
+              <select id="f-guests" name="guests" data-guests><option value="2">2 guests</option></select>
+            </div>
+            <div class="form-field full">
+              <label for="f-msg">Message to <span data-cfg="hosts">Maria &amp; Andreas</span> (optional)</label>
+              <textarea id="f-msg" name="message" placeholder="Let us know if you're celebrating something special or have any questions before you arrive…"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="card form-card" aria-labelledby="pay-title">
+          <h2 id="pay-title"><i data-icon="card"></i> 2. Preferred payment method</h2>
+          <fieldset class="pay-fieldset">
+          <legend class="visually-hidden">Payment method</legend>
+          <div class="pay-options">
+            <div class="pay-option">
+              <input type="radio" id="pay-swish" name="payment" value="swish" checked>
+              <label for="pay-swish"><i data-icon="phone"></i> Swish</label>
+            </div>
+            <div class="pay-option">
+              <input type="radio" id="pay-bank" name="payment" value="bank">
+              <label for="pay-bank"><i data-icon="card"></i> Bank transfer</label>
+            </div>
+          </div>
+          </fieldset>
+
+          <div class="pay-panel" data-pay-panel="swish">
+            <p class="m-0">Once we've confirmed your booking, we'll send you our Swish number and the amount. Swish is a Swedish mobile payment app.</p>
+          </div>
+          <div class="pay-panel" data-pay-panel="bank" hidden>
+            <p class="m-0">Once we've confirmed your booking, we'll send you our bank details and the amount so you can pay via online banking.</p>
+          </div>
+
+          <p class="small icon-line mt-20"><i data-icon="lock"></i> No payment now – you only pay once we've confirmed your booking.</p>
+          <p class="form-msg" data-form-msg role="alert" hidden></p>
+        </section>
+      </form>
+    </div>
+
+    <aside class="sidebar">
+      <div class="card summary" data-summary="selected">
+        <h2>Booking summary</h2>
+        <div class="summary-dates">
+          <div><span class="label">Check-in</span><strong data-sum="checkin">–</strong></div>
+          <i data-icon="arrow-right"></i>
+          <div class="end"><span class="label">Check-out</span><strong data-sum="checkout">–</strong></div>
+        </div>
+        <ul class="summary-lines" data-sum="lines"></ul>
+        <ul class="summary-lines" data-sum="discounts"></ul>
+        <div class="summary-total">
+          <div><strong>Total</strong><span class="small" data-sum="totalnote"></span></div>
+          <span class="amount" data-sum="total" aria-live="polite" aria-atomic="true">–</span>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" form="checkout" data-submit data-requires-dates>
+          <i data-icon="mail"></i> Send booking request
+        </button>
+        <p class="small">We'll get back to you with a confirmation and payment instructions. Free cancellation up to <span data-cfg="cancel">14</span> days before arrival.</p>
+      </div>
+
+      <div class="card host-card">
+        <span class="ico-ok" aria-hidden="true"><i data-icon="shield"></i></span>
+        <div><strong>Free cancellation up to <span data-cfg="cancel">14</span> days</strong><span>You can cancel completely free of charge up to <span data-cfg="cancel">14</span> days before your planned arrival.</span></div>
+      </div>
+
+      <div class="card host-card">
+        <span class="avatar" aria-hidden="true"><img src="../assets/img/vardar.jpg" alt onerror="this.remove()">M&amp;A</span>
+        <div><strong><span data-cfg="hosts">Maria &amp; Andreas</span> are here to help</strong><span>Questions about payment or the cabin? <a data-mail href="mailto:kontakt@pinebo.se">Send us a message</a>.</span></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a class="brand" href="index.html" aria-label="Pinebo Palace – home"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+        <p>A dog-friendly guesthouse by a babbling stream in the forest outside Ulricehamn. With a wood-fired sauna, a hot tub and hosts who love to share their best tips.</p>
+      </div>
+      <nav class="footer-col" aria-labelledby="footer-links">
+        <h2 id="footer-links">Links</h2>
+        <ul>
+          <li><a href="boendet.html">About the cabin</a></li>
+          <li><a href="bastu-bad.html">Sauna &amp; hot tub</a></li>
+          <li><a href="index.html#upplevelser">Activities</a></li>
+          <li><a href="index.html#faq">Frequently asked questions</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Contact</h2>
+        <ul>
+          <li><a data-mail data-cfg="email" href="mailto:kontakt@pinebo.se">kontakt@pinebo.se</a></li>
+          <li><address>Ulricehamn, Sweden</address></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Pinebo Palace. All rights reserved.</span>
+      <span>Book directly with Maria &amp; Andreas – no platform fees</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/config.js?v=7"></script>
+<script src="../assets/js/icons.js?v=7"></script>
+<script src="../assets/js/i18n.js?v=7"></script>
+<script src="../assets/js/main.js?v=7"></script>
+</body>
+</html>

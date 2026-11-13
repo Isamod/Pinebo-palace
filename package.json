@@ -1,0 +1,14 @@
+{
+  "name": "pinebo-palace",
+  "private": true,
+  "description": "Webbplats för Pinebo Palace",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-i18n.mjs",
+    "extract": "node scripts/build-i18n.mjs --extract",
+    "sync": "node scripts/sync-calendars.mjs"
+  },
+  "devDependencies": {
+    "node-html-parser": "6.1.13"
+  }
+}

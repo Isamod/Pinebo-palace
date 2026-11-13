@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="de" data-root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schritt 1 von 2: Aufenthalt wählen – Pinebo Palace</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1f2a22">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css?v=7">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="boka">
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Pinebo Palace – Startseite">
+      <span class="brand-mark"><i data-icon="tree"></i></span>
+      <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Private Hütte</span></span>
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Hauptmenü">
+      <a href="boendet.html">Die Unterkunft</a>
+      <a href="bastu-bad.html">Sauna &amp; Whirlpool</a>
+      <a href="index.html#priser">Preise &amp; Extras</a>
+      <a href="index.html#upplevelser">Erlebnisse</a>
+      <a href="index.html#faq">FAQ</a>
+    <nav class="lang-switch lang-switch--menu" data-lang-switch translate="no" aria-label="Sprache wählen"><a href="../boka.html" hreflang="sv" lang="sv">SV<span class="visually-hidden"> – Svenska</span></a><a href="../en/boka.html" hreflang="en" lang="en">EN<span class="visually-hidden"> – English</span></a><a href="../de/boka.html" hreflang="de" lang="de" aria-current="true">DE<span class="visually-hidden"> – Deutsch</span></a></nav></nav>
+    <div class="header-aside"><nav class="lang-switch lang-switch--bar" data-lang-switch translate="no" aria-label="Sprache wählen"><a href="../boka.html" hreflang="sv" lang="sv">SV<span class="visually-hidden"> – Svenska</span></a><a href="../en/boka.html" hreflang="en" lang="en">EN<span class="visually-hidden"> – English</span></a><a href="../de/boka.html" hreflang="de" lang="de" aria-current="true">DE<span class="visually-hidden"> – Deutsch</span></a></nav>
+      <span class="header-step">Schritt 1 von 2: Aufenthalt wählen</span>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-controls="main-nav" aria-expanded="false"><i data-icon="menu"></i></button>
+  </div>
+</header>
+
+<main id="main">
+<section class="booking-bar" aria-label="Ihre Suche">
+  <div class="container">
+    <span class="item"><i data-icon="calendar"></i><span class="visually-hidden">Daten:</span> <span data-bar-dates>–</span></span>
+    <span class="sep"></span>
+    <span class="item"><i data-icon="users"></i><span class="visually-hidden">Gäste:</span> <span data-bar-guests>2 Gäste</span></span>
+    <button class="btn btn-outline btn-sm" type="button" data-toggle-search aria-controls="booking-search" aria-expanded="false">Suche ändern</button>
+  </div>
+  <div class="container booking-search" id="booking-search" data-booking-search hidden>
+    <form class="search search--inline" data-search novalidate aria-label="Daten und Gäste ändern">
+      <div class="search-field">
+        <label class="label" for="s-from">Anreise</label>
+        <input type="date" id="s-from" name="from" required>
+      </div>
+      <div class="search-field">
+        <label class="label" for="s-to">Abreise</label>
+        <input type="date" id="s-to" name="to" required>
+      </div>
+      <div class="search-field">
+        <label class="label" for="s-guests">Gäste</label>
+        <select id="s-guests" name="guests" data-guests><option value="2">2 Gäste</option></select>
+      </div>
+      <p class="search-note">Kostenlose Stornierung bis <span data-cfg="cancel">14</span> Tage vor der Anreise.</p>
+      <button class="btn btn-primary" type="submit">Aktualisieren</button>
+      <p class="search-error" data-search-error role="alert" hidden></p>
+    </form>
+    <section class="availability" id="tillganglighet" data-availability aria-labelledby="avail-title" hidden>
+      <div class="availability-head">
+        <h2 id="avail-title">Freie Termine</h2>
+        <div class="availability-nav">
+          <button type="button" class="btn btn-outline btn-sm" data-cal-prev aria-label="Vorheriger Monat"><i data-icon="chevron-left"></i></button>
+          <button type="button" class="btn btn-outline btn-sm" data-cal-next aria-label="Nächster Monat"><i data-icon="chevron-right"></i></button>
+        </div>
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-cal-status></p>
+      <div class="cal-months" data-cal-months></div>
+      <p class="cal-legend small">
+        <span><span class="cal-key cal-key--free" aria-hidden="true"></span>Frei</span>
+        <span><span class="cal-key cal-key--booked" aria-hidden="true"></span>Belegt</span>
+        <span><span class="cal-key cal-key--selected" aria-hidden="true"></span>Ihre gewählten Nächte</span>
+        <span data-cal-updated></span>
+      </p>
+    </section>
+  </div>
+</section>
+
+<div class="section section--tight">
+  <div class="container layout-sidebar">
+    <div>
+      <div class="notice notice--warn" data-conflict role="alert" hidden>
+        <i data-icon="calendar"></i>
+        <span data-conflict-text></span>
+      </div>
+      <span class="eyebrow" data-dates-badge>Ihre gewählten Daten</span>
+      <h1 class="h-lg">Gestalten Sie Ihren Aufenthalt im Pinebo Palace</h1>
+      <p class="lead mb-32">Die Preise unten gelten für Ihren gesamten Aufenthalt: <span data-intro-nights>Ihre Nächte</span> für <span data-intro-guests>2 Personen</span>.</p>
+
+      <!-- Grundpaket -->
+      <article class="card package is-selected">
+        <div class="photo">
+          <img src="../assets/img/vardagsrum-1600.webp" srcset="../assets/img/vardagsrum-800.webp 800w, ../assets/img/vardagsrum-1600.webp 1600w" sizes="(max-width: 1080px) 100vw, 760px" width="1600" height="1067" alt="Das Wohnzimmer mit grauem Schlafsofa, weiß getäfelten Wänden und Wärmepumpe" fetchpriority="high" decoding="async">
+        </div>
+        <div class="package-body">
+          <div class="package-head">
+            <div>
+              <h2>Pinebo Classic – Ihre eigene Waldhütte</h2>
+              <span class="sub">Das Grundpaket für Ruhe und Erholung</span>
+            </div>
+            <div class="package-price">
+              <strong data-pkg-total>–</strong>
+              <span data-pkg-detail></span>
+            </div>
+          </div>
+          <p class="package-desc">Unser gemütliches Grundpaket bietet Ihnen das ganze Gästehaus mit eigenem Eingang und Terrasse, umgeben von Wald und einem plätschernden Bach. Perfekt zum Wandern, Lesen auf dem Sofa und einfach Durchatmen. Eine Putz-Checkliste ist inbegriffen.</p>
+          <div class="package-foot">
+            <div class="perks"><span><i data-icon="coffee"></i> Kaffee inklusive</span><span><i data-icon="wifi"></i> Schnelles WLAN</span></div>
+            <span class="badge-selected"><i data-icon="check"></i> Gewähltes Paket</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tillval -->
+      <article class="card package">
+        <div class="photo">
+          <img src="../assets/img/spabad-1600.webp" srcset="../assets/img/spabad-800.webp 800w, ../assets/img/spabad-1600.webp 1600w" sizes="(max-width: 1080px) 100vw, 760px" width="1600" height="1067" alt="Der Whirlpool auf der Terrasse mit Sichtschutz, Sonnenliegen und einer Flasche Sekt im Kühler" loading="lazy" decoding="async">
+        </div>
+        <div class="package-body">
+          <div class="package-head">
+            <div>
+              <span class="tag">Diesen Herbst am beliebtesten</span>
+              <h2>Extras – Holzsauna und Whirlpool</h2>
+              <span class="sub">Wählen Sie ein Extra oder kombinieren Sie beide</span>
+            </div>
+            <div class="package-price">
+              <strong>Ab <span data-cfg="bastu">400</span> SEK</strong>
+              <span><span data-cfg="combo">10</span>&nbsp;% Rabatt bei Buchung von beidem</span>
+            </div>
+          </div>
+          <p class="small ink-soft m-0">Wählen Sie, an wie vielen Tagen Sie die Extras möchten. Der Preis richtet sich nach der Anzahl der Tage.</p>
+
+          <div class="option" data-addon="bastu">
+            <div class="option-head"><h3 id="bastu-title">Holzsauna</h3><span class="price"><span data-cfg="bastu">400</span> SEK/Tag</span></div>
+            <p class="desc">6 Stunden pro Tag · Holz inklusive</p>
+            <div class="option-row">
+              <span id="bastu-days">Anzahl Tage</span>
+              <span class="stepper" role="group" aria-labelledby="bastu-title bastu-days">
+                <button type="button" data-dec aria-label="Weniger Saunatage">−</button>
+                <output data-value aria-live="polite">0</output>
+                <button type="button" data-inc aria-label="Mehr Saunatage">+</button>
+              </span>
+            </div>
+            <div class="option-row"><span>Gewählt</span><b data-period>Nicht gewählt</b></div>
+          </div>
+
+          <div class="option" data-addon="spa">
+            <div class="option-head"><h3 id="spa-title">Whirlpool</h3><span class="price">Ab <span data-cfg="spa">400</span> SEK</span></div>
+            <p class="desc">1–2 Tage: <span data-cfg="spaTiers">400–600</span> SEK · danach <span data-cfg="spaExtra">100</span> SEK pro weiterem Tag</p>
+            <div class="option-row">
+              <span id="spa-days">Anzahl Tage</span>
+              <span class="stepper" role="group" aria-labelledby="spa-title spa-days">
+                <button type="button" data-dec aria-label="Weniger Whirlpooltage">−</button>
+                <output data-value aria-live="polite">0</output>
+                <button type="button" data-inc aria-label="Mehr Whirlpooltage">+</button>
+              </span>
+            </div>
+            <div class="option-row"><span>Gewählt</span><b data-period>Nicht gewählt</b></div>
+          </div>
+
+          <p class="notice notice--inline" data-combo-note role="status" hidden><i data-icon="sparkles"></i> <span>Prima! Sie erhalten <span data-cfg="combo">10</span>&nbsp;% Kombirabatt auf Sauna und Whirlpool.</span></p>
+
+          <div class="option" data-addon="stad">
+            <div class="option-head"><h3>Endreinigung</h3><span class="price"><span data-cfg="stad">800</span> SEK</span></div>
+            <p class="desc">Wir übernehmen Reinigung und Wäsche nach Ihrem Aufenthalt.</p>
+            <div class="option-row"><span>Einmaliges Extra</span><button type="button" class="btn btn-primary btn-sm" data-toggle>Hinzufügen</button></div>
+          </div>
+
+          <div class="option" data-addon="linne">
+            <div class="option-head"><h3>Bettwäsche &amp; Handtücher</h3><span class="price"><span data-cfg="linne">250</span> SEK</span></div>
+            <p class="desc">Bettwäsche, Handtücher und Badetücher für <span data-linne-guests>2 Personen</span>.</p>
+            <div class="option-row"><span>Einmaliges Extra</span><button type="button" class="btn btn-primary btn-sm" data-toggle>Hinzufügen</button></div>
+          </div>
+
+          <div class="package-foot package-foot--ruled">
+            <div class="perks"><span><i data-icon="coffee"></i> Kaffee inklusive</span><span><i data-icon="wifi"></i> Schnelles WLAN</span></div>
+            <a class="btn btn-outline btn-sm" href="kassa.html" data-requires-dates>Weiter zu Ihren Angaben</a>
+          </div>
+        </div>
+      </article>
+
+      <ul class="trust" role="list">
+        <li><i data-icon="shield"></i> Sichere Direktbuchung – keine versteckten Vermittlungsgebühren.</li>
+        <li><i data-icon="paw"></i> Hundefreundliches Gästehaus mit eingezäunter Terrasse.</li>
+      </ul>
+    </div>
+
+    <aside class="sidebar">
+      <div class="card summary" data-summary="all">
+        <h2>Buchungsübersicht</h2>
+        <div class="summary-dates">
+          <div><span class="label">Anreise</span><strong data-sum="checkin">–</strong></div>
+          <i data-icon="arrow-right"></i>
+          <div class="end"><span class="label">Abreise</span><strong data-sum="checkout">–</strong></div>
+        </div>
+        <ul class="summary-lines" data-sum="lines"></ul>
+        <div class="summary-total">
+          <div><strong>Gesamtbetrag</strong><span class="small" data-sum="totalnote"></span></div>
+          <span class="amount" data-sum="total" aria-live="polite" aria-atomic="true">–</span>
+        </div>
+        <a class="btn btn-primary btn-block btn-lg" href="kassa.html" data-requires-dates>Weiter zu Ihren Angaben</a>
+        <p class="small">Jetzt keine Zahlung. Kostenlose Stornierung bis <span data-cfg="cancel">14</span> Tage vor der Anreise.</p>
+      </div>
+
+      <div class="card host-card">
+        <span class="avatar" aria-hidden="true"><img src="../assets/img/vardar.jpg" alt onerror="this.remove()">M&amp;A</span>
+        <div><strong>Fragen vor der Buchung?</strong><span>Ihre Gastgeber sind <span data-cfg="hosts">Maria &amp; Andreas</span>. <a data-mail href="mailto:kontakt@pinebo.se">Schreiben Sie uns</a> direkt.</span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="mobile-cta" data-mobile-cta>
+  <div><span class="small">Gesamtbetrag</span><strong data-sum-total-inline>–</strong></div>
+  <a class="btn btn-primary" href="kassa.html" data-requires-dates>Weiter</a>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a class="brand" href="index.html" aria-label="Pinebo Palace – Startseite"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+        <p>Ein hundefreundliches Gästehaus an einem plätschernden Bach im Wald bei Ulricehamn. Mit Holzsauna, Whirlpool und Gastgebern, die gern ihre besten Tipps teilen.</p>
+      </div>
+      <nav class="footer-col" aria-labelledby="footer-links">
+        <h2 id="footer-links">Links</h2>
+        <ul>
+          <li><a href="boendet.html">Über die Hütte</a></li>
+          <li><a href="bastu-bad.html">Sauna &amp; Whirlpool</a></li>
+          <li><a href="index.html#upplevelser">Aktivitäten</a></li>
+          <li><a href="index.html#faq">Häufige Fragen</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Kontakt</h2>
+        <ul>
+          <li><a data-mail data-cfg="email" href="mailto:kontakt@pinebo.se">kontakt@pinebo.se</a></li>
+          <li><address>Ulricehamn, Schweden</address></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Pinebo Palace. Alle Rechte vorbehalten.</span>
+      <span>Direkt bei Maria &amp; Andreas buchen – ohne Plattformgebühren</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/config.js?v=7"></script>
+<script src="../assets/js/icons.js?v=7"></script>
+<script src="../assets/js/i18n.js?v=7"></script>
+<script src="../assets/js/main.js?v=7"></script>
+</body>
+</html>
