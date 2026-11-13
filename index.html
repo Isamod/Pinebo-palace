@@ -88,8 +88,17 @@
         </div>
         <p>Välkommen till Pinebo Palace – en ombonad stuga i Ulricehamns sydvästra skogar, där du kan stanna upp och bara vara. Boka direkt hos oss, utan mellanhänder.</p>
       </div>
-      <div class="photo" data-img="hero.jpg">
+      <!-- Herofilm: fotot visas direkt, filmen laddas först när resten av sidan är klar (se initHeroVideo i main.js).
+           Filerna skapas med scripts/encode-hero-video.sh. -->
+      <div class="photo hero-media" data-img="hero.jpg" data-hero-video
+           data-src-small="assets/video/hero-720.mp4"
+           data-src-large="assets/video/hero-1080.mp4">
         <img src="assets/img/hero.jpg" alt="Stugan i morgondimma bland höga tallar" fetchpriority="high" onerror="this.remove()">
+        <video class="hero-video" muted loop playsinline preload="none" hidden aria-label="Film från Pinebo Palace"></video>
+        <div class="video-controls" hidden>
+          <button type="button" class="video-btn" data-video-toggle></button>
+          <button type="button" class="video-btn" data-video-sound></button>
+        </div>
       </div>
 
       <form class="search" id="boka" data-search novalidate aria-label="Sök datum och boka">

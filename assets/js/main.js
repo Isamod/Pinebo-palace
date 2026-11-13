@@ -526,9 +526,92 @@
     if (h) h.focus();
   }
 
+  /* ---------- Herofilm ----------
+     - Fotot är sidans första bild; filmen laddas först efter att sidan laddat klart.
+     - Mobil/små skärmar får en mindre fil.
+     - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
+     - Ljudet är alltid av från början och slås bara på av besökaren.
+     - Filmen pausas när den inte syns och fortsätter när den syns igen,
+       om inte besökaren själv har pausat. */
+  function initHeroVideo() {
+    var box = $("[data-hero-video]");
+    if (!box || !("IntersectionObserver" in window)) return;
+    var video = $("video", box);
+    var controls = $(".video-controls", box);
+    var toggle = $("[data-video-toggle]", box);
+    var sound = $("[data-video-sound]", box);
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var conn = navigator.connection || {};
+    var saveData = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
+    var autoplay = !reduceMotion && !saveData;
+    var userPaused = !autoplay;
+    var inView = true;
+
+    function setBtn(btn, icon, label) {
+      btn.innerHTML = '<i data-icon="' + icon + '"></i><span class="video-btn-text">' + label + "</span>";
+      window.PineboIcons.render(btn);
+    }
+    function updateUI() {
+      setBtn(toggle, video.paused ? "play" : "pause", video.paused ? "Spela filmen" : "Pausa filmen");
+      setBtn(sound, video.muted ? "volume-x" : "volume", video.muted ? "Slå på ljud" : "Stäng av ljud");
+    }
+    function play() {
+      var p = video.play();
+      if (p && p.catch) p.catch(function () { userPaused = true; updateUI(); });
+    }
+    function fail() {
+      video.removeAttribute("src");
+      video.hidden = true;
+      controls.hidden = true;
+      box.classList.remove("video-ready");
+    }
+
+    video.addEventListener("play", updateUI);
+    video.addEventListener("pause", updateUI);
+    video.addEventListener("volumechange", updateUI);
+    video.addEventListener("playing", function () { box.classList.add("video-ready"); });
+    video.addEventListener("error", fail);
+    video.addEventListener("loadedmetadata", function () {
+      controls.hidden = false;
+      updateUI();
+      if (!userPaused && inView) play();
+    });
+
+    toggle.addEventListener("click", function () {
+      if (video.paused) { userPaused = false; play(); }
+      else { userPaused = true; video.pause(); }
+    });
+    sound.addEventListener("click", function () {
+      video.muted = !video.muted;
+      if (!video.muted && video.paused) { userPaused = false; play(); }
+    });
+
+    new IntersectionObserver(function (entries) {
+      inView = entries[0].isIntersecting;
+      if (!video.src) return;
+      if (!inView && !video.paused) video.pause();
+      else if (inView && !userPaused && video.paused) play();
+    }, { threshold: 0.25 }).observe(box);
+
+    function load() {
+      var small = window.matchMedia("(max-width: 900px)").matches;
+      video.preload = autoplay ? "auto" : "metadata";
+      video.src = small ? box.getAttribute("data-src-small") : box.getAttribute("data-src-large");
+      video.hidden = false;
+    }
+    function schedule() {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(load, { timeout: 2000 });
+      else setTimeout(load, 200);
+    }
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+  }
+
   /* ---------- Start ---------- */
   var booking = getBooking();
   initNav();
+  initHeroVideo();
   fillConfigValues();
   fillGuestSelects(booking.guests);
   initSearchForms(booking);
