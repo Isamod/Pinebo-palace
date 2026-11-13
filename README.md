@@ -34,23 +34,19 @@ Se `assets/img/README.md` för vilka filnamn som behövs.
 
 ## Herofilm på startsidan
 
-Startsidans toppbild kan vara en film. Skapa webbfilerna från originalfilmen med:
+Toppen av startsidan visar en YouTube-film (ca 1 minut) som loopar. Film-id:t står
+i `index.html` på elementet `data-youtube-id`. Byt id:t för att byta film.
 
-```bash
-scripts/encode-hero-video.sh /sökväg/till/originalfilm.mp4
-```
-
-Valfritt andra argument kortar filmen, t.ex. `30` för de första 30 sekunderna.
-Skriptet skapar `assets/video/hero-1080.mp4`, `assets/video/hero-720.mp4` och
-`assets/img/hero.jpg` (stillbild). Lägg aldrig originalfilen i repot.
-
-Så påverkar filmen inte sidan negativt:
-- Stillbilden visas direkt, och filmen hämtas först när resten av sidan har laddat.
-- Mobiler får 720p-versionen.
+Så påverkar filmen sidan så lite som möjligt:
+- Stillbilden visas direkt. YouTube-spelaren laddas först när resten av sidan har laddat.
+- Cookie-fri YouTube-domän (`youtube-nocookie.com`), utan YouTubes separata API-skript.
+- Ljudet är av från start. Egna knappar för paus/spela och ljud på/av. YouTubes egna
+  kontroller och videoförslag visas inte.
 - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
-- Ljudet är av från start. Det finns knappar för paus/spela och ljud på/av.
-- Filmen pausas när den scrollas ur bild.
-- Saknas filmfilerna visas bara stillbilden.
+- Filmen pausas när den scrollas ur bild. Pausad film visar stillbilden.
+
+Tips: lägg en egen stillbild som `assets/img/hero.jpg` och byt `src` på bilden i
+heron – det laddar snabbare och ser bättre ut än YouTubes miniatyrbild.
 
 ## Hur bokningen fungerar just nu
 

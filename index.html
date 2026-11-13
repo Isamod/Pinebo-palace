@@ -15,6 +15,8 @@
   <meta property="og:url" content="https://isamod.github.io/Pinebo-palace/">
   <meta property="og:image" content="https://isamod.github.io/Pinebo-palace/assets/img/hero.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel="dns-prefetch" href="https://www.youtube-nocookie.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
@@ -88,13 +90,11 @@
         </div>
         <p>Välkommen till Pinebo Palace – en ombonad stuga i Ulricehamns sydvästra skogar, där du kan stanna upp och bara vara. Boka direkt hos oss, utan mellanhänder.</p>
       </div>
-      <!-- Herofilm: fotot visas direkt, filmen laddas först när resten av sidan är klar (se initHeroVideo i main.js).
-           Filerna skapas med scripts/encode-hero-video.sh. -->
-      <div class="photo hero-media" data-img="hero.jpg" data-hero-video
-           data-src-small="assets/video/hero-720.mp4"
-           data-src-large="assets/video/hero-1080.mp4">
-        <img src="assets/img/hero.jpg" alt="Stugan i morgondimma bland höga tallar" fetchpriority="high" onerror="this.remove()">
-        <video class="hero-video" muted loop playsinline preload="none" hidden aria-label="Film från Pinebo Palace"></video>
+      <!-- Herofilm från YouTube (se initHeroVideo i main.js).
+           Stillbilden visas direkt; spelaren laddas först när resten av sidan har laddat klart.
+           Byt gärna stillbilden mot en egen assets/img/hero.jpg (snabbare än YouTubes bild). -->
+      <div class="photo hero-media" data-img="hero" data-hero-video data-youtube-id="Xw8OHbYiO7k">
+        <img src="https://i.ytimg.com/vi/Xw8OHbYiO7k/maxresdefault.jpg" alt="Stugan i morgondimma bland höga tallar" fetchpriority="high" onerror="this.remove()">
         <div class="video-controls" hidden>
           <button type="button" class="video-btn" data-video-toggle></button>
           <button type="button" class="video-btn" data-video-sound></button>

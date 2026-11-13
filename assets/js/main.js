@@ -526,17 +526,20 @@
     if (h) h.focus();
   }
 
-  /* ---------- Herofilm ----------
-     - Fotot är sidans första bild; filmen laddas först efter att sidan laddat klart.
-     - Mobil/små skärmar får en mindre fil.
+  /* ---------- Herofilm (YouTube) ----------
+     - Stillbilden visas direkt. YouTube-spelaren skapas först när sidan har laddat klart,
+       så den inte konkurrerar med sidans egna filer.
+     - Cookie-fri domän (youtube-nocookie.com). Spelaren styrs med postMessage,
+       så YouTubes separata API-skript behöver inte laddas.
+     - Loopar, startar alltid utan ljud. Egna knappar för paus/spela och ljud.
      - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
-     - Ljudet är alltid av från början och slås bara på av besökaren.
-     - Filmen pausas när den inte syns och fortsätter när den syns igen,
-       om inte besökaren själv har pausat. */
+     - Pausas när den inte syns och fortsätter när den syns igen,
+       om inte besökaren själv har pausat. När filmen är pausad visas stillbilden. */
   function initHeroVideo() {
     var box = $("[data-hero-video]");
     if (!box || !("IntersectionObserver" in window)) return;
-    var video = $("video", box);
+    var id = box.getAttribute("data-youtube-id");
+    var ORIGIN = "https://www.youtube-nocookie.com";
     var controls = $(".video-controls", box);
     var toggle = $("[data-video-toggle]", box);
     var sound = $("[data-video-sound]", box);
@@ -545,6 +548,11 @@
     var conn = navigator.connection || {};
     var saveData = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
     var autoplay = !reduceMotion && !saveData;
+
+    var frame = null;
+    var ready = false;
+    var playing = false;
+    var muted = true;
     var userPaused = !autoplay;
     var inView = true;
 
@@ -553,56 +561,95 @@
       window.PineboIcons.render(btn);
     }
     function updateUI() {
-      setBtn(toggle, video.paused ? "play" : "pause", video.paused ? "Spela filmen" : "Pausa filmen");
-      setBtn(sound, video.muted ? "volume-x" : "volume", video.muted ? "Slå på ljud" : "Stäng av ljud");
+      setBtn(toggle, playing ? "pause" : "play", playing ? "Pausa filmen" : "Spela filmen");
+      setBtn(sound, muted ? "volume-x" : "volume", muted ? "Slå på ljud" : "Stäng av ljud");
+      box.classList.toggle("video-ready", playing);
     }
-    function play() {
-      var p = video.play();
-      if (p && p.catch) p.catch(function () { userPaused = true; updateUI(); });
+    function send(data) {
+      if (frame && frame.contentWindow) {
+        data.id = 1;
+        data.channel = "widget";
+        frame.contentWindow.postMessage(JSON.stringify(data), ORIGIN);
+      }
     }
-    function fail() {
-      video.removeAttribute("src");
-      video.hidden = true;
-      controls.hidden = true;
-      box.classList.remove("video-ready");
+    function cmd(func, args) { if (ready) send({ event: "command", func: func, args: args || [] }); }
+
+    function create() {
+      if (frame) return;
+      var params = new URLSearchParams({
+        autoplay: 1, mute: 1, loop: 1, playlist: id, controls: 0, playsinline: 1,
+        rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, modestbranding: 1,
+        enablejsapi: 1, origin: location.origin,
+      });
+      frame = document.createElement("iframe");
+      frame.className = "hero-video";
+      frame.src = ORIGIN + "/embed/" + encodeURIComponent(id) + "?" + params.toString();
+      frame.title = "Film från Pinebo Palace";
+      frame.allow = "autoplay; encrypted-media; picture-in-picture";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      // Styrs via knapparna ovan – spelaren själv ska inte gå att tabba in i
+      frame.tabIndex = -1;
+      frame.setAttribute("aria-hidden", "true");
+      frame.addEventListener("load", function () { send({ event: "listening" }); });
+      box.insertBefore(frame, controls);
     }
 
-    video.addEventListener("play", updateUI);
-    video.addEventListener("pause", updateUI);
-    video.addEventListener("volumechange", updateUI);
-    video.addEventListener("playing", function () { box.classList.add("video-ready"); });
-    video.addEventListener("error", fail);
-    video.addEventListener("loadedmetadata", function () {
-      controls.hidden = false;
+    window.addEventListener("message", function (e) {
+      if (e.origin !== ORIGIN || !frame || e.source !== frame.contentWindow) return;
+      var d;
+      try { d = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+      if (!d || !d.event) return;
+      var info = d.info || {};
+      if (d.event === "onReady" || d.event === "initialDelivery") {
+        if (!ready) {
+          ready = true;
+          if (!muted) cmd("unMute");
+          if (userPaused || !inView) cmd("pauseVideo");
+        }
+      }
+      var state = d.event === "onStateChange" ? d.info : (typeof info.playerState === "number" ? info.playerState : null);
+      if (state === 1) playing = true;        // spelar
+      else if (state === 2) playing = false;  // pausad (övriga lägen, t.ex. loop-omstart, ignoreras)
+      if (typeof info.muted === "boolean") muted = info.muted;
       updateUI();
-      if (!userPaused && inView) play();
     });
 
     toggle.addEventListener("click", function () {
-      if (video.paused) { userPaused = false; play(); }
-      else { userPaused = true; video.pause(); }
+      if (playing) {
+        userPaused = true;
+        playing = false;
+        cmd("pauseVideo");
+        updateUI();
+      } else {
+        userPaused = false;
+        if (frame) cmd("playVideo"); else create();
+      }
     });
     sound.addEventListener("click", function () {
-      video.muted = !video.muted;
-      if (!video.muted && video.paused) { userPaused = false; play(); }
+      muted = !muted;
+      if (frame) cmd(muted ? "mute" : "unMute");
+      if (!muted && !playing) {
+        userPaused = false;
+        if (frame) cmd("playVideo"); else create();
+      }
+      updateUI();
     });
 
     new IntersectionObserver(function (entries) {
       inView = entries[0].isIntersecting;
-      if (!video.src) return;
-      if (!inView && !video.paused) video.pause();
-      else if (inView && !userPaused && video.paused) play();
+      if (!frame) return;
+      if (!inView && playing) { cmd("pauseVideo"); }
+      else if (inView && !userPaused && !playing) { cmd("playVideo"); }
     }, { threshold: 0.25 }).observe(box);
 
-    function load() {
-      var small = window.matchMedia("(max-width: 900px)").matches;
-      video.preload = autoplay ? "auto" : "metadata";
-      video.src = small ? box.getAttribute("data-src-small") : box.getAttribute("data-src-large");
-      video.hidden = false;
+    function start() {
+      controls.hidden = false;
+      updateUI();
+      if (autoplay) create();
     }
     function schedule() {
-      if ("requestIdleCallback" in window) window.requestIdleCallback(load, { timeout: 2000 });
-      else setTimeout(load, 200);
+      if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 2000 });
+      else setTimeout(start, 200);
     }
     if (document.readyState === "complete") schedule();
     else window.addEventListener("load", schedule, { once: true });
