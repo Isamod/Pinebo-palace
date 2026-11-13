@@ -8,7 +8,9 @@ mindre filen. Skapa nya med samma namnmönster: `namn-800.webp` och `namn-1600.w
 | Fil                  | Används på                                          |
 |----------------------|-----------------------------------------------------|
 | `vardagsrum-*.webp`  | Start (Boendet), Boendet (galleri), Boka            |
-| `sovloft-*.webp`     | Boendet (galleri)                                   |
+| `sovloft-*.webp`     | Boendet (galleri) – balkongdörren                   |
+| `sovloft-sang-*.webp`| Boendet (galleri) – dubbelsängen                    |
+| `kok-oversikt-*.webp`| Boendet (galleri)                                   |
 | `kok-*.webp`         | Start (intro), Boendet (galleri)                    |
 | `bastu-*.webp`       | Start (bastukort), Bastu & Bad                      |
 | `bastu-eld-*.webp`   | Bastu & Bad (toppbild)                              |

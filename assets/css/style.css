@@ -535,10 +535,10 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 /* ---------- Boendet ---------- */
 .gallery {
   display: grid;
-  grid-template-columns: 1.85fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   grid-template-rows: repeat(2, 1fr);
-  gap: 18px;
-  height: 440px;
+  gap: 16px;
+  height: 500px;
 }
 .gallery .photo { min-height: 0; height: 100%; }
 .gallery .photo:first-child { grid-row: span 2; }
