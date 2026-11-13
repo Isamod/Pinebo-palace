@@ -74,6 +74,16 @@ function relLink(fromLang, toLang, page) {
   return (LANGS[fromLang].dir ? "../" : "") + LANGS[toLang].dir + page;
 }
 
+// Tar bort ett element och mellanrummet (radbrytningen) före det, så att
+// upprepade byggen inte lämnar tomma rader efter sig
+function removeWithSpace(node) {
+  const siblings = node.parentNode.childNodes;
+  const i = siblings.indexOf(node);
+  const prev = siblings[i - 1];
+  if (prev && prev.nodeType === 3 && !prev.text.trim()) prev.remove();
+  node.remove();
+}
+
 function langSwitch(lang, page, cls) {
   const items = Object.entries(LANGS).map(([code, l]) =>
     `<a href="${relLink(lang, code, page)}" hreflang="${code}" lang="${code}"${code === lang ? ' aria-current="true"' : ""}>` +
@@ -97,7 +107,7 @@ function processPage(html, lang, page, t) {
 
   // hreflang och canonical för publika sidor
   const head = doc.querySelector("head");
-  doc.querySelectorAll('link[rel="alternate"][hreflang]').forEach((n) => n.remove());
+  doc.querySelectorAll('link[rel="alternate"][hreflang]').forEach(removeWithSpace);
   if (PUBLIC.includes(page)) {
     const urlFor = (code) => BASE + LANGS[code].dir + (page === "index.html" ? "" : page);
     const canon = doc.querySelector('link[rel="canonical"]');
