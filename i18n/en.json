@@ -334,5 +334,9 @@
   "Altanen är inhägnad. Tyvärr inga katter på grund av allergi.": "The deck is fenced. Sorry, no cats due to allergies.",
   "Säker betalning": "Secure payment",
   "Du betalar med kort via Stripe – utan plattformsavgifter.": "You pay by card via Stripe – no platform fees.",
-  "Bokningsformulär": "Booking form"
+  "Bokningsformulär": "Booking form",
+  "dagar före ankomst. Avbokar du senare än så debiteras hela beloppet.": "days before arrival. If you cancel later than that, the full amount is charged.",
+  "Avbokning": "Cancellation",
+  "Fri avbokning fram till": "Free cancellation up to",
+  "dagar före ankomst. Avbokar du senare debiteras hela beloppet.": "days before arrival. Later cancellations are charged in full."
 }

@@ -333,5 +333,9 @@
   "Altanen är inhägnad. Tyvärr inga katter på grund av allergi.": "Die Terrasse ist eingezäunt. Leider keine Katzen wegen Allergien.",
   "Säker betalning": "Sichere Zahlung",
   "Du betalar med kort via Stripe – utan plattformsavgifter.": "Sie zahlen per Karte über Stripe – ohne Plattformgebühren.",
-  "Bokningsformulär": "Buchungsformular"
+  "Bokningsformulär": "Buchungsformular",
+  "dagar före ankomst. Avbokar du senare än så debiteras hela beloppet.": "Tage vor der Anreise. Bei einer späteren Stornierung wird der volle Betrag berechnet.",
+  "Avbokning": "Stornierung",
+  "Fri avbokning fram till": "Kostenlose Stornierung bis",
+  "dagar före ankomst. Avbokar du senare debiteras hela beloppet.": "Tage vor der Anreise. Spätere Stornierungen werden voll berechnet."
 }
