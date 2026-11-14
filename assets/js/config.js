@@ -10,9 +10,9 @@ window.PINEBO = {
   minNights: 1,
   checkInTime: "15:00",
   checkOutTime: "11:00",
-  freeCancellationDays: 14,
+  freeCancellationDays: 3,
 
   // Kontakt
   hosts: "Maria & Andreas",
-  email: "kontakt@pinebo.se",
+  email: "maria@pinebo.se",
 };

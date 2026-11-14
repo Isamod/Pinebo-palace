@@ -88,7 +88,8 @@ i de andra kanalerna.
 
 - [ ] Riktiga foton (se `assets/img/README.md`)
 - [x] Riktiga gästomdömen (från Airbnb)
-- [ ] Korrekt e-post i `config.js` och priser som stämmer med Sirvoy
+- [x] Korrekt e-post i `config.js`
+- [ ] Priser som stämmer med Sirvoy (bekräfta lägsta nattpris)
 - [x] Bokning, tillgänglighet och betalning via Sirvoy
 - [ ] Bokningsvillkor/ordningsregler som sida
 - [ ] Integritetspolicy (GDPR)
