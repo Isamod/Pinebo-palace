@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://isamod.github.io/Pinebo-palace/sitemap.xml
+Sitemap: https://pinebo.se/sitemap.xml
