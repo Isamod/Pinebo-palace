@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pinebo.se/sitemap.xml
+Sitemap: https://www.pinebo.se/sitemap.xml

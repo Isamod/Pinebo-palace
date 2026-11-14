@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://pinebo.se/</loc>
+    <loc>https://www.pinebo.se/</loc>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/"/>
   </url>
   <url>
-    <loc>https://pinebo.se/en/</loc>
+    <loc>https://www.pinebo.se/en/</loc>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/"/>
   </url>
   <url>
-    <loc>https://pinebo.se/de/</loc>
+    <loc>https://www.pinebo.se/de/</loc>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/"/>
   </url>
   <url>
-    <loc>https://pinebo.se/boendet.html</loc>
+    <loc>https://www.pinebo.se/boendet.html</loc>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/boendet.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/en/boendet.html</loc>
+    <loc>https://www.pinebo.se/en/boendet.html</loc>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/boendet.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/de/boendet.html</loc>
+    <loc>https://www.pinebo.se/de/boendet.html</loc>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/boendet.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/boendet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/boendet.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/bastu-bad.html</loc>
+    <loc>https://www.pinebo.se/bastu-bad.html</loc>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/bastu-bad.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/en/bastu-bad.html</loc>
+    <loc>https://www.pinebo.se/en/bastu-bad.html</loc>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/bastu-bad.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/de/bastu-bad.html</loc>
+    <loc>https://www.pinebo.se/de/bastu-bad.html</loc>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/bastu-bad.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/bastu-bad.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/bastu-bad.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/bokningsvillkor.html</loc>
+    <loc>https://www.pinebo.se/bokningsvillkor.html</loc>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/bokningsvillkor.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/en/bokningsvillkor.html</loc>
+    <loc>https://www.pinebo.se/en/bokningsvillkor.html</loc>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/bokningsvillkor.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/de/bokningsvillkor.html</loc>
+    <loc>https://www.pinebo.se/de/bokningsvillkor.html</loc>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/bokningsvillkor.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/bokningsvillkor.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/bokningsvillkor.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/integritetspolicy.html</loc>
+    <loc>https://www.pinebo.se/integritetspolicy.html</loc>
     <priority>0.2</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/integritetspolicy.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/en/integritetspolicy.html</loc>
+    <loc>https://www.pinebo.se/en/integritetspolicy.html</loc>
     <priority>0.2</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/integritetspolicy.html"/>
   </url>
   <url>
-    <loc>https://pinebo.se/de/integritetspolicy.html</loc>
+    <loc>https://www.pinebo.se/de/integritetspolicy.html</loc>
     <priority>0.2</priority>
-    <xhtml:link rel="alternate" hreflang="sv" href="https://pinebo.se/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://pinebo.se/en/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://pinebo.se/de/integritetspolicy.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://pinebo.se/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/integritetspolicy.html"/>
   </url>
 </urlset>
