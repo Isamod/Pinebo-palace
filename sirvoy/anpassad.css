@@ -104,6 +104,7 @@ fieldset[disabled] .button {
 .input,
 .textarea,
 .select select {
+  background-color: #ffffff !important;
   border-color: #c4beb1 !important;
   border-radius: 8px !important;
   box-shadow: none !important;
