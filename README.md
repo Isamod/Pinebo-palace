@@ -91,6 +91,7 @@ i de andra kanalerna.
 - [x] Korrekt e-post i `config.js`
 - [ ] Priser som stämmer med Sirvoy (bekräfta lägsta nattpris)
 - [x] Bokning, tillgänglighet och betalning via Sirvoy
-- [ ] Bokningsvillkor/ordningsregler som sida
-- [ ] Integritetspolicy (GDPR)
+- [x] Bokningsvillkor (bokningsvillkor.html)
+- [x] Integritetspolicy (integritetspolicy.html)
+- [ ] Länka bokningsvillkor och integritetspolicy i Sirvoy när den egna domänen finns
 - [ ] Publicering (t.ex. GitHub Pages) och domän

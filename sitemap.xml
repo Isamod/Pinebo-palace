@@ -96,4 +96,28 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/bokningsvillkor.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/bokningsvillkor.html"/>
   </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/integritetspolicy.html</loc>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/integritetspolicy.html"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/en/integritetspolicy.html</loc>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/integritetspolicy.html"/>
+  </url>
+  <url>
+    <loc>https://isamod.github.io/Pinebo-palace/de/integritetspolicy.html</loc>
+    <priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://isamod.github.io/Pinebo-palace/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://isamod.github.io/Pinebo-palace/en/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://isamod.github.io/Pinebo-palace/de/integritetspolicy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://isamod.github.io/Pinebo-palace/en/integritetspolicy.html"/>
+  </url>
 </urlset>
