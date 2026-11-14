@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 import { parse } from "node-html-parser";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const BASE = "https://isamod.github.io/Pinebo-palace/";
+const BASE = "https://pinebo.se/";
 const PAGES = ["index.html", "boendet.html", "bastu-bad.html", "boka.html", "bokningsvillkor.html", "integritetspolicy.html"];
 const PUBLIC = ["index.html", "boendet.html", "bastu-bad.html", "bokningsvillkor.html", "integritetspolicy.html"];
 const LANGS = {

@@ -12,6 +12,8 @@ python3 -m http.server 8000
 
 …och gå till http://localhost:8000.
 
+Sajten finns på **https://pinebo.se** (GitHub Pages, domänen och DNS hos one.com).
+
 ## Sidor
 
 | Fil              | Innehåll                                                |
@@ -100,4 +102,4 @@ i de andra kanalerna.
 - [x] Bokningsvillkor (bokningsvillkor.html)
 - [x] Integritetspolicy (integritetspolicy.html)
 - [ ] Länka bokningsvillkor och integritetspolicy i Sirvoy när den egna domänen finns
-- [ ] Publicering (t.ex. GitHub Pages) och domän
+- [x] Publicering på GitHub Pages med domänen pinebo.se (DNS hos one.com)
