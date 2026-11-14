@@ -120,4 +120,28 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/integritetspolicy.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/integritetspolicy.html"/>
   </url>
+  <url>
+    <loc>https://www.pinebo.se/omradet.html</loc>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/omradet.html"/>
+  </url>
+  <url>
+    <loc>https://www.pinebo.se/en/omradet.html</loc>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/omradet.html"/>
+  </url>
+  <url>
+    <loc>https://www.pinebo.se/de/omradet.html</loc>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.pinebo.se/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pinebo.se/en/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pinebo.se/de/omradet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pinebo.se/en/omradet.html"/>
+  </url>
 </urlset>
