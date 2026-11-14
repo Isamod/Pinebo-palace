@@ -38,7 +38,9 @@
     "Coop",
     "Willys",
     "ICA Maxi Stormarknad",
-    "Borås"
+    "Borås",
+    "Ulricehamn Ski Bike Hike",
+    "skibikehike.se"
   ],
   "Hoppa till innehållet": "Zum Inhalt springen",
   "Boendet": "Die Unterkunft",
@@ -437,7 +439,6 @@
   "Vattnet renas och sköts regelbundet, så att det alltid är rent och klart när du kliver i.": "Das Wasser wird regelmäßig aufbereitet und gepflegt, damit es immer sauber und klar ist, wenn Sie hineinsteigen.",
   "Gratis parkering för 2 bilar vid gästhuset.": "Kostenlose Parkplätze für 2 Autos am Gästehaus.",
   "Vandring, bad och utflykter i Ulricehamn | Pinebo Palace": "Wandern, Baden und Ausflüge in Ulricehamn | Pinebo Palace",
-  "Värdarnas tips runt Ulricehamn: vandringsleder som Blå stigen, Komosse och Klevaberget, badplatser och avstånd till mataffärer, Borås och Göteborg.": "Tipps der Gastgeber rund um Ulricehamn: Wanderwege wie Blå stigen, Komosse und Klevaberget, Badestellen und Entfernungen zu Läden und Städten.",
   "Upplev Ulricehamn": "Ulricehamn erleben",
   "Vandring, bad och natur runt Ulricehamn": "Wandern, Baden und Natur rund um Ulricehamn",
   "Runt Pinebo Palace finns skog, sjöar och vandringsleder i alla längder. Här har vi samlat våra favoriter – fler tips hittar du i husmanualen i gästhuset.": "Rund um das Pinebo Palace gibt es Wälder, Seen und Wanderwege in allen Längen. Hier haben wir unsere Favoriten gesammelt – weitere Tipps finden Sie im Hausbuch im Gästehaus.",
@@ -484,5 +485,11 @@
   "8,8 km": "8,8 km",
   "En omväxlande led som delvis går på en historisk banvall, genom välbevarat odlingslandskap och förbi kvarlevor av den gamla ridvägen.": "Ein abwechslungsreicher Weg, teils auf einem historischen Bahndamm, durch gut erhaltene Kulturlandschaft und an Resten des alten Reitwegs vorbei.",
   "7,4 km": "7,4 km",
-  "En vacker vandringsled runt sjön Mogden, en av Hökerums mittpunkter, med flera fornminnen och sevärdheter längs vägen.": "Ein schöner Wanderweg rund um den See Mogden, einen der Mittelpunkte von Hökerum, mit mehreren Bodendenkmälern und Sehenswürdigkeiten unterwegs."
+  "En vacker vandringsled runt sjön Mogden, en av Hökerums mittpunkter, med flera fornminnen och sevärdheter längs vägen.": "Ein schöner Wanderweg rund um den See Mogden, einen der Mittelpunkte von Hökerum, mit mehreren Bodendenkmälern und Sehenswürdigkeiten unterwegs.",
+  "Skidor och cykling": "Skifahren und Radfahren",
+  "Ulricehamn har en egen skid- och cykelanläggning – perfekt för en aktiv dag oavsett säsong.": "Ulricehamn hat ein eigenes Ski- und Bikegebiet – ideal für einen aktiven Tag zu jeder Jahreszeit.",
+  "En anläggning som är öppen året runt. På vintern finns 8 nedfarter, 7 liftar, barnområde och skidskola. På sommaren blir den en bike park med 12 downhill-leder, från lätta till extrema.": "Ein ganzjährig geöffnetes Gebiet. Im Winter gibt es 8 Pisten, 7 Lifte, einen Kinderbereich und eine Skischule. Im Sommer wird es zum Bikepark mit 12 Downhill-Strecken, von leicht bis extrem.",
+  "Värdarnas tips runt Ulricehamn: vandringsleder som Blå stigen och Komosse, Ski Bike Hike, badplatser vid Åsunden och avstånd till Borås och Göteborg.": "Tipps der Gastgeber rund um Ulricehamn: Wanderwege wie Blå stigen und Komosse, Ski Bike Hike, Baden am Åsunden und Entfernungen zu Städten.",
+  "13 min med bil · Vinter: alpint · Sommar: bike park": "13 Min. mit dem Auto · Winter: Alpinski · Sommer: Bikepark",
+  "13 min med bil": "13 Min. mit dem Auto"
 }
