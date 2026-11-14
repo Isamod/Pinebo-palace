@@ -294,9 +294,6 @@
   "Från 400 kr": "From SEK 400",
   "Nybyggd bastu med plats för upp till fyra personer och tillhörande kallbad. Du tänder kaminen själv – ved ingår.": "A newly built sauna for up to four people, with its own cold plunge. You light the stove yourself – firewood included.",
   "4 timmar per dag – svalka dig i kallbadet efteråt": "4 hours per day – cool off in the cold plunge afterwards",
-  "1 dag 400 kr · 2 dagar 600 kr": "1 day SEK 400 · 2 days SEK 600",
-  "Nybyggd bastu med kallbad, 4 timmar per dag och ved ingår. 1 dag 400 kr, 2 dagar 600 kr, 3 dagar 700 kr.": "Newly built sauna with a cold plunge, 4 hours per day, firewood included. 1 day SEK 400, 2 days SEK 600, 3 days SEK 700.",
-  "1 dag 400 kr, 2 dagar 600 kr, därefter 100 kr per extra dag.": "1 day SEK 400, 2 days SEK 600, then SEK 100 per extra day.",
   "600 kr": "SEK 600",
   "Sängkläder 80 kr och handdukar 50 kr per set. Bokar du en hel vecka ingår sängkläderna.": "Bed linen SEK 80 and towels SEK 50 per set. Bed linen is included when you book a full week.",
   "Från 50 kr": "From SEK 50",
@@ -316,7 +313,6 @@
   "Svalka dig i kallbadet eller i altanens friska luft – och kliv sedan ner i det varma spabadet under stjärnorna.": "Cool off in the cold plunge or the fresh air on the deck – then slip into the warm hot tub under the stars.",
   "Kan jag hyra handdukar?": "Can I rent towels?",
   "Ja. Du kan ta med egna eller hyra av oss när du bokar: handdukar 50 kr och sängkläder 80 kr per set.": "Yes. You can bring your own or rent from us when you book: towels SEK 50 and bed linen SEK 80 per set.",
-  "Du väljer bastu och spabad som tillval när du bokar. Bastun kostar 400 kr för 1 dag, 600 kr för 2 dagar och 700 kr för 3 dagar, med 4 timmar per dag. Spabadet kostar 400 kr för 1 dag, 600 kr för 2 dagar och därefter 100 kr per extra dag.": "You choose the sauna and hot tub as extras when you book. The sauna costs SEK 400 for 1 day, SEK 600 for 2 days and SEK 700 for 3 days, with 4 hours per day. The hot tub costs SEK 400 for 1 day, SEK 600 for 2 days and then SEK 100 per extra day.",
   "Finns det kallbad vid bastun?": "Is there a cold plunge by the sauna?",
   "Ja – bastun har ett tillhörande kallbad som kan fyllas med bäckvatten eller vanligt vatten. Du kan också doppa dig i själva bäcken, men den är relativt grund.": "Yes – the sauna has its own cold plunge that can be filled with stream water or regular water. You can also take a dip in the stream itself, but it's fairly shallow.",
   "Nybyggd vedeldad bastu med kallbad och varmt spabad under stjärnhimlen – boka som tillval när du hyr Pinebo Palace, ett hundvänligt gästhus vid en bäck utanför Ulricehamn.": "A newly built wood-fired sauna with a cold plunge and a warm hot tub under the stars – book them as extras when you rent Pinebo Palace, a dog-friendly guesthouse by a stream outside Ulricehamn, Sweden.",
@@ -411,5 +407,9 @@
   "Om du anser att vi hanterar dina uppgifter fel kan du lämna klagomål till Integritetsskyddsmyndigheten (IMY),": "If you believe we are handling your data incorrectly, you can lodge a complaint with the Swedish Authority for Privacy Protection (IMY),",
   "8. Ändringar": "8. Changes",
   "Vi kan komma att uppdatera policyn. Senast uppdaterad 14 november 2026.": "We may update this policy. Last updated 14 November 2026.",
-  "Några tjänster från andra företag laddas när du besöker sidan och kan då få del av din IP-adress: filmen på startsidan från YouTube (via youtube-nocookie.com) och bokningsformuläret från Sirvoy, som kan använda cookies som behövs för att bokningen ska fungera.": "Some services from other companies load when you visit the site and may receive your IP address: the video on the home page from YouTube (via youtube-nocookie.com) and the booking form from Sirvoy, which may use cookies needed for the booking to work."
+  "Några tjänster från andra företag laddas när du besöker sidan och kan då få del av din IP-adress: filmen på startsidan från YouTube (via youtube-nocookie.com) och bokningsformuläret från Sirvoy, som kan använda cookies som behövs för att bokningen ska fungera.": "Some services from other companies load when you visit the site and may receive your IP address: the video on the home page from YouTube (via youtube-nocookie.com) and the booking form from Sirvoy, which may use cookies needed for the booking to work.",
+  "Första dagen 400 kr · extra dag 200 kr": "First day SEK 400 · extra day SEK 200",
+  "Nybyggd bastu med kallbad, 4 timmar per dag och ved ingår. Första dagen 400 kr, därefter 200 kr per extra dag.": "Newly built sauna with a cold plunge, 4 hours per day, firewood included. First day SEK 400, then SEK 200 per extra day.",
+  "Första dagen 400 kr, därefter 200 kr per extra dag.": "First day SEK 400, then SEK 200 per extra day.",
+  "Du väljer bastu och spabad som tillval när du bokar. Båda kostar 400 kr för första dagen och 200 kr för varje extra dag – halva priset. Bastun är din 4 timmar per bokad dag.": "You choose the sauna and hot tub as extras when you book. Both cost SEK 400 for the first day and SEK 200 for each extra day – half price. The sauna is yours for 4 hours per booked day."
 }
