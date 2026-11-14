@@ -5,7 +5,19 @@
    Påverkar bara utseendet – priser, tillval och betalning fungerar som vanligt.
    ========================================================================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif&display=swap");
+/* Typsnitten hämtas från webbplatsen. Byt adressen när den egna domänen är på plats. */
+@font-face {
+  font-family: "Figtree";
+  src: url("https://isamod.github.io/Pinebo-palace/assets/fonts/figtree-latin.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("https://isamod.github.io/Pinebo-palace/assets/fonts/instrument-serif-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
 
 /* ---------- Grund ---------- */
 body {
