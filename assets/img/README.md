@@ -24,6 +24,7 @@ mindre filen. Skapa nya med samma namnmönster: `namn-800.webp` och `namn-1600.w
 | `svamp-*.webp`       | Start – Upplevelser                                 |
 | `entre-*.webp`       | Start – Hundvänligt                                 |
 | `backen-*.webp`      | Start – Upplevelser                                 |
+| `vandring-*.webp`    | Start – Upplevelser (vandringsleder)                |
 | `vardar-*.webp`      | Boka, Kassa (rund porträttbild på värdarna)         |
 | `og-image.jpg`       | Förhandsbild när länken delas (1200×800)            |
 
@@ -31,4 +32,3 @@ mindre filen. Skapa nya med samma namnmönster: `namn-800.webp` och `namn-1600.w
 
 | Platshållare   | Används på                         | Motiv                         |
 |----------------|------------------------------------|-------------------------------|
-| `vandring.jpg` | Start – Upplevelser                | Vandringsled i närheten       |
