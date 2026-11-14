@@ -203,7 +203,6 @@
   "Värdarna": "Ihre Gastgeber",
   "Vi bor i ett eget hus på samma gård. Gästhuset ligger avskilt med egen ingång och altan.": "Wir wohnen in einem eigenen Haus auf demselben Hof. Das Gästehaus liegt für sich, mit eigenem Eingang und eigener Terrasse.",
   "Parkering": "Parken",
-  "Gratis parkering för 2 bilar vid gästhuset. Boendet är lätt att hitta.": "Kostenlose Parkplätze für 2 Autos am Gästehaus. Die Unterkunft ist leicht zu finden.",
   "Städning": "Reinigung",
   "Följ vår städchecklista eller boka slutstädning för": "Folgen Sie unserer Putz-Checkliste oder buchen Sie die Endreinigung für",
   "Boka utan mellanhänder": "Ohne Vermittler buchen",
@@ -413,5 +412,6 @@
   "Kallbadet fylls med friskt bäckvatten. Du kan också doppa dig i själva bäcken – men den är ganska grund.": "Das Kaltwasserbecken wird mit frischem Bachwasser gefüllt. Sie können auch im Bach selbst baden – er ist allerdings recht flach.",
   "Ja – bastun har ett tillhörande kallbad som fylls med friskt bäckvatten. Du kan också doppa dig i själva bäcken, men den är relativt grund.": "Ja – zur Sauna gehört ein Kaltwasserbecken, das mit frischem Bachwasser gefüllt wird. Sie können auch im Bach selbst baden, er ist allerdings recht flach.",
   "Rent och klart vatten": "Sauberes, klares Wasser",
-  "Vattnet renas och sköts regelbundet, så att det alltid är rent och klart när du kliver i.": "Das Wasser wird regelmäßig aufbereitet und gepflegt, damit es immer sauber und klar ist, wenn Sie hineinsteigen."
+  "Vattnet renas och sköts regelbundet, så att det alltid är rent och klart när du kliver i.": "Das Wasser wird regelmäßig aufbereitet und gepflegt, damit es immer sauber und klar ist, wenn Sie hineinsteigen.",
+  "Gratis parkering för 2 bilar vid gästhuset.": "Kostenlose Parkplätze für 2 Autos am Gästehaus."
 }
