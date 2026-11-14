@@ -19,9 +19,7 @@ python3 -m http.server 8000
 | `index.html`     | Startsida: hero + datumsök, boendet, bastu, priser, FAQ |
 | `boendet.html`   | Detaljsida om stugan med galleri och priskort           |
 | `bastu-bad.html` | Vedbastu och spabad                                     |
-| `boka.html`      | Bokning steg 1: välj tillval, live-prisberäkning        |
-| `kassa.html`     | Bokning steg 2: gästuppgifter och betalsätt             |
-| `tack.html`      | Bekräftelse efter skickad förfrågan                     |
+| `boka.html`      | Bokning med Sirvoys bokningsformulär                    |
 
 ## Språk: svenska, engelska och tyska
 
@@ -41,12 +39,11 @@ npm run build
 - Varje sida har `hreflang`-länkar till sina språkversioner och en språkväljare i menyn.
 - Omdömena på engelska/tyska är översatta från Airbnbs svenska version och märkta
   "Translated"/"Übersetzt".
-- Bokningsmejlet till värdarna är alltid på svenska, med en rad om gästens språk.
 
 ## Ändra priser och kontaktuppgifter
 
-Allt finns i **`assets/js/config.js`** – nattpris, tillval, komborabatt,
-in-/utcheckningstider, värdarnas namn och e-post. Sidorna uppdateras automatiskt.
+I **`assets/js/config.js`**: lägsta nattpris, in-/utcheckningstider, värdarnas namn och
+e-post. Priser för tillval står i texterna – och styrs i Sirvoy.
 
 ## Uppdatera CSS/JS – öka versionsnumret
 
@@ -69,53 +66,30 @@ som loopar och rubriken ovanpå. Film-id:t står i `index.html` på `data-youtub
 - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
 - Filmen pausas när den scrollas ur bild och fortsätter när den syns igen.
 
-## Hur bokningen fungerar
+## Bokning via Sirvoy
 
-Sajten tar emot **bokningsförfrågningar** – ingen betalning sker på sajten.
-Gästen väljer datum och tillval, fyller i sina uppgifter och önskat betalsätt
-(Swish eller banköverföring). Värdarna bekräftar och skickar betalningsinstruktioner.
+Bokningen sker i **Sirvoys bokningsformulär**, inbäddat på `boka.html`
+(Sirvoy → Webbverktyg → Bokningsformulär). Sirvoy är kopplat till Airbnb,
+Booking.com och Stripe, så tillgänglighet, priser, tillval, betalning och
+bekräftelser sköts där – och en bokning via sajten blockerar datumen automatiskt
+i de andra kanalerna.
 
-- Om `bookingEndpoint` i `config.js` är tom öppnas gästens e-postprogram med ett
-  färdigifyllt mejl till värdarnas adress.
-- Sätter man `bookingEndpoint` till t.ex. en [Formspree](https://formspree.io)-adress
-  skickas förfrågan direkt från sidan och hamnar i värdarnas inkorg.
-
-## Kalendersynk med Airbnb och Booking.com
-
-Bokade datum hämtas automatiskt varje timme från Airbnb och Booking.com och visas
-som en kalender på bokningssidan. Gäster kan inte skicka förfrågan på upptagna datum.
-
-Så fungerar det: `.github/workflows/publicera.yml` kör `scripts/sync-calendars.mjs`,
-som skriver `data/bokade-datum.json`, och publicerar sedan sajten på GitHub Pages.
-
-### Engångsinställning
-
-1. **Koden måste ligga på `main`** – schemalagda körningar går bara där.
-2. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
-3. **Hämta kalenderlänkarna** (de är hemliga – lägg dem aldrig i koden):
-   - *Airbnb:* Annonser → välj annonsen → Tillgänglighet → Anslut kalendrar /
-     Synkronisera kalendrar → Exportera kalender → kopiera länken.
-   - *Booking.com (extranätet):* Priser och tillgänglighet → Synkronisera kalendrar
-     → Exportera kalender → kopiera länken.
-4. **Settings → Secrets and variables → Actions → New repository secret:**
-   `AIRBNB_ICAL_URL` och `BOOKING_ICAL_URL` med respektive länk.
-5. **Actions → Publicera sajten → Run workflow** för att köra direkt första gången.
-
-Utan länkar publiceras sajten ändå, men kalendern döljs.
-
-### Viktigt
-- **Direktbokningar** från sajten måste blockeras manuellt i Airbnb och Booking.com
-  när ni bekräftar dem – annars kan någon boka samma datum där.
-- Se till att **Airbnb och Booking.com även synkar med varandra** (importera den ena
-  kalendern i den andra), om ni inte redan gör det.
+- Sökrutorna på startsidan och Boendet skickar `check_in`, `check_out` och `adults`
+  i adressen till `boka.html`. Sirvoys formulär läser dem och visar lediga
+  alternativ direkt (`target=results`). Utan datum öppnas formuläret på datumvalet.
+- Formulärets språk sätts per sida (`data-lang`) av byggskriptet.
+- **Priser och tillval ändras i Sirvoy.** Texterna på sajten (t.ex. "Från 1 000 kr/natt",
+  bastu- och spabadspriser) måste hållas i samma nivå – nattpriset i `config.js`,
+  övriga priser i HTML-texterna och `i18n/*.json`.
+- Tillvalens namn och beskrivningar visas som de är skrivna i Sirvoy – lägg in
+  engelska och tyska översättningar där om möjligt.
 
 ## Att göra
 
 - [ ] Riktiga foton (se `assets/img/README.md`)
 - [x] Riktiga gästomdömen (från Airbnb)
-- [ ] Korrekt e-post, priser och värdnamn i `config.js`
-- [x] Tillgänglighetskalender (synk mot Airbnb och Booking.com)
-- [ ] Lägg in kalenderlänkarna som hemligheter (se ovan)
+- [ ] Korrekt e-post i `config.js` och priser som stämmer med Sirvoy
+- [x] Bokning, tillgänglighet och betalning via Sirvoy
 - [ ] Bokningsvillkor/ordningsregler som sida
 - [ ] Integritetspolicy (GDPR)
 - [ ] Publicering (t.ex. GitHub Pages) och domän
