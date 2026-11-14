@@ -21,6 +21,12 @@ python3 -m http.server 8000
 | `bastu-bad.html` | Vedbastu och spabad                                     |
 | `boka.html`      | Bokning med Sirvoys bokningsformulär                    |
 
+## Utseende på Sirvoys bokningsformulär
+
+`sirvoy/anpassad.css` ger Sirvoys formulär webbplatsens färger, typsnitt och former.
+Klistra in hela filen i Sirvoy: **Webbverktyg → Bokningsformulär → Anpassad CSS**.
+Ändras webbplatsens färger behöver filen uppdateras och klistras in igen.
+
 ## Språk: svenska, engelska och tyska
 
 De svenska sidorna i roten är källan. Engelska (`/en/`) och tyska (`/de/`) sidor
