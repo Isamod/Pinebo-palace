@@ -1,17 +1,11 @@
-# Publicerar sajten på GitHub Pages och hämtar bokade datum från Airbnb och
-# Booking.com en gång i timmen.
+# Bygger engelska och tyska sidor och publicerar sajten på GitHub Pages.
 #
-# Engångsinställning (se README):
-#  1. Settings → Pages → Source: "GitHub Actions"
-#  2. Settings → Secrets and variables → Actions → New repository secret:
-#     AIRBNB_ICAL_URL och BOOKING_ICAL_URL
+# Engångsinställning: Settings → Pages → Source: "GitHub Actions"
 name: Publicera sajten
 
 on:
   push:
     branches: [main]
-  schedule:
-    - cron: "17 * * * *" # varje timme, 17 minuter över
   workflow_dispatch: # går att köra manuellt under fliken Actions
 
 permissions:
@@ -42,11 +36,6 @@ jobs:
           npm run build
           rm -rf node_modules
 
-      - name: Hämta bokade datum från Airbnb och Booking.com
-        env:
-          AIRBNB_ICAL_URL: ${{ secrets.AIRBNB_ICAL_URL }}
-          BOOKING_ICAL_URL: ${{ secrets.BOOKING_ICAL_URL }}
-        run: node scripts/sync-calendars.mjs
 
       - uses: actions/configure-pages@v5
 

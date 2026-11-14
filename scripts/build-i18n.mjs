@@ -20,7 +20,7 @@ import { parse } from "node-html-parser";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = "https://isamod.github.io/Pinebo-palace/";
-const PAGES = ["index.html", "boendet.html", "bastu-bad.html", "boka.html", "kassa.html", "tack.html"];
+const PAGES = ["index.html", "boendet.html", "bastu-bad.html", "boka.html"];
 const PUBLIC = ["index.html", "boendet.html", "bastu-bad.html"];
 const LANGS = {
   sv: { dir: "", locale: "sv_SE", short: "SV", name: "Svenska" },
@@ -93,6 +93,8 @@ function langSwitch(lang, page, cls) {
 
 function processPage(html, lang, page, t) {
   const doc = parse(html, { comment: true, blockTextElements: { script: true, style: true } });
+  // Sirvoys bokningsformulär visas på sidans språk
+  doc.querySelectorAll("script[data-form-id]").forEach((s) => s.setAttribute("data-lang", lang));
   const htmlEl = doc.querySelector("html");
   htmlEl.setAttribute("lang", lang);
   if (LANGS[lang].dir) htmlEl.setAttribute("data-root", "../");
