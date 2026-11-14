@@ -134,7 +134,7 @@
   }
 
   /* ---------- Herofilm (YouTube) ----------
-     - Spelaren skapas direkt när sidan öppnas. Tills filmen spelar syns heron mörkgrön.
+     - En stillbild visas direkt. Spelaren skapas när sidan har laddat och tonas in ovanpå.
      - Cookie-fri domän (youtube-nocookie.com). Spelaren styrs med postMessage,
        så YouTubes separata API-skript behöver inte laddas.
      - Loopar och är alltid ljudlös. Egen knapp för paus/spela.
@@ -245,8 +245,10 @@
       updateUI();
       if (autoplay) create();
     }
-    // Starta direkt (skriptet ligger sist i body, så sidans innehåll är redan på plats)
-    start();
+    // Stillbilden visas direkt. Spelaren skapas när resten av sidan har laddat,
+    // så att den inte konkurrerar med sidans viktigaste innehåll.
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
   }
 
   /* ---------- Bildvisare (lightbox) ----------
