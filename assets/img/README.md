@@ -10,6 +10,7 @@ mindre filen. Skapa nya med samma namnmönster: `namn-800.webp` och `namn-1600.w
 
 | Fil                  | Används på                                          |
 |----------------------|-----------------------------------------------------|
+| `oversikt-*.webp`    | Start (intro), Boendet (galleri, första bild)       |
 | `vardagsrum-*.webp`  | Start (Boendet), Boendet (galleri), Boka            |
 | `sovloft-*.webp`     | Boendet (galleri) – balkongdörren                   |
 | `sovloft-sang-*.webp`| Boendet (galleri) – dubbelsängen                    |
@@ -26,7 +27,7 @@ mindre filen. Skapa nya med samma namnmönster: `namn-800.webp` och `namn-1600.w
 | `backen-*.webp`      | Start – Upplevelser                                 |
 | `vandring-*.webp`    | Start – Upplevelser (vandringsleder)                |
 | `vardar-*.webp`      | Boka, Kassa (rund porträttbild på värdarna)         |
-| `og-image.jpg`       | Förhandsbild när länken delas (1200×800)            |
+| `og-image.jpg`       | Förhandsbild när länken delas (1200×630, översikt)  |
 
 ## Saknas fortfarande (visar grön platshållare med filnamn)
 
