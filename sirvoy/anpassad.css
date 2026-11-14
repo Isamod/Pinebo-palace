@@ -52,27 +52,27 @@ a:hover { color: #94593a; }
 
 .button.is-primary,
 .button.is-success,
-.button.js-link-show-booking,
-.button.js-link-show-extra {
+.button[class*="link-show-booking"],
+.button[class*="link-show-extra"] {
   background-color: #1f2a22;
   border-color: #1f2a22;
   color: #ffffff;
 }
 .button.is-primary:hover,
 .button.is-success:hover,
-.button.js-link-show-booking:hover,
-.button.js-link-show-extra:hover {
+.button[class*="link-show-booking"]:hover,
+.button[class*="link-show-extra"]:hover {
   background-color: #2b3a2f;
   border-color: #2b3a2f;
   color: #ffffff;
 }
-.button.js-link-show-booking .icon,
-.button.js-link-show-extra .icon,
-.button.js-link-show-booking *,
-.button.js-link-show-extra * { color: #ffffff !important; }
+.button[class*="link-show-booking"] .icon,
+.button[class*="link-show-extra"] .icon,
+.button[class*="link-show-booking"] *,
+.button[class*="link-show-extra"] * { color: #ffffff !important; }
 
 /* "Ta bort tillval", "Läs mer", "Tillbaka" – diskreta knappar */
-.button.js-link-clear-extra,
+.button[class*="link-clear-extra"],
 .button.sirvoy-long-text__toggle,
 .button.book-details__back-button {
   background-color: #ffffff;
