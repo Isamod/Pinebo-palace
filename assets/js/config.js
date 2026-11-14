@@ -14,5 +14,5 @@ window.PINEBO = {
 
   // Kontakt
   hosts: "Maria & Andreas",
-  email: "kontakt@pinebo.se",
+  email: "maria@pinebo.se",
 };
