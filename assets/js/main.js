@@ -137,7 +137,7 @@
      - Spelaren skapas direkt när sidan öppnas. Tills filmen spelar syns heron mörkgrön.
      - Cookie-fri domän (youtube-nocookie.com). Spelaren styrs med postMessage,
        så YouTubes separata API-skript behöver inte laddas.
-     - Loopar, startar alltid utan ljud. Egna knappar för paus/spela och ljud.
+     - Loopar och är alltid ljudlös. Egen knapp för paus/spela.
      - Ingen autostart vid "reducerad rörelse" eller datasparläge – då visas en play-knapp.
      - Pausas när den inte syns och fortsätter när den syns igen,
        om inte besökaren själv har pausat. */
@@ -149,7 +149,6 @@
     var root = box.parentNode;
     var controls = $(".video-controls", root);
     var toggle = $("[data-video-toggle]", root);
-    var sound = $("[data-video-sound]", root);
 
     var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var conn = navigator.connection || {};
@@ -159,7 +158,6 @@
     var frame = null;
     var ready = false;
     var playing = false;
-    var muted = true;
     var userPaused = !autoplay;
     var inView = true;
 
@@ -169,7 +167,6 @@
     }
     function updateUI() {
       setBtn(toggle, playing ? "pause" : "play", playing ? t("Pausa filmen") : t("Spela filmen"));
-      setBtn(sound, muted ? "volume-x" : "volume", muted ? t("Slå på ljud") : t("Stäng av ljud"));
       // Filmen tonas in första gången den spelar och ligger sedan kvar (även pausad)
       if (playing) box.classList.add("video-ready");
     }
@@ -215,14 +212,12 @@
       if (d.event === "onReady" || d.event === "initialDelivery") {
         if (!ready) {
           ready = true;
-          if (!muted) cmd("unMute");
           if (userPaused || !inView) cmd("pauseVideo");
         }
       }
       var state = d.event === "onStateChange" ? d.info : (typeof info.playerState === "number" ? info.playerState : null);
       if (state === 1) playing = true;        // spelar
       else if (state === 2) playing = false;  // pausad (övriga lägen, t.ex. loop-omstart, ignoreras)
-      if (typeof info.muted === "boolean") muted = info.muted;
       updateUI();
     });
 
@@ -236,15 +231,6 @@
         userPaused = false;
         if (frame) cmd("playVideo"); else create();
       }
-    });
-    sound.addEventListener("click", function () {
-      muted = !muted;
-      if (frame) cmd(muted ? "mute" : "unMute");
-      if (!muted && !playing) {
-        userPaused = false;
-        if (frame) cmd("playVideo"); else create();
-      }
-      updateUI();
     });
 
     new IntersectionObserver(function (entries) {
