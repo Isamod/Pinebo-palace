@@ -20,7 +20,7 @@ import { parse } from "node-html-parser";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = "https://www.pinebo.se/";
-const PAGES = ["index.html", "boendet.html", "bastu-bad.html", "boka.html", "bokningsvillkor.html", "integritetspolicy.html", "omradet.html"];
+const PAGES = ["index.html", "boendet.html", "bastu-bad.html", "boka.html", "bokningsvillkor.html", "integritetspolicy.html", "omradet.html", "min-bokning.html"];
 const PUBLIC = ["index.html", "boendet.html", "bastu-bad.html", "bokningsvillkor.html", "integritetspolicy.html", "omradet.html"];
 const LANGS = {
   sv: { dir: "", locale: "sv_SE", short: "SV", name: "Svenska" },
