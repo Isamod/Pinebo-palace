@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="de" data-root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meine Buchung – Pinebo Palace</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1f2a22">
+  <link rel="preload" href="../assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/style.css?v=22">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="min-bokning">
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Pinebo Palace – Startseite">
+      <span class="brand-mark"><i data-icon="tree"></i></span>
+      <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Gästehaus in Ulricehamn</span></span>
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Hauptmenü">
+      <a href="boendet.html">Die Unterkunft</a>
+      <a href="bastu-bad.html">Sauna &amp; Whirlpool</a>
+      <a href="index.html#priser">Preise &amp; Extras</a>
+      <a href="omradet.html">Erlebnisse</a>
+      <a href="index.html#faq">FAQ</a>
+    <nav class="lang-switch lang-switch--menu" data-lang-switch translate="no" aria-label="Sprache wählen"><a href="../min-bokning.html" hreflang="sv" lang="sv">SV<span class="visually-hidden"> – Svenska</span></a><a href="../en/min-bokning.html" hreflang="en" lang="en">EN<span class="visually-hidden"> – English</span></a><a href="../de/min-bokning.html" hreflang="de" lang="de" aria-current="true">DE<span class="visually-hidden"> – Deutsch</span></a></nav></nav>
+    <div class="header-aside"><nav class="lang-switch lang-switch--bar" data-lang-switch translate="no" aria-label="Sprache wählen"><a href="../min-bokning.html" hreflang="sv" lang="sv">SV<span class="visually-hidden"> – Svenska</span></a><a href="../en/min-bokning.html" hreflang="en" lang="en">EN<span class="visually-hidden"> – English</span></a><a href="../de/min-bokning.html" hreflang="de" lang="de" aria-current="true">DE<span class="visually-hidden"> – Deutsch</span></a></nav>
+      <span class="header-price">Ab <span data-cfg="night">1 000</span> SEK/Nacht</span>
+      <a class="btn btn-primary" href="boka.html">Direkt buchen</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-controls="main-nav" aria-expanded="false"><i data-icon="menu"></i></button>
+  </div>
+</header>
+
+<main id="main" class="section section--tight">
+  <div class="container">
+    <span class="eyebrow">Meine Buchung</span>
+    <h1 class="h-lg">Buchung ansehen</h1>
+    <p class="lead mb-32">Geben Sie Ihre Buchungsnummer und Ihren Nachnamen ein, um Ihre Buchung anzusehen. Die Buchungsnummer finden Sie in der Bestätigungs-E-Mail.</p>
+
+    <div class="layout-sidebar">
+      <section class="card booking-widget" aria-label="Meine Buchung">
+        <!-- Sirvoys gästportal (Gästportal → Installera → Installation på din webbplats).
+             Språket sätts per sida av scripts/build-i18n.mjs. -->
+        <script async src="https://secured.sirvoy.com/widget/sirvoy.js" data-form-id="a2736a8f692e8552" data-widget="review" data-lang="de"></script>
+        <noscript><p class="card-pad">Das Gästeportal benötigt JavaScript. Schreiben Sie uns an <a data-mail href="mailto:maria@pinebo.se">maria@pinebo.se</a> und wir helfen Ihnen gern.</p></noscript>
+      </section>
+
+      <aside class="sidebar">
+        <div class="card card-pad">
+          <h2 class="h-sm">Gut zu wissen</h2>
+          <ul class="feature-list" role="list">
+            <li><span class="ico" aria-hidden="true"><i data-icon="calendar"></i></span><div><strong>Daten ändern</strong><span>Möchten Sie die Daten oder die Anzahl der Gäste ändern? Schreiben Sie uns an <a data-mail href="mailto:maria@pinebo.se">maria@pinebo.se</a> und wir helfen Ihnen gern.</span></div></li>
+            <li><span class="ico" aria-hidden="true"><i data-icon="clock"></i></span><div><strong>Stornierung</strong><span>Kostenlose Stornierung bis <span data-cfg="cancel">3</span> Tage vor der Anreise. Spätere Stornierungen werden voll berechnet. <a href="bokningsvillkor.html">Buchungsbedingungen lesen</a></span></div></li>
+            <li><span class="ico" aria-hidden="true"><i data-icon="lock"></i></span><div><strong>Über Airbnb oder Booking.com gebucht?</strong><span>Dann verwalten Sie Ihre Buchung bei Airbnb oder Booking.com.</span></div></li>
+          </ul>
+        </div>
+
+        <div class="card host-card">
+        <span class="avatar" aria-hidden="true"><img src="../assets/img/vardar-96.webp" srcset="../assets/img/vardar-96.webp 1x, ../assets/img/vardar-192.webp 2x" width="96" height="96" alt loading="lazy" decoding="async"></span>
+        <div><strong>Fragen zu Ihrem Aufenthalt?</strong><span>Ihre Gastgeber sind <span data-cfg="hosts">Maria &amp; Andreas</span>. <a data-mail href="mailto:maria@pinebo.se">Schreiben Sie uns</a> direkt.</span></div>
+      </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a class="brand" href="index.html" aria-label="Pinebo Palace – Startseite"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+        <p>Ein hundefreundliches Gästehaus an einem plätschernden Bach im Wald bei Ulricehamn. Mit Holzsauna, Whirlpool und Gastgebern, die gern ihre besten Tipps teilen.</p>
+      </div>
+      <nav class="footer-col" aria-labelledby="footer-links">
+        <h2 id="footer-links">Links</h2>
+        <ul>
+          <li><a href="boendet.html">Über die Hütte</a></li>
+          <li><a href="bastu-bad.html">Sauna &amp; Whirlpool</a></li>
+          <li><a href="index.html#vardarna">Über die Gastgeber</a></li>
+          <li><a href="omradet.html">Ulricehamn erleben</a></li>
+          <li><a href="index.html#faq">Häufige Fragen</a></li>
+          <li><a href="min-bokning.html">Meine Buchung</a></li>
+          <li><a href="bokningsvillkor.html">Buchungsbedingungen</a></li>
+          <li><a href="integritetspolicy.html">Datenschutzerklärung</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Kontakt</h2>
+        <ul>
+          <li><a data-mail data-cfg="email" href="mailto:maria@pinebo.se">maria@pinebo.se</a></li>
+          <li><address>Ulricehamn, Schweden</address></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Pinebo Palace. Alle Rechte vorbehalten.</span>
+      <span>Direkt bei Maria &amp; Andreas buchen – ohne Plattformgebühren</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/config.js?v=22"></script>
+<script src="../assets/js/icons.js?v=22"></script>
+<script src="../assets/js/i18n.js?v=22"></script>
+<script src="../assets/js/main.js?v=22"></script>
+</body>
+</html>

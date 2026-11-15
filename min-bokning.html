@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Min bokning – Pinebo Palace</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1f2a22">
+  <link rel="preload" href="assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=22">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="min-bokning">
+<a class="skip-link" href="#main">Hoppa till innehållet</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Pinebo Palace – startsida">
+      <span class="brand-mark"><i data-icon="tree"></i></span>
+      <span><span class="brand-name">Pinebo Palace</span><span class="brand-sub">Gästhus i Ulricehamn</span></span>
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Huvudmeny">
+      <a href="boendet.html">Boendet</a>
+      <a href="bastu-bad.html">Bastu &amp; Bad</a>
+      <a href="index.html#priser">Priser &amp; Tillval</a>
+      <a href="omradet.html">Upplevelser</a>
+      <a href="index.html#faq">FAQ</a>
+    <nav class="lang-switch lang-switch--menu" data-lang-switch translate="no" aria-label="Välj språk"><a href="min-bokning.html" hreflang="sv" lang="sv" aria-current="true">SV<span class="visually-hidden"> – Svenska</span></a><a href="en/min-bokning.html" hreflang="en" lang="en">EN<span class="visually-hidden"> – English</span></a><a href="de/min-bokning.html" hreflang="de" lang="de">DE<span class="visually-hidden"> – Deutsch</span></a></nav></nav>
+    <div class="header-aside"><nav class="lang-switch lang-switch--bar" data-lang-switch translate="no" aria-label="Välj språk"><a href="min-bokning.html" hreflang="sv" lang="sv" aria-current="true">SV<span class="visually-hidden"> – Svenska</span></a><a href="en/min-bokning.html" hreflang="en" lang="en">EN<span class="visually-hidden"> – English</span></a><a href="de/min-bokning.html" hreflang="de" lang="de">DE<span class="visually-hidden"> – Deutsch</span></a></nav>
+      <span class="header-price">Från <span data-cfg="night">1 000</span> kr/natt</span>
+      <a class="btn btn-primary" href="boka.html">Boka direkt</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Öppna meny" aria-controls="main-nav" aria-expanded="false"><i data-icon="menu"></i></button>
+  </div>
+</header>
+
+<main id="main" class="section section--tight">
+  <div class="container">
+    <span class="eyebrow">Min bokning</span>
+    <h1 class="h-lg">Se din bokning</h1>
+    <p class="lead mb-32">Skriv in ditt bokningsnummer och efternamn för att se din bokning. Bokningsnumret hittar du i bekräftelsemejlet.</p>
+
+    <div class="layout-sidebar">
+      <section class="card booking-widget" aria-label="Min bokning">
+        <!-- Sirvoys gästportal (Gästportal → Installera → Installation på din webbplats).
+             Språket sätts per sida av scripts/build-i18n.mjs. -->
+        <script async src="https://secured.sirvoy.com/widget/sirvoy.js" data-form-id="a2736a8f692e8552" data-widget="review" data-lang="sv"></script>
+        <noscript><p class="card-pad">Gästportalen kräver JavaScript. Mejla oss på <a data-mail href="mailto:maria@pinebo.se">maria@pinebo.se</a> så hjälper vi dig.</p></noscript>
+      </section>
+
+      <aside class="sidebar">
+        <div class="card card-pad">
+          <h2 class="h-sm">Bra att veta</h2>
+          <ul class="feature-list" role="list">
+            <li><span class="ico" aria-hidden="true"><i data-icon="calendar"></i></span><div><strong>Ändra datum</strong><span>Vill du ändra datum eller antal gäster? Mejla oss på <a data-mail href="mailto:maria@pinebo.se">maria@pinebo.se</a> så hjälper vi dig.</span></div></li>
+            <li><span class="ico" aria-hidden="true"><i data-icon="clock"></i></span><div><strong>Avbokning</strong><span>Fri avbokning fram till <span data-cfg="cancel">3</span> dagar före ankomst. Avbokar du senare debiteras hela beloppet. <a href="bokningsvillkor.html">Läs bokningsvillkoren</a></span></div></li>
+            <li><span class="ico" aria-hidden="true"><i data-icon="lock"></i></span><div><strong>Bokat via Airbnb eller Booking.com?</strong><span>Då hanterar du din bokning hos Airbnb eller Booking.com.</span></div></li>
+          </ul>
+        </div>
+
+        <div class="card host-card">
+        <span class="avatar" aria-hidden="true"><img src="assets/img/vardar-96.webp" srcset="assets/img/vardar-96.webp 1x, assets/img/vardar-192.webp 2x" width="96" height="96" alt="" loading="lazy" decoding="async"></span>
+        <div><strong>Frågor om din vistelse?</strong><span>Vi som äger Pinebo heter <span data-cfg="hosts">Maria &amp; Andreas</span>. <a data-mail href="mailto:maria@pinebo.se">Skicka ett meddelande</a> direkt till oss.</span></div>
+      </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a class="brand" href="index.html" aria-label="Pinebo Palace – startsida"><span class="brand-mark"><i data-icon="tree"></i></span><span class="brand-name">Pinebo Palace</span></a>
+        <p>Hundvänligt gästhus vid en porlande bäck i skogen utanför Ulricehamn. Med vedbastu, spabad och värdar som gärna delar sina bästa tips.</p>
+      </div>
+      <nav class="footer-col" aria-labelledby="footer-links">
+        <h2 id="footer-links">Länkar</h2>
+        <ul>
+          <li><a href="boendet.html">Om stugan</a></li>
+          <li><a href="bastu-bad.html">Bastu &amp; bad</a></li>
+          <li><a href="index.html#vardarna">Om värdarna</a></li>
+          <li><a href="omradet.html">Upplev Ulricehamn</a></li>
+          <li><a href="index.html#faq">Vanliga frågor</a></li>
+          <li><a href="min-bokning.html">Min bokning</a></li>
+          <li><a href="bokningsvillkor.html">Bokningsvillkor</a></li>
+          <li><a href="integritetspolicy.html">Integritetspolicy</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2>Kontakt</h2>
+        <ul>
+          <li><a data-mail data-cfg="email" href="mailto:maria@pinebo.se">maria@pinebo.se</a></li>
+          <li><address>Ulricehamn, Sverige</address></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Pinebo Palace. Alla rättigheter reserverade.</span>
+      <span>Boka direkt hos Maria &amp; Andreas – utan plattformsavgifter</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/config.js?v=22"></script>
+<script src="assets/js/icons.js?v=22"></script>
+<script src="assets/js/i18n.js?v=22"></script>
+<script src="assets/js/main.js?v=22"></script>
+</body>
+</html>
